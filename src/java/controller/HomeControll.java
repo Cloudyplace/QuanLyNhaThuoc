@@ -5,14 +5,18 @@
  */
 package controller;
 
-import dal.ProductDB;
+import dal.AccountDBContext;
+import dal.MedicineDB;
+import dal.ProductDBGetById;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.Medicine;
 
 /**
  *
@@ -31,11 +35,37 @@ public class HomeControll extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         HttpSession session = request.getSession();
-        if (session.getAttribute("username") == null) {
+        if (session.getAttribute("username") == null) {// set login
             response.sendRedirect("login");
         } else {
-            request.setAttribute("listMedicine", new ProductDB().getAllMedicine());
+            //dung de phan trang
+            String indexPage = request.getParameter("indexPage");
+            if (indexPage == null) {
+                indexPage = "1";
+            }
+            int indexP = Integer.parseInt(indexPage);
+            //get total medicine
+            MedicineDB medicine = new MedicineDB();
+            int count = medicine.getTotalMedicine();
+            int endPage = count / 10;
+            if (count % 10 != 0) {
+                endPage++;
+            }
+            request.setAttribute("endPage", endPage);
+            List<Medicine> listMedPage = medicine.pagingMedicine(indexP);
+            request.setAttribute("listMedPage", listMedPage);
+
+            //style tag page
+            request.setAttribute("tagPage", indexP);
+
+            //profileUser
+            request.setAttribute("profileUser", new AccountDBContext().getUser(session.getAttribute("username").toString(), session.getAttribute("password").toString()));
+            //
+            //all medicine
+            request.setAttribute("listMedicine", new MedicineDB().getAllMedicine());
+            //
             request.getRequestDispatcher("view/Home/Home.jsp").forward(request, response);
         }
     }

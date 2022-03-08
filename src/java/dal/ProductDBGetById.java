@@ -17,7 +17,7 @@ import model.Medicine;
  *
  * @author cloudy_place
  */
-public class ProductDBGetById extends DBContext{
+public class ProductDBGetById extends DBContext {
 
     public Medicine getMedicineById(int medicineId) {
         try {
@@ -26,11 +26,11 @@ public class ProductDBGetById extends DBContext{
             stm.setInt(1, medicineId);
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
-                Medicine medicine = new Medicine(rs.getInt(1), rs.getString(2), 
-                        rs.getInt(3), rs.getInt(4), rs.getInt(5), 
-                        rs.getString(6), rs.getInt(7), rs.getInt(8), rs.getString(9), 
+                Medicine medicine = new Medicine(rs.getInt(1), rs.getString(2),
+                        rs.getInt(3), rs.getInt(4), rs.getInt(5),
+                        rs.getString(6), rs.getInt(7), rs.getInt(8), rs.getString(9),
                         rs.getString(10), rs.getString(11), rs.getInt(12), rs.getString(13));
-                
+
                 return medicine;
             }
         } catch (SQLException ex) {
@@ -38,6 +38,7 @@ public class ProductDBGetById extends DBContext{
         }
         return null;
     }
+
     public String getTypeNameByTypeId(int typeId) {
         try {
             String sql = "select TypeName from TypeOfMedicine where TypeId = ?";
@@ -52,6 +53,22 @@ public class ProductDBGetById extends DBContext{
         }
         return null;
     }
+
+    public String getBoxNameByBoxId(int boxId) {
+        try {
+            String sql = "select BoxName from MedicalBox where BoxId = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, boxId);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                return rs.getString(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
     public String getDistributorNameByDistributorId(int DistributorId) {
         try {
             String sql = "select DistributorName from Distributor where DistributorId = ?";
@@ -66,7 +83,7 @@ public class ProductDBGetById extends DBContext{
         }
         return null;
     }
-     
+
     public static void main(String[] args) {
         System.out.println(new ProductDBGetById().getDistributorNameByDistributorId(1));
     }

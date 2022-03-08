@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.Account;
 
 /**
  *
@@ -35,7 +36,14 @@ public class ProfileControll extends HttpServlet {
         HttpSession session = request.getSession();
         request.setAttribute("profileUser", new AccountDBContext().getUser
         (session.getAttribute("username").toString(), session.getAttribute("password").toString()));
+        
+                //get roleName by roleId
+        Account account = new AccountDBContext().getUser(session.getAttribute("username").toString(), session.getAttribute("password").toString());
+        int role = Integer.parseInt(account.getRole());
+        request.setAttribute("roleName", new AccountDBContext().getRollNameByRollId(role));
         request.getRequestDispatcher("view/Profile/profile.jsp").forward(request, response);
+        
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

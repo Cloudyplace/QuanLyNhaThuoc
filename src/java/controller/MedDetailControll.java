@@ -5,7 +5,7 @@
  */
 package controller;
 
-import dal.ProductDB;
+import dal.MedicineDB;
 import dal.ProductDBGetById;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -37,7 +37,9 @@ public class MedDetailControll extends HttpServlet {
         request.setAttribute("typeName", new ProductDBGetById().getTypeNameByTypeId(typeId));
         int distributorId = ((Medicine) request.getAttribute("MedicineDetail")).getDistributorId();
         request.setAttribute("distributorName", new ProductDBGetById().getDistributorNameByDistributorId(distributorId));
-        request.getRequestDispatcher("view/MedicineDetail/medicineDetail.jsp").forward(request, response);
+        int boxId = ((Medicine) request.getAttribute("MedicineDetail")).getBoxId();
+        request.setAttribute("boxName", new ProductDBGetById().getBoxNameByBoxId(boxId));
+        request.getRequestDispatcher("view/MedicineDetail/MedicineDetail.jsp").forward(request, response);
 
     }
 

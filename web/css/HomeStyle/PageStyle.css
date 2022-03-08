@@ -1,0 +1,37 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Mar 5, 2022, 3:56:10 PM
+    Author     : cloudy_place
+*/
+
+.tagPage {
+    width: 500px;
+    margin: auto;
+    text-align: center;
+}
+.tag {
+    width: 400px;
+    margin-left: 220px;
+}
+.tag a {
+    display: block;
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color .3s;
+    font-size: 22px;
+}
+
+.tag a.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.tag a:hover:not(.active) {
+    background-color: #ddd;
+}

@@ -20,6 +20,22 @@
         <servlet-name>ProfileControll</servlet-name>
         <servlet-class>controller.ProfileControll</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ListMedPageControll</servlet-name>
+        <servlet-class>controller.ListMedPageControll</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProfileEditControll</servlet-name>
+        <servlet-class>controller.ProfileEditControll</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MedicineManageControll</servlet-name>
+        <servlet-class>controller.Manage.MedicineManageControll</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MedicineDetailAdmin</servlet-name>
+        <servlet-class>controller.Manage.MedicineDetailAdminControll</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -39,6 +55,22 @@
     <servlet-mapping>
         <servlet-name>ProfileControll</servlet-name>
         <url-pattern>/profile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListMedPageControll</servlet-name>
+        <url-pattern>/listmedpage</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProfileEditControll</servlet-name>
+        <url-pattern>/profileedit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MedicineManageControll</servlet-name>
+        <url-pattern>/medicinemanage</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MedicineDetailAdmin</servlet-name>
+        <url-pattern>/medicineDetailAdmin</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

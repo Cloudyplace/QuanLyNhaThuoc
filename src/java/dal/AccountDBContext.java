@@ -57,6 +57,22 @@ public class AccountDBContext extends DBContext {
         }
         return null;
     }
+    
+        public String getRollNameByRollId(int RollId) {
+        try {
+            String sql = "select RoleName\n"
+                    + "from RoleAccount where RoleId = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, RollId);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                return rs.getString(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 
     public static void main(String[] args) {
         System.out.println(new AccountDBContext().getUser("admin", "123456"));
