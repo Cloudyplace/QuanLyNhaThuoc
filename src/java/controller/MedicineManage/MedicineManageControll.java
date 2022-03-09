@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.Manage;
+package controller.MedicineManage;
 
 import dal.MedicineDB;
 import dal.ProductDBGetById;

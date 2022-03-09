@@ -15,7 +15,7 @@
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
-        <link href="css/Profile/ProfileStyle.css" rel="stylesheet" />
+        <link href="css/Manage/MedicineManage/MedicineDetailAdmin.css" rel="stylesheet" />
 
     </head>
     <body>
@@ -56,7 +56,7 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-sm-3">
-                                            <h6 class="mb-0">Full Name</h6>
+                                            <h6 class="mb-0">Tên thuốc</h6>
                                         </div>
                                         <div class="col-sm-9 text-secondary">
                                             ${MedicineDetail.medicineName}
@@ -156,7 +156,7 @@
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <a class="btn btn-info " target="__blank"
-                                               href="profileedit">Edit</a>
+                                               href="medicineedit?id=${MedicineDetail.medicineId}">Edit</a>
                                         </div>
                                     </div>
                                 </div>

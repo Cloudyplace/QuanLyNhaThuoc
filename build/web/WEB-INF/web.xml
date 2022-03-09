@@ -30,11 +30,15 @@
     </servlet>
     <servlet>
         <servlet-name>MedicineManageControll</servlet-name>
-        <servlet-class>controller.Manage.MedicineManageControll</servlet-class>
+        <servlet-class>controller.MedicineManage.MedicineManageControll</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>MedicineDetailAdmin</servlet-name>
-        <servlet-class>controller.Manage.MedicineDetailAdminControll</servlet-class>
+        <servlet-class>controller.MedicineManage.MedicineDetailAdminControll</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MedicineEditControll</servlet-name>
+        <servlet-class>controller.MedicineManage.MedicineEditControll</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
@@ -71,6 +75,10 @@
     <servlet-mapping>
         <servlet-name>MedicineDetailAdmin</servlet-name>
         <url-pattern>/medicineDetailAdmin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MedicineEditControll</servlet-name>
+        <url-pattern>/medicineedit</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
