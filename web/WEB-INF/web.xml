@@ -40,6 +40,14 @@
         <servlet-name>MedicineEditControll</servlet-name>
         <servlet-class>controller.MedicineManage.MedicineEditControll</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DistributorManageControll</servlet-name>
+        <servlet-class>controller.DistributorManage.DistributorManageControll</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DistributorDetailAdminControll</servlet-name>
+        <servlet-class>controller.DistributorManage.DistributorDetailAdminControll</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -79,6 +87,14 @@
     <servlet-mapping>
         <servlet-name>MedicineEditControll</servlet-name>
         <url-pattern>/medicineedit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DistributorManageControll</servlet-name>
+        <url-pattern>/distributormanage</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DistributorDetailAdminControll</servlet-name>
+        <url-pattern>/distributorDetailAdmin</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

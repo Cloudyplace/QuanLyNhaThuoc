@@ -79,7 +79,7 @@ public class MedicineDB extends DBContext {
 
     public static void main(String[] args) {
         MedicineDB medicine = new MedicineDB();
-        List<Medicine> list = medicine.pagingMedicine(2);
+        List<Medicine> list = medicine.pagingMedicine(1);
         for (Medicine o : list) {
             System.out.println(o);
         }

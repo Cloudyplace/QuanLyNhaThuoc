@@ -90,6 +90,7 @@
                         <button class="dropbtn">Quản Lý</button>
                         <div class="dropdown-content">
                             <a href="medicinemanage">Quản lý thuốc</a>
+                            <a href="distributormanage">Quản lý nhà phân phối</a>
                             <a href="#">Quản lý nhân viên</a>
                         </div>
                     </div>
@@ -110,7 +111,7 @@
                             <button class="dropbtn">${profileUser.fullName}</button>
                             <div class="dropdown-content">
                                 <a href="profile">Thông Tin Tài Khoản</a>
-                                <a href="#">Đăng xuất</a>
+                                <a href="logout">Đăng xuất</a>
                             </div>
                         </div>
                     </a>

@@ -1,28 +1,25 @@
+package controller.DistributorManage;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.MedicineManage;
-
 import dal.AccountDBContext;
-import dal.MedicineDB;
-import dal.ProductDBGetById;
+import dal.distributor.DistributorDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.Medicine;
 
 /**
  *
  * @author cloudy_place
  */
-public class MedicineManageControll extends HttpServlet {
+public class DistributorDetailAdminControll extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,6 +42,15 @@ public class MedicineManageControll extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+//                request.setAttribute("MedicineDetail", new ProductDBGetById().getMedicineById(Integer.parseInt(request.getParameter("id"))));
+//        int typeId = ((Medicine) request.getAttribute("MedicineDetail")).getTypeId();
+//        request.setAttribute("typeName", new ProductDBGetById().getTypeNameByTypeId(typeId));
+//        int distributorId = ((Medicine) request.getAttribute("MedicineDetail")).getDistributorId();
+//        request.setAttribute("distributorName", new ProductDBGetById().getDistributorNameByDistributorId(distributorId));
+//        int boxId = ((Medicine) request.getAttribute("MedicineDetail")).getBoxId();
+//        request.setAttribute("boxName", new ProductDBGetById().getBoxNameByBoxId(boxId));
+//        request.getRequestDispatcher("view/Manage/MedicineManage/MedicineDetailAdmin.jsp").forward(request, response);
+
         //check session
         HttpSession session = request.getSession();
         if (session.getAttribute("username") == null) {// set login
@@ -53,32 +59,14 @@ public class MedicineManageControll extends HttpServlet {
             //profileUser
             request.setAttribute("profileUser", new AccountDBContext().getUser(session.getAttribute("username").toString(), session.getAttribute("password").toString()));
 
-            //dung de phan trang
-            String indexPage = request.getParameter("indexPage");
-            if (indexPage == null) {
-                indexPage = "1";
-            }
-            int indexP = Integer.parseInt(indexPage);
-            //get total medicine
-            MedicineDB medicine = new MedicineDB();
-            int count = medicine.getTotalMedicine();
-            int endPage = count / 10;
-            if (count % 10 != 0) {
-                endPage++;
-            }
-            request.setAttribute("endPage", endPage);
-            List<Medicine> listMedPage = medicine.pagingMedicine(indexP);
-            request.setAttribute("listMedPage", listMedPage);
-
-            //style tag page
-            request.setAttribute("tagPage", indexP);
-
-            request.getRequestDispatcher("view/Manage/MedicineManage/MedicineManage.jsp").forward(request, response);
+            request.setAttribute("DistributorDetail", new DistributorDBContext().getDistributorById(Integer.parseInt(request.getParameter("id"))));
+            request.getRequestDispatcher("view/Manage/DistributorManage/DistributorDetailAdmin.jsp").forward(request, response);
         }
 
     }
 
     /**
+     *
      * Handles the HTTP <code>POST</code> method.
      *
      * @param request servlet request
@@ -89,6 +77,7 @@ public class MedicineManageControll extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
     }
 
     /**

@@ -33,17 +33,22 @@ public class ProfileControll extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        //check session
         HttpSession session = request.getSession();
-        request.setAttribute("profileUser", new AccountDBContext().getUser
-        (session.getAttribute("username").toString(), session.getAttribute("password").toString()));
-        
-                //get roleName by roleId
-        Account account = new AccountDBContext().getUser(session.getAttribute("username").toString(), session.getAttribute("password").toString());
-        int role = Integer.parseInt(account.getRole());
-        request.setAttribute("roleName", new AccountDBContext().getRollNameByRollId(role));
-        request.getRequestDispatcher("view/Profile/profile.jsp").forward(request, response);
-        
-        
+        if (session.getAttribute("username") == null) {// set login
+            response.sendRedirect("login");
+        } else {//profileUser
+            request.setAttribute("profileUser", new AccountDBContext().getUser(session.getAttribute("username").toString(), session.getAttribute("password").toString()));
+
+            request.setAttribute("profileUser", new AccountDBContext().getUser(session.getAttribute("username").toString(), session.getAttribute("password").toString()));
+
+            //get roleName by roleId
+            Account account = new AccountDBContext().getUser(session.getAttribute("username").toString(), session.getAttribute("password").toString());
+            int role = Integer.parseInt(account.getRole());
+            request.setAttribute("roleName", new AccountDBContext().getRollNameByRollId(role));
+            request.getRequestDispatcher("view/Profile/profile.jsp").forward(request, response);
+        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

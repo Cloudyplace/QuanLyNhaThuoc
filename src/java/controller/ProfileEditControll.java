@@ -31,17 +31,25 @@ public class ProfileEditControll extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        //get profile 
+        //check session
         HttpSession session = request.getSession();
-        request.setAttribute("profileUser", new AccountDBContext().getUser(session.getAttribute("username").toString(), session.getAttribute("password").toString()));
+        if (session.getAttribute("username") == null) {// set login
+            response.sendRedirect("login");
+        } else {
+            //profileUser
+            request.setAttribute("profileUser", new AccountDBContext().getUser(session.getAttribute("username").toString(), session.getAttribute("password").toString()));
 
-        //get roleName by roleId
-        Account account = new AccountDBContext().getUser(session.getAttribute("username").toString(), session.getAttribute("password").toString());
-        int role = Integer.parseInt(account.getRole());
-        request.setAttribute("roleName", new AccountDBContext().getRollNameByRollId(role));
+            response.setContentType("text/html;charset=UTF-8");
+            //get profile 
+            request.setAttribute("profileUser", new AccountDBContext().getUser(session.getAttribute("username").toString(), session.getAttribute("password").toString()));
 
-        request.getRequestDispatcher("view/Profile/profileEdit.jsp").forward(request, response);
+            //get roleName by roleId
+            Account account = new AccountDBContext().getUser(session.getAttribute("username").toString(), session.getAttribute("password").toString());
+            int role = Integer.parseInt(account.getRole());
+            request.setAttribute("roleName", new AccountDBContext().getRollNameByRollId(role));
+
+            request.getRequestDispatcher("view/Profile/profileEdit.jsp").forward(request, response);
+        }
 
     }
 
