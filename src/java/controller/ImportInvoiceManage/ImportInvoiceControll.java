@@ -1,25 +1,29 @@
-package controller.DistributorManage;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package controller.ImportInvoiceManage;
+
 import dal.AccountDBContext;
-import dal.distributor.DistributorDBContext;
+import dal.ImportInvoice.ImportInvoiceDBContext;
+import dal.ProductDBGetById;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.ImportInvoice;
+import model.Medicine;
 
 /**
  *
  * @author cloudy_place
  */
-public class DistributorDetailAdminControll extends HttpServlet {
+public class ImportInvoiceControll extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -30,6 +34,23 @@ public class DistributorDetailAdminControll extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ImportInvoiceControll</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ImportInvoiceControll at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
+    }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -42,15 +63,6 @@ public class DistributorDetailAdminControll extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//                request.setAttribute("MedicineDetail", new ProductDBGetById().getMedicineById(Integer.parseInt(request.getParameter("id"))));
-//        int typeId = ((Medicine) request.getAttribute("MedicineDetail")).getTypeId();
-//        request.setAttribute("typeName", new ProductDBGetById().getTypeNameByTypeId(typeId));
-//        int distributorId = ((Medicine) request.getAttribute("MedicineDetail")).getDistributorId();
-//        request.setAttribute("distributorName", new ProductDBGetById().getDistributorNameByDistributorId(distributorId));
-//        int boxId = ((Medicine) request.getAttribute("MedicineDetail")).getBoxId();
-//        request.setAttribute("boxName", new ProductDBGetById().getBoxNameByBoxId(boxId));
-//        request.getRequestDispatcher("view/Manage/MedicineManage/MedicineDetailAdmin.jsp").forward(request, response);
-
         //check session
         HttpSession session = request.getSession();
         if (session.getAttribute("username") == null) {// set login
@@ -59,25 +71,31 @@ public class DistributorDetailAdminControll extends HttpServlet {
             //profileUser
             request.setAttribute("profileUser", new AccountDBContext().getUser(session.getAttribute("username").toString(), session.getAttribute("password").toString()));
 
-            //distributor detail
-            request.setAttribute("DistributorDetail", new DistributorDBContext().getDistributorById(Integer.parseInt(request.getParameter("id"))));
+            //dung de phan trang
+            String indexPage = request.getParameter("indexPage");
+            if (indexPage == null) {
+                indexPage = "1";
+            }
+            int indexP = Integer.parseInt(indexPage);
+            //get total import invoice
+            ImportInvoiceDBContext importInvoice = new ImportInvoiceDBContext();
+            int count = importInvoice.getTotalImportInvoice();
+            int endPage = count / 10;
+            if (count % 10 != 0) {
+                endPage++;
+            }
+            request.setAttribute("endPage", endPage);
+            List<ImportInvoice> listMedPage = importInvoice.pagingImportInvoice(indexP);
+            request.setAttribute("listImInvoicePage", listMedPage);
 
-            //total medicine
-            request.setAttribute("TotalTypeMidicine", new DistributorDBContext().getTotalTypeMedicineByDisId(Integer.parseInt(request.getParameter("id"))));
+            //style tag page
+            request.setAttribute("tagPage", indexP);
 
-            //total Import Invoice
-            request.setAttribute("TotalImportInvoice", new DistributorDBContext().getTotalImInvoiceByDisId(Integer.parseInt(request.getParameter("id"))));
-
-            //total money of Im Invoice
-            request.setAttribute("TotalMoneyIInvoice", new DistributorDBContext().getTotalMoneyImInvoiceByDisId(Integer.parseInt(request.getParameter("id"))));
-
-            request.getRequestDispatcher("view/Manage/DistributorManage/DistributorDetailAdmin.jsp").forward(request, response);
+            request.getRequestDispatcher("view/Manage/ImportInvoiceManage/ImportInvoiceManage.jsp").forward(request, response);
         }
-
     }
 
     /**
-     *
      * Handles the HTTP <code>POST</code> method.
      *
      * @param request servlet request
@@ -88,7 +106,7 @@ public class DistributorDetailAdminControll extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        processRequest(request, response);
     }
 
     /**

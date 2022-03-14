@@ -44,9 +44,6 @@
                                         <div class="d-flex flex-column align-items-center text-center">
                                             <img src="${MedicineDetail.image}" alt="Ảnh"
                                                   width="300">
-                                            <div class="mt-3">
-                                                <h4>${profileUser.fullName}</h4>
-                                        </div>
                                     </div>
                                 </div>
                             </div>

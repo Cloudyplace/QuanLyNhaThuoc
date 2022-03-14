@@ -91,6 +91,7 @@
                         <div class="dropdown-content">
                             <a href="medicinemanage">Quản lý thuốc</a>
                             <a href="distributormanage">Quản lý nhà phân phối</a>
+                            <a href="importInvoice">Quản lý hóa đơn nhập</a>
                             <a href="#">Quản lý nhân viên</a>
                         </div>
                     </div>

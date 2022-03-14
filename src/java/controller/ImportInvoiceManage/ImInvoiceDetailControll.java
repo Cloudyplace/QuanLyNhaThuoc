@@ -1,11 +1,13 @@
-package controller.DistributorManage;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package controller.ImportInvoiceManage;
+
 import dal.AccountDBContext;
+import dal.ImportInvoice.ImportInvoiceDBContext;
+import dal.ProductDBGetById;
 import dal.distributor.DistributorDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -19,7 +21,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author cloudy_place
  */
-public class DistributorDetailAdminControll extends HttpServlet {
+public class ImInvoiceDetailControll extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -29,9 +31,11 @@ public class DistributorDetailAdminControll extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
-     */
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
+     *
+     *
+     * //
+     * <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+     * /**
      * Handles the HTTP <code>GET</code> method.
      *
      * @param request servlet request
@@ -42,16 +46,6 @@ public class DistributorDetailAdminControll extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//                request.setAttribute("MedicineDetail", new ProductDBGetById().getMedicineById(Integer.parseInt(request.getParameter("id"))));
-//        int typeId = ((Medicine) request.getAttribute("MedicineDetail")).getTypeId();
-//        request.setAttribute("typeName", new ProductDBGetById().getTypeNameByTypeId(typeId));
-//        int distributorId = ((Medicine) request.getAttribute("MedicineDetail")).getDistributorId();
-//        request.setAttribute("distributorName", new ProductDBGetById().getDistributorNameByDistributorId(distributorId));
-//        int boxId = ((Medicine) request.getAttribute("MedicineDetail")).getBoxId();
-//        request.setAttribute("boxName", new ProductDBGetById().getBoxNameByBoxId(boxId));
-//        request.getRequestDispatcher("view/Manage/MedicineManage/MedicineDetailAdmin.jsp").forward(request, response);
-
-        //check session
         HttpSession session = request.getSession();
         if (session.getAttribute("username") == null) {// set login
             response.sendRedirect("login");
@@ -59,25 +53,24 @@ public class DistributorDetailAdminControll extends HttpServlet {
             //profileUser
             request.setAttribute("profileUser", new AccountDBContext().getUser(session.getAttribute("username").toString(), session.getAttribute("password").toString()));
 
-            //distributor detail
-            request.setAttribute("DistributorDetail", new DistributorDBContext().getDistributorById(Integer.parseInt(request.getParameter("id"))));
+            //distributor
+            request.setAttribute("DistributorDetail", new ImportInvoiceDBContext().getDistributorByImInvoiceId(Integer.parseInt(request.getParameter("id"))));
 
-            //total medicine
-            request.setAttribute("TotalTypeMidicine", new DistributorDBContext().getTotalTypeMedicineByDisId(Integer.parseInt(request.getParameter("id"))));
+            //Invoice
+            request.setAttribute("ImInvoice", new ImportInvoiceDBContext().getImInvoiceById(Integer.parseInt(request.getParameter("id"))));
 
-            //total Import Invoice
-            request.setAttribute("TotalImportInvoice", new DistributorDBContext().getTotalImInvoiceByDisId(Integer.parseInt(request.getParameter("id"))));
+            //invoice detail
+            request.setAttribute("ImInvoiceDetail", new ImportInvoiceDBContext().getImInvoiceDetailById(Integer.parseInt(request.getParameter("id"))));
 
-            //total money of Im Invoice
-            request.setAttribute("TotalMoneyIInvoice", new DistributorDBContext().getTotalMoneyImInvoiceByDisId(Integer.parseInt(request.getParameter("id"))));
+            //medice detail
+            request.setAttribute("MedicineDetail", new ProductDBGetById().getMedicineById(Integer.parseInt(request.getParameter("id"))));
 
-            request.getRequestDispatcher("view/Manage/DistributorManage/DistributorDetailAdmin.jsp").forward(request, response);
+            request.getRequestDispatcher("view/Manage/ImportInvoiceManage/ImInvoiceDetail.jsp").forward(request, response);
+
         }
-
     }
 
     /**
-     *
      * Handles the HTTP <code>POST</code> method.
      *
      * @param request servlet request
@@ -88,7 +81,6 @@ public class DistributorDetailAdminControll extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
     }
 
     /**

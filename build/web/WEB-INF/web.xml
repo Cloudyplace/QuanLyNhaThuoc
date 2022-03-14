@@ -48,6 +48,22 @@
         <servlet-name>DistributorDetailAdminControll</servlet-name>
         <servlet-class>controller.DistributorManage.DistributorDetailAdminControll</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ImportInvoiceControll</servlet-name>
+        <servlet-class>controller.ImportInvoiceManage.ImportInvoiceControll</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ImInvoiceEditControll</servlet-name>
+        <servlet-class>controller.ImportInvoiceManage.ImInvoiceEditControll</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ImInvoiceDetailControll</servlet-name>
+        <servlet-class>controller.ImportInvoiceManage.ImInvoiceDetailControll</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ImInvoiceOfDistributor</servlet-name>
+        <servlet-class>controller.DistributorManage.ImInvoiceOfDistributor</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -95,6 +111,22 @@
     <servlet-mapping>
         <servlet-name>DistributorDetailAdminControll</servlet-name>
         <url-pattern>/distributorDetailAdmin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ImportInvoiceControll</servlet-name>
+        <url-pattern>/importInvoice</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ImInvoiceEditControll</servlet-name>
+        <url-pattern>/imImvoiceEdit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ImInvoiceDetailControll</servlet-name>
+        <url-pattern>/imInvoiceDetail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ImInvoiceOfDistributor</servlet-name>
+        <url-pattern>/ImInvoiceOfDistributor</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

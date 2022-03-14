@@ -27,6 +27,24 @@ public class Medicine {
     public Medicine() {
     }
 
+    public Medicine(int medicineId, String medicineName, int inputPrice, int price, String outOfDate, int quantityInStock) {
+        this.medicineId = medicineId;
+        this.medicineName = medicineName;
+        this.inputPrice = inputPrice;
+        this.price = price;
+        this.outOfDate = outOfDate;
+        this.quantityInStock = quantityInStock;
+    }
+
+    
+    public Medicine(String medicineName, String unit, int inputPrice) {
+        this.medicineName = medicineName;
+        this.unit = unit;
+        this.inputPrice = inputPrice;
+    }
+    
+    
+
     public Medicine(int medicineId, String medicineName, int typeId, int boxId, int distributor, String unit, int inputPrice, int price, String manufactureDate, String outOfDate, String image, int quantityInStock, String note) {
         this.medicineId = medicineId;
         this.medicineName = medicineName;

@@ -4,6 +4,7 @@
     Author     : cloudy_place
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -40,46 +41,50 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            <h6 class="mb-0">Thuốc đã nhập</h6>
+                                            <h6 class="mb-0">Các thuốc đã nhập</h6>
                                         </div>
                                         <div class="col-sm-6 text-secondary">
-                                            hihi
-                                        </div>
-                                    </div>                                 
-                                    <hr>
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <h6 class="mb-0">Số lượng hóa đơn nhập </h6>
-                                        </div>
-                                        <div class="col-sm-6 text-secondary">
-                                            1000
-                                        </div>
-                                    </div>                                 
-                                    <hr>
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <h6 class="mb-0">Tổng số tiền nhập</h6>
-                                        </div>
-                                        <div class="col-sm-6 text-secondary">
-                                            33242
-                                        </div>
-                                    </div>                                 
-                                    <hr>
-                                </div>
+                                        ${TotalTypeMidicine}
+                                    </div>
+                                    <a class="col-sm-3" href="MedicineOfDistributor?id=${DistributorDetail.distributorId}">Xem thuốc</a>
+
+                                </div>                                 
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <h6 class="mb-0">Số lượng hóa đơn nhập </h6>
+                                    </div>
+                                    <div class="col-sm-3 text-secondary">
+                                        ${TotalImportInvoice}
+                                    </div>
+
+                                    <a class="col-sm-3" href="ImInvoiceOfDistributor?id=${DistributorDetail.distributorId}">Xem hóa đơn</a>
+                                </div>                                 
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <h6 class="mb-0">Tổng số tiền nhập</h6>
+                                    </div>
+                                    <div class="col-sm-6 text-secondary">
+                                        ${TotalMoneyIInvoice}VND
+                                    </div>
+                                </div>                                 
+                                <hr>
                             </div>
-                        </div> 
+                        </div>
+                    </div> 
 
 
 
 
-                        <div class="col-md-4">
-                            <div class="card mb-3">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-sm-4">
-                                            <h6 class="mb-0">Tên nhà phân phối</h6>
-                                        </div>
-                                        <div class="col-sm-8 text-secondary">
+                    <div class="col-md-4">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <h6 class="mb-0">Tên nhà phân phối</h6>
+                                    </div>
+                                    <div class="col-sm-8 text-secondary">
                                         ${DistributorDetail.distributorName}
                                     </div>
                                 </div>
