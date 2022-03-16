@@ -67,7 +67,7 @@ public class MedicineManageControll extends HttpServlet {
                 endPage++;
             }
             request.setAttribute("endPage", endPage);
-            List<Medicine> listMedPage = medicine.pagingMedicine(indexP);
+            List<Medicine> listMedPage = medicine.pagingMedicineManage(indexP);
             request.setAttribute("listMedPage", listMedPage);
 
             //style tag page

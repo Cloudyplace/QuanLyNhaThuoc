@@ -3,24 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller;
+package controller.MedicineManage;
 
-import dal.AccountDBContext;
-import dal.ProductDBGetById;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import model.Account;
 
 /**
  *
  * @author cloudy_place
  */
-public class ProfileControll extends HttpServlet {
+@WebServlet(name = "dsfsdafsd", urlPatterns = {"/dsfsdafsd"})
+public class dsfsdafsd extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,22 +31,19 @@ public class ProfileControll extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //check session
-        HttpSession session = request.getSession();
-        if (session.getAttribute("username") == null) {// set login
-            response.sendRedirect("login");
-        } else {//profileUser
-            request.setAttribute("profileUser", new AccountDBContext().getUser(session.getAttribute("username").toString(), session.getAttribute("password").toString()));
-
-            request.setAttribute("profileUser", new AccountDBContext().getUser(session.getAttribute("username").toString(), session.getAttribute("password").toString()));
-
-            //get roleName by roleId
-            Account account = new AccountDBContext().getUser(session.getAttribute("username").toString(), session.getAttribute("password").toString());
-            int role = Integer.parseInt(account.getRole());
-            request.setAttribute("roleName", new AccountDBContext().getRollNameByRollId(role));
-            request.getRequestDispatcher("view/Profile/profile.jsp").forward(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet dsfsdafsd</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet dsfsdafsd at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

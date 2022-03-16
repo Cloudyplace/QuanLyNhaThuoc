@@ -43,12 +43,12 @@ public class MedDetailControll extends HttpServlet {
             request.setAttribute("profileUser", new AccountDBContext().getUser(session.getAttribute("username").toString(), session.getAttribute("password").toString()));
 
             request.setAttribute("MedicineDetail", new ProductDBGetById().getMedicineById(Integer.parseInt(request.getParameter("id"))));
-            int typeId = ((Medicine) request.getAttribute("MedicineDetail")).getTypeId();
-            request.setAttribute("typeName", new ProductDBGetById().getTypeNameByTypeId(typeId));
-            int distributorId = ((Medicine) request.getAttribute("MedicineDetail")).getDistributorId();
-            request.setAttribute("distributorName", new ProductDBGetById().getDistributorNameByDistributorId(distributorId));
-            int boxId = ((Medicine) request.getAttribute("MedicineDetail")).getBoxId();
-            request.setAttribute("boxName", new ProductDBGetById().getBoxNameByBoxId(boxId));
+//            int typeId = ((Medicine) request.getAttribute("MedicineDetail")).getTypeId();
+//            request.setAttribute("typeName", new ProductDBGetById().getTypeNameByTypeId(typeId));
+//            int distributorId = ((Medicine) request.getAttribute("MedicineDetail")).getDistributorId();
+//            request.setAttribute("distributorName", new ProductDBGetById().getDistributorNameByDistributorId(distributorId));
+//            int boxId = ((Medicine) request.getAttribute("MedicineDetail")).getBoxId();
+//            request.setAttribute("boxName", new ProductDBGetById().getBoxNameByBoxId(boxId));
             request.getRequestDispatcher("view/MedicineDetail/MedicineDetail.jsp").forward(request, response);
         }
     }

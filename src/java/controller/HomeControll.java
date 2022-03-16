@@ -11,6 +11,7 @@ import dal.ProductDBGetById;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import javax.security.auth.message.callback.PrivateKeyCallback;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -35,6 +36,8 @@ public class HomeControll extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        request.setCharacterEncoding("UTF-8");
 
         HttpSession session = request.getSession();
         if (session.getAttribute("username") == null) {// set login
@@ -63,8 +66,8 @@ public class HomeControll extends HttpServlet {
             //profileUser
             request.setAttribute("profileUser", new AccountDBContext().getUser(session.getAttribute("username").toString(), session.getAttribute("password").toString()));
             //
-            //all medicine
-            request.setAttribute("listMedicine", new MedicineDB().getAllMedicine());
+//            //all medicine
+//            request.setAttribute("listMedicine", new MedicineDB().getAllMedicine());
             //
             request.getRequestDispatcher("view/Home/Home.jsp").forward(request, response);
         }

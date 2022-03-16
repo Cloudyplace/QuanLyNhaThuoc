@@ -65,7 +65,7 @@
                                             <h6 class="mb-0">Loại thuốc</h6>
                                         </div>
                                         <div class="col-sm-9 text-secondary">
-                                            ${typeName}
+                                            ${MedicineDetail.type.typeName}
                                         </div>
                                     </div>
                                     <hr>
@@ -74,7 +74,7 @@
                                             <h6 class="mb-0">Nhà phân phối</h6>
                                         </div>
                                         <div class="col-sm-9 text-secondary">
-                                            ${distributorName}
+                                            ${MedicineDetail.distributor.distributorName}
                                         </div>
                                     </div>
                                     <hr>
@@ -128,7 +128,7 @@
                                             <h6 class="mb-0">Vị trí</h6>
                                         </div>
                                         <div class="col-sm-9 text-secondary">
-                                            ${boxName}
+                                            ${MedicineDetail.box.boxName}
                                         </div>
                                     </div>
                                     <hr>

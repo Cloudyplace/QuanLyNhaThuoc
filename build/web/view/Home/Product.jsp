@@ -26,7 +26,7 @@
                             <img style="height: 212.28px" src="${o.image}">
                             <div id="details">
                                 <h3 style="font-size: 28px">${o.medicineName}</h3>
-                                <h4>HSD: ${o.outOfDate}</h4>
+                                <h4>Vị trí: ${o.box.boxName}</h4>
                                 <h2 style="font-size: 18px">Giá ${o.unit}: ${o.price}VND</h2>
                             </div>
                         </a></div>

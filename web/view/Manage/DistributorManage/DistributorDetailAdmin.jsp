@@ -43,7 +43,7 @@
                                         <div class="col-sm-6">
                                             <h6 class="mb-0">Các thuốc đã nhập</h6>
                                         </div>
-                                        <div class="col-sm-6 text-secondary">
+                                        <div class="col-sm-3 text-secondary">
                                         ${TotalTypeMidicine}
                                     </div>
                                     <a class="col-sm-3" href="MedicineOfDistributor?id=${DistributorDetail.distributorId}">Xem thuốc</a>
@@ -66,7 +66,7 @@
                                         <h6 class="mb-0">Tổng số tiền nhập</h6>
                                     </div>
                                     <div class="col-sm-6 text-secondary">
-                                        ${TotalMoneyIInvoice}VND
+                                        ${TotalMoneyIInvoice}  VND
                                     </div>
                                 </div>                                 
                                 <hr>
@@ -129,7 +129,7 @@
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <a class="btn btn-info " target="__blank"
-                                           href="medicineedit?id=${MedicineDetail.medicineId}">Edit</a>
+                                           href="DistributorEdit?id=${DistributorDetail.distributorId}">Edit</a>
                                     </div>
                                 </div>
                             </div>

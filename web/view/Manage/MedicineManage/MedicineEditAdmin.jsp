@@ -4,6 +4,7 @@
     Author     : cloudy_place
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -45,101 +46,163 @@
                                          class="rounded-circle" width="300">
                                 </div>
                                 <hr class="my-4">
+
                             </div>
                         </div>
                     </div>
+
+
+
+
                     <div class="col-lg-8">
                         <div class="card">
                             <div class="card-body">
-                                <div class="row mb-3">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">Tên thuốc</h6>
+                                <form action="medicineedit" method="POST">
+                                    <input type="hidden" name="id" value="${MedicineDetail.medicineId}">
+                                    <div class="row mb-3">
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0">Tên thuốc</h6>
+                                        </div>
+                                        <div class="col-sm-9 text-secondary">
+                                            <input type="text" class="form-control"  name="name" value="${MedicineDetail.medicineName}">
+                                        </div>
                                     </div>
-                                    <div class="col-sm-9 text-secondary">
-                                        <input type="text" class="form-control" value="${MedicineDetail.medicineName}">
+                                    <div class="row mb-3">
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0">Loại thuốc</h6>
+                                        </div>
+                                        <div class="col-sm-9 text-secondary">
+                                            <select name="typeId" >
+                                                <c:forEach items="${AllTypeMedicine}" var="t">
+                                                    <option 
+                                                        <c:if test="${MedicineDetail.type.typeId eq t.typeId}">
+                                                            selected="selected"
+                                                        </c:if>
+                                                        value="${t.typeId}">${t.typeName}</option> 
+                                                </c:forEach>
+
+                                                <option><a href="dsfsd">Khác</a></option>
+
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">Loại thuốc</h6>
+                                    <div class="row mb-3">
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0">Nhà phân phối</h6>
+                                        </div>
+                                        <div class="col-sm-9 text-secondary">
+                                            <select name="disId" >
+                                                <c:forEach items="${AllDistributor}" var="d">
+                                                    <option 
+                                                        <c:if test="${MedicineDetail.distributor.distributorId eq d.distributorId}">
+                                                            selected="selected"
+                                                        </c:if>
+                                                        value="${d.distributorId}">${d.distributorName}</option> 
+                                                </c:forEach>
+
+                                                <option><a href="dsfsd">Khác</a></option>
+
+                                            </select> <br/> 
+                                        </div>
                                     </div>
-                                    <div class="col-sm-9 text-secondary">
-                                        <input type="text" class="form-control" value="${typeName}">
+                                    <div class="row mb-3">
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0">Ngày sản xuất</h6>
+                                        </div>
+                                        <div class="col-sm-9 text-secondary">
+                                            <input type="text" class="form-control" name="ManufactureDate" value="${MedicineDetail.manufactureDate}">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">Nhà phân phối</h6>
+                                    <div class="row mb-3">
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0">Hạn sử dụng</h6>
+                                        </div>
+                                        <div class="col-sm-9 text-secondary">
+                                            <input type="text" class="form-control" name="OutOfDate" value="${MedicineDetail.outOfDate}">
+                                        </div>
                                     </div>
-                                    <div class="col-sm-9 text-secondary">
-                                        <input type="text" class="form-control" value="${distributorName}">
+                                    <div class="row mb-3">
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0">Giá nhập</h6>
+                                        </div>
+                                        <div class="col-sm-9 text-secondary">
+                                            <input type="text" class="form-control"  name="InputPrice" value="${MedicineDetail.inputPrice}"  VND>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">Ngày sản xuất</h6>
+                                    <div class="row mb-3">
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0">Giá bán</h6>
+                                        </div>
+                                        <div class="col-sm-9 text-secondary">
+                                            <input type="text" class="form-control"  name="Price" value="${MedicineDetail.price}" VND>
+                                        </div>
                                     </div>
-                                    <div class="col-sm-9 text-secondary">
-                                        <input type="text" class="form-control" value="${MedicineDetail.manufactureDate}">
+                                    <div class="row mb-3">
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0">Đơn vị</h6>
+                                        </div>
+                                        <div class="col-sm-9 text-secondary">
+                                            <input type="text" class="form-control"  name="Unit" value="${MedicineDetail.unit}">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">Hạn sử dụng</h6>
+                                    <div class="row mb-3">
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0">Vị trí</h6>
+                                        </div>
+                                        <div class="col-sm-9 text-secondary">
+                                            <select name="boxId" >
+                                                <c:forEach items="${AllMedicalBox}" var="b">
+                                                    <option 
+                                                        <c:if test="${MedicineDetail.box.boxId eq b.boxId}">
+                                                            selected="selected"
+                                                        </c:if>
+                                                        value="${b.boxId}">${b.boxName}</option> 
+                                                </c:forEach>
+
+                                                <option><a href="dsfsd">Khác</a></option>
+
+                                            </select>
+                                        </div>
                                     </div>
-                                    <div class="col-sm-9 text-secondary">
-                                        <input type="text" class="form-control" value="${MedicineDetail.outOfDate}">
+                                    <div class="row mb-3">
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0">Số lượng</h6>
+                                        </div>
+                                        <div class="col-sm-9 text-secondary">
+                                            <input type="text" class="form-control" name="Quantity" value="${MedicineDetail.quantityInStock}">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">Giá nhập</h6>
+                                    <div class="row mb-3">
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0">Chú ý</h6>
+                                        </div>
+                                        <div class="col-sm-9 text-secondary">
+                                            <input type="text" class="form-control"  name="Note" value="${MedicineDetail.note}">
+                                        </div>
                                     </div>
-                                    <div class="col-sm-9 text-secondary">
-                                        <input type="text" class="form-control" value="${MedicineDetail.inputPrice} VND">
+                                    <div class="row mb-3">
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0">Địa chỉ ảnh</h6>
+                                        </div>
+                                        <div class="col-sm-9 text-secondary">
+                                            <input type="text" class="form-control"  name="image" value="${MedicineDetail.image}">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">Giá bán</h6>
+                                    <div class="row">
+                                        <div class="col-sm-3"></div>
+                                        <div class="col-sm-9 text-secondary">
+                                            <input type="submit" class="btn btn-primary px-4" value="Save Changes">
+                                        </div>
                                     </div>
-                                    <div class="col-sm-9 text-secondary">
-                                        <input type="text" class="form-control" value="${MedicineDetail.price} VND">
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">Vị trí</h6>
-                                    </div>
-                                    <div class="col-sm-9 text-secondary">
-                                        <input type="text" class="form-control" value="${boxName}">
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">Số lượng</h6>
-                                    </div>
-                                    <div class="col-sm-9 text-secondary">
-                                        <input type="text" class="form-control" value="${MedicineDetail.quantityInStock}">
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">Chú ý</h6>
-                                    </div>
-                                    <div class="col-sm-9 text-secondary">
-                                        <input type="text" class="form-control" value="${MedicineDetail.note}">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-3"></div>
-                                    <div class="col-sm-9 text-secondary">
-                                        <input type="button" class="btn btn-primary px-4" value="Save Changes">
-                                    </div>
-                                </div>
+                                </form>
+
                             </div>
                         </div>
                     </div>
+
+
+
+
                 </div>
             </div>
         </div>

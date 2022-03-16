@@ -23,6 +23,13 @@ public class Distributor {
     public Distributor(String distributorName) {
         this.distributorName = distributorName;
     }
+
+    public Distributor(int distributorId, String distributorName) {
+        this.distributorId = distributorId;
+        this.distributorName = distributorName;
+    }
+    
+    
     
     public Distributor(int distributorId, String distributorName, String address, String email, String phone, String note) {
         this.distributorId = distributorId;

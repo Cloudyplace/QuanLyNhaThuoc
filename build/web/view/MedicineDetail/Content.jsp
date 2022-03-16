@@ -17,6 +17,7 @@
         <!-- CONTENT SECTION -->
         <div id="mainContainer">
             <h1></h1>
+            
             <div style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; display: flex; justify-content: space-evenly;" id="containerClothing">
                 <div><img style="width: 400px;height: 400px;" src="${MedicineDetail.image}"></div>
                 <div><hr style="height: 383px;"></div>
@@ -26,11 +27,11 @@
                     <div id="details">
                         <h3 style="font-size: 28px;">
                             Tên thuốc: ${MedicineDetail.medicineName}</h3>
-                        <h4>Loại thuốc: ${typeName}</h4>
-                        <h4>Nhà phân phối: ${distributorName}</h4>
+                        <h4>Loại thuốc: ${MedicineDetail.type.typeName}</h4>
+                        <h4>Nhà phân phối: ${MedicineDetail.distributor.distributorName}</h4>
                         <h4>Số lượng còn lại: ${MedicineDetail.quantityInStock}</h4>
                         <h4>NSX: ${MedicineDetail.manufactureDate}  HSD: ${MedicineDetail.outOfDate}</h4>
-                        <h4>Vị trí: ${boxName}</h4>
+                        <h4>Vị trí: ${MedicineDetail.box.boxName}</h4>
                         <h2>Giá: ${MedicineDetail.price} VND</h2>
                         <h4>Đơn vị: ${MedicineDetail.unit}</h4>
                         <h4>Ghi chú: ${MedicineDetail.note}</h4>

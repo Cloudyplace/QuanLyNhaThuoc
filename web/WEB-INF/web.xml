@@ -18,7 +18,7 @@
     </servlet>
     <servlet>
         <servlet-name>ProfileControll</servlet-name>
-        <servlet-class>controller.ProfileControll</servlet-class>
+        <servlet-class>controller.profile.ProfileControll</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ListMedPageControll</servlet-name>
@@ -26,7 +26,7 @@
     </servlet>
     <servlet>
         <servlet-name>ProfileEditControll</servlet-name>
-        <servlet-class>controller.ProfileEditControll</servlet-class>
+        <servlet-class>controller.profile.ProfileEditControll</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>MedicineManageControll</servlet-name>
@@ -63,6 +63,14 @@
     <servlet>
         <servlet-name>ImInvoiceOfDistributor</servlet-name>
         <servlet-class>controller.DistributorManage.ImInvoiceOfDistributor</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MedicineOfDistributor</servlet-name>
+        <servlet-class>controller.DistributorManage.MedicineOfDistributor</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DistributorEditControll</servlet-name>
+        <servlet-class>controller.DistributorManage.DistributorEditControll</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
@@ -127,6 +135,14 @@
     <servlet-mapping>
         <servlet-name>ImInvoiceOfDistributor</servlet-name>
         <url-pattern>/ImInvoiceOfDistributor</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MedicineOfDistributor</servlet-name>
+        <url-pattern>/MedicineOfDistributor</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DistributorEditControll</servlet-name>
+        <url-pattern>/DistributorEdit</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

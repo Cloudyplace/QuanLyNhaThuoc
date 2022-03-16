@@ -3,22 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller;
+package controller.DistributorManage;
 
-import dal.AccountDBContext;
+import dal.MedicineDB;
+import dal.distributor.DistributorDBContext;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import model.Account;
+import model.Medicine;
 
 /**
  *
  * @author cloudy_place
  */
-public class ProfileEditControll extends HttpServlet {
+public class MedicineOfDistributor extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -29,30 +31,6 @@ public class ProfileEditControll extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        //check session
-        HttpSession session = request.getSession();
-        if (session.getAttribute("username") == null) {// set login
-            response.sendRedirect("login");
-        } else {
-            //profileUser
-            request.setAttribute("profileUser", new AccountDBContext().getUser(session.getAttribute("username").toString(), session.getAttribute("password").toString()));
-
-            response.setContentType("text/html;charset=UTF-8");
-            //get profile 
-            request.setAttribute("profileUser", new AccountDBContext().getUser(session.getAttribute("username").toString(), session.getAttribute("password").toString()));
-
-            //get roleName by roleId
-            Account account = new AccountDBContext().getUser(session.getAttribute("username").toString(), session.getAttribute("password").toString());
-            int role = Integer.parseInt(account.getRole());
-            request.setAttribute("roleName", new AccountDBContext().getRollNameByRollId(role));
-
-            request.getRequestDispatcher("view/Profile/profileEdit.jsp").forward(request, response);
-        }
-
-    }
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -65,7 +43,31 @@ public class ProfileEditControll extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+        //dung de phan trang
+        String indexPage = request.getParameter("indexPage");
+        if (indexPage == null) {
+            indexPage = "1";
+        }
+        int indexP = Integer.parseInt(indexPage);
+        //get total medicine of Distributor
+        DistributorDBContext distributor = new DistributorDBContext();
+        int count = distributor.getTotalMedicineOfDistributor(Integer.parseInt(request.getParameter("id")));
+        int endPage = count / 10;
+        if (count % 10 != 0) {
+            endPage++;
+        }
+        request.setAttribute("endPage", endPage);
+        List<Medicine> listMedicinePageOfDis = distributor.pagingMedicineOfDistributor(Integer.parseInt(request.getParameter("id")), indexP);
+        request.setAttribute("listMedicinePageOfDis", listMedicinePageOfDis);
+
+        //style tag page
+        request.setAttribute("tagPage", indexP);
+
+        //Distributor detail dùng để quay về 
+        request.setAttribute("DistributorDetail", new DistributorDBContext().getDistributorById(Integer.parseInt(request.getParameter("id"))));
+
+        request.getRequestDispatcher("view/Manage/DistributorManage/MedicineOfDistributor.jsp").forward(request, response);
     }
 
     /**
@@ -79,7 +81,7 @@ public class ProfileEditControll extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
     }
 
     /**

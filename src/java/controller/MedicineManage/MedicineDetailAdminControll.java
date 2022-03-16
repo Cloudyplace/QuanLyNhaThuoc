@@ -43,6 +43,7 @@ public class MedicineDetailAdminControll extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         //check session
         HttpSession session = request.getSession();
         if (session.getAttribute("username") == null) {// set login
@@ -51,13 +52,13 @@ public class MedicineDetailAdminControll extends HttpServlet {
             //profileUser
             request.setAttribute("profileUser", new AccountDBContext().getUser(session.getAttribute("username").toString(), session.getAttribute("password").toString()));
 
-            request.setAttribute("MedicineDetail", new ProductDBGetById().getMedicineById(Integer.parseInt(request.getParameter("id"))));
-            int typeId = ((Medicine) request.getAttribute("MedicineDetail")).getTypeId();
-            request.setAttribute("typeName", new ProductDBGetById().getTypeNameByTypeId(typeId));
-            int distributorId = ((Medicine) request.getAttribute("MedicineDetail")).getDistributorId();
-            request.setAttribute("distributorName", new ProductDBGetById().getDistributorNameByDistributorId(distributorId));
-            int boxId = ((Medicine) request.getAttribute("MedicineDetail")).getBoxId();
-            request.setAttribute("boxName", new ProductDBGetById().getBoxNameByBoxId(boxId));
+            request.setAttribute("MedicineDetail", new ProductDBGetById().getMedicineByIdAdmin(Integer.parseInt(request.getParameter("id"))));
+//            int typeId = ((Medicine) request.getAttribute("MedicineDetail")).getTypeId();
+//            request.setAttribute("typeName", new ProductDBGetById().getTypeNameByTypeId(typeId));
+//            int distributorId = ((Medicine) request.getAttribute("MedicineDetail")).getDistributorId();
+//            request.setAttribute("distributorName", new ProductDBGetById().getDistributorNameByDistributorId(distributorId));
+//            int boxId = ((Medicine) request.getAttribute("MedicineDetail")).getBoxId();
+//            request.setAttribute("boxName", new ProductDBGetById().getBoxNameByBoxId(boxId));
             request.getRequestDispatcher("view/Manage/MedicineManage/MedicineDetailAdmin.jsp").forward(request, response);
         }
 
