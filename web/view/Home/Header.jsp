@@ -85,13 +85,20 @@
                      font: black;">
                     <a style=" text-decoration: none;"href="home"> <b>NHÀ THUỐC 304</b></a></div>
                 <!-- COLLCETIONS ON WEBSITE -->
-                <div id="collection">
+                <div id="collection" style="display: flex; justify-content: space-around">
+                    <div class="dropdown">
+                        <button class="dropbtn">Hóa đơn</button>
+                        <div class="dropdown-content">
+                            <a href="ImportInvoice">Hóa đơn nhập</a>
+                            <a href="#">Hóa đơn xuất</a>
+                        </div>
+                    </div>
                     <div class="dropdown">
                         <button class="dropbtn">Quản Lý</button>
                         <div class="dropdown-content">
                             <a href="medicinemanage">Quản lý thuốc</a>
                             <a href="distributormanage">Quản lý nhà phân phối</a>
-                            <a href="importInvoice">Quản lý hóa đơn nhập</a>
+                            <a href="importInvoiceManage">Quản lý hóa đơn nhập</a>
                             <a href="#">Quản lý nhân viên</a>
                         </div>
                     </div>

@@ -5,6 +5,7 @@
  */
 package dal.ImportInvoice;
 
+import controller.ImportInvoiceManage.ImInvoiceDetailControll;
 import dal.AccountDBContext;
 import dal.DBContext;
 import java.sql.PreparedStatement;
@@ -61,19 +62,19 @@ public class ImportInvoiceDBContext extends DBContext {
     }
 
     // get importInvoiceDetail by id
-    public List<ImportInvoiceDetail> getImInvoiceDetailById(int importInvoiceId) {
+    public List<ImportInvoiceDetail> getListImInvoiceDetailById(int importInvoiceId) {
         List<ImportInvoiceDetail> list = new ArrayList<>();
-        String sql = "select ii.ImDetailId,ii.ImInvoiceId, ii.Quantity, ii.Money, m.MedicineName, m.Unit, m.InputPrice "
-                + "from ImportInvoiceDetail ii inner join Medicine m "
-                + "on ii.MedicineId=m.MedicineId where ImInvoiceId = ?";
+        String sql = "select iid.ImDetailId,ii.ImInvoiceId, m.MedicineId, m.MedicineName, m.Unit, m.InputPrice, iid.Quantity \n"
+                + "from ImportInvoiceDetail iid inner join Medicine m on iid.MedicineId=m.MedicineId \n"
+                + "inner join ImportInvoice ii on ii.ImInvoiceId = iid.ImInvoiceId \n"
+                + "where ii.ImInvoiceId = ?";
         try {
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, importInvoiceId);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
-                list.add(new ImportInvoiceDetail(rs.getInt("imDetailId"), rs.getInt("ImInvoiceId"),
-                        new Medicine(rs.getString("medicineName"), rs.getString("unit"),
-                                rs.getInt("inputPrice")), rs.getInt("quantity"), rs.getInt("money")));
+                list.add(new ImportInvoiceDetail(rs.getInt(1), new ImportInvoice(rs.getInt(2)), new Medicine(rs.getInt(3),
+                        rs.getString(4), rs.getString(5), rs.getInt(6)), rs.getInt(7)));
             }
         } catch (SQLException ex) {
             Logger.getLogger(ImportInvoiceDBContext.class.getName()).log(Level.SEVERE, null, ex);
@@ -81,15 +82,19 @@ public class ImportInvoiceDBContext extends DBContext {
         return list;
     }
 
-    // get importInvoice by id
-    public ImportInvoice getImInvoiceById(int importInvoiceId) {
+    public ImportInvoice getImInvoiceAndDistributorByImInvoiceId(int imInvoiceId) {
         try {
-            String sql = "select * from ImportInvoice where ImInvoiceId = ?";
+            String sql = "select ii.ImInvoiceId,d.*, ii.ImDate, ii.TotalMoney, ii.Note\n"
+                    + "from ImportInvoice ii inner join Distributor d on d.DistributorId=ii.DistributorId\n"
+                    + "where ii.ImInvoiceId= ?";
             PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setInt(1, importInvoiceId);
+            stm.setInt(1, imInvoiceId);
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
-                ImportInvoice importInvoice = new ImportInvoice(rs.getInt("imInvoiceId"), rs.getString("imDate"), rs.getString("totalMoney"), rs.getString("note"));
+                ImportInvoice importInvoice = new ImportInvoice(rs.getInt(1),
+                        new Distributor(rs.getInt(2), rs.getString(3), rs.getString(4),
+                                rs.getString(5), rs.getString(6), rs.getString(7)),
+                        rs.getString(8), rs.getString(9), rs.getString(10));
                 return importInvoice;
             }
         } catch (SQLException ex) {
@@ -98,18 +103,34 @@ public class ImportInvoiceDBContext extends DBContext {
         return null;
     }
 
-    public Distributor getDistributorByImInvoiceId(int imInvoiceId) {
+    //get max import invoiceid
+    public int getImInvoiceIdMax() {
+        String sql = "select max(ImInvoiceId)\n"
+                + "from ImportInvoice";
         try {
-            String sql = "select d.*\n"
-                    + "from ImportInvoice ii inner join Distributor d on d.DistributorId=ii.DistributorId\n"
-                    + "where ii.ImInvoiceId= ?";
             PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setInt(1, imInvoiceId);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ImportInvoiceDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+
+    // get ImInvoice have ImInvoice Id max
+    public ImportInvoice getImInvoiceMaxId() {
+        try {
+            String sql = "select *\n"
+                    + "from ImportInvoice where ImInvoiceId = (select max(ImInvoiceId) from ImportInvoice)";
+            PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
-                Distributor distributor = new Distributor(rs.getInt(1), rs.getString(2),
-                        rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6));
-                return distributor;
+                ImportInvoice importInvoice = new ImportInvoice(rs.getInt(1),
+                        new Distributor(rs.getInt(2)),
+                        rs.getString(3), rs.getString(4), rs.getString(5));
+                return importInvoice;
             }
         } catch (SQLException ex) {
 
@@ -117,12 +138,64 @@ public class ImportInvoiceDBContext extends DBContext {
         return null;
     }
 
+    public void insertImportInvoice(ImportInvoice i) {
+        String sql = "INSERT INTO [ImportInvoice]\n"
+                + "           ([DistributorId]\n"
+                + "           ,[ImDate]\n"
+                + "           ,[TotalMoney]\n"
+                + "           ,[Note])\n"
+                + "     VALUES\n"
+                + "           (?,?,?,?)";
+        PreparedStatement stm = null;
+        try {
+            stm = connection.prepareStatement(sql);
+
+            stm.setInt(1, i.getDistributor().getDistributorId());
+            stm.setString(2, i.getImDate());
+            stm.setString(3, i.getTotalMoney());
+            stm.setString(4, i.getNote());
+
+            stm.executeUpdate(); //INSERT UPDATE DELETE
+        } catch (SQLException ex) {
+        }
+    }
+
+    //insert 1 imInvoice detail
+    public void insertImInvoiceDetail(ImportInvoiceDetail iid) {
+        String sql = "INSERT INTO [ImportInvoiceDetail]\n"
+                + "           ([ImInvoiceId]\n"
+                + "           ,[MedicineId]\n"
+                + "           ,[Quantity])\n"
+                + "     VALUES\n"
+                + "           (?,?,?)";
+        PreparedStatement stm = null;
+        try {
+            stm = connection.prepareStatement(sql);
+
+            stm.setInt(1, iid.getImportInvoice().getImInvoiceId());
+            stm.setInt(2, iid.getMedicine().getMedicineId());
+            stm.setInt(3, iid.getQuantity());
+
+            stm.executeUpdate(); //INSERT UPDATE DELETE
+        } catch (SQLException ex) {
+        }
+    }
+
+    //insert many medicine
+    public void insertManyImInvoiceDetail(List<ImportInvoiceDetail> list) {
+        for (ImportInvoiceDetail detail : list) {
+            System.out.println(detail.getImportInvoice().getImInvoiceId());
+            System.out.println(detail.getMedicine().getMedicineId());
+            System.out.println(detail.getQuantity());
+            insertImInvoiceDetail(detail);
+        }
+    }
+
     public static void main(String[] args) {
         ImportInvoiceDBContext imInvoice = new ImportInvoiceDBContext();
-        List<ImportInvoiceDetail> list = imInvoice.getImInvoiceDetailById(1);
-        for (ImportInvoiceDetail o : list) {
-            System.out.println(o);
-        }
-        //       System.out.println(imInvoice.getImInvoiceById(3));
+        List<ImportInvoiceDetail> list = new ArrayList<>();
+        list.add(new ImportInvoiceDetail(new ImportInvoice(18), new Medicine(8), 5));
+        list.add(new ImportInvoiceDetail(new ImportInvoice(17), new Medicine(3000), 5));
+        imInvoice.insertManyImInvoiceDetail(list);
     }
 }

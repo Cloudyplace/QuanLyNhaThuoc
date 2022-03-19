@@ -49,8 +49,8 @@
         <servlet-class>controller.DistributorManage.DistributorDetailAdminControll</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ImportInvoiceControll</servlet-name>
-        <servlet-class>controller.ImportInvoiceManage.ImportInvoiceControll</servlet-class>
+        <servlet-name>ImportInvoiceControllManage</servlet-name>
+        <servlet-class>controller.ImportInvoiceManage.ImportInvoiceControllManage</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ImInvoiceEditControll</servlet-name>
@@ -71,6 +71,22 @@
     <servlet>
         <servlet-name>DistributorEditControll</servlet-name>
         <servlet-class>controller.DistributorManage.DistributorEditControll</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ImportInvoiceControll</servlet-name>
+        <servlet-class>controller.ImportInvoice.ImportInvoiceControll</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddMedicineControll</servlet-name>
+        <servlet-class>controller.ImportInvoice.AddMedicineControll</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditMedicineControll</servlet-name>
+        <servlet-class>controller.ImportInvoice.EditMedicineControll</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ClearMedicineControll</servlet-name>
+        <servlet-class>controller.ImportInvoice.ClearMedicineControll</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
@@ -121,8 +137,8 @@
         <url-pattern>/distributorDetailAdmin</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ImportInvoiceControll</servlet-name>
-        <url-pattern>/importInvoice</url-pattern>
+        <servlet-name>ImportInvoiceControllManage</servlet-name>
+        <url-pattern>/importInvoiceManage</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ImInvoiceEditControll</servlet-name>
@@ -143,6 +159,22 @@
     <servlet-mapping>
         <servlet-name>DistributorEditControll</servlet-name>
         <url-pattern>/DistributorEdit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ImportInvoiceControll</servlet-name>
+        <url-pattern>/ImportInvoice</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddMedicineControll</servlet-name>
+        <url-pattern>/AddMedicine</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditMedicineControll</servlet-name>
+        <url-pattern>/EditMedicine</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ClearMedicineControll</servlet-name>
+        <url-pattern>/ClearMedicine</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

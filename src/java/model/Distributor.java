@@ -20,6 +20,12 @@ public class Distributor {
     public Distributor() {
     }
 
+    public Distributor(int distributorId) {
+        this.distributorId = distributorId;
+    }
+    
+    
+
     public Distributor(String distributorName) {
         this.distributorName = distributorName;
     }

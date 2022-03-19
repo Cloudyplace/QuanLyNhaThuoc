@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.ImportInvoice;
 import model.Medicine;
 
 /**
@@ -53,14 +54,14 @@ public class ImInvoiceOfDistributor extends HttpServlet {
         int indexP = Integer.parseInt(indexPage);
         //get total medicine of Distributor
         DistributorDBContext distributor = new DistributorDBContext();
-        int count = distributor.getTotalMedicineOfDistributor(Integer.parseInt(request.getParameter("id")));
+        int count = distributor.getTotalImInvoiceOfDistributor(Integer.parseInt(request.getParameter("id")));
         int endPage = count / 10;
         if (count % 10 != 0) {
             endPage++;
         }
         request.setAttribute("endPage", endPage);
-        List<Medicine> listMedicinePageOfDis = distributor.pagingMedicineOfDistributor(Integer.parseInt(request.getParameter("id")), indexP);
-        request.setAttribute("listMedicinePageOfDis", listMedicinePageOfDis);
+        List<ImportInvoice> listImInvoicePageOfDis = distributor.pagingImInvoiceOfDistributor(Integer.parseInt(request.getParameter("id")), indexP);
+        request.setAttribute("listImInvoicePageOfDis", listImInvoicePageOfDis);
 
         //style tag page
         request.setAttribute("tagPage", indexP);

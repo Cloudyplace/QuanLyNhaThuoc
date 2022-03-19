@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Account;
 import model.Distributor;
+import model.ImportInvoice;
 import model.MedicalBox;
 import model.Medicine;
 import model.TypeMedicine;
@@ -24,24 +25,6 @@ import model.TypeMedicine;
  */
 public class MedicineDB extends DBContext {
 
-//    public List<Medicine> getAllMedicine() {
-//        List<Medicine> list = new ArrayList<>();
-//        try {
-//            String sql = "select * from Medicine";
-//            PreparedStatement stm = connection.prepareStatement(sql);
-//            ResultSet rs = stm.executeQuery();
-//            while (rs.next()) {
-//                list.add(new Medicine(rs.getInt(1), rs.getString(2), rs.getInt(3),
-//                        rs.getInt(4), rs.getInt(5), rs.getString(6), rs.getInt(7),
-//                        rs.getInt(8), rs.getString(9), rs.getString(10), rs.getString(11),
-//                        rs.getInt(12), rs.getString(13)));
-//            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(AccountDBContext.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//
-//        return list;
-//    }
     //Đếm số lượng product trong db
     public int getTotalMedicine() {
         String sql = "select count(*) from Medicine";
@@ -90,7 +73,6 @@ public class MedicineDB extends DBContext {
             stm.setInt(1, (index - 1) * 10);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
-//                list.add(new Medicine(, new MedicalBox(rs.getString(3)), rs.getInt(4), rs.getString(5)));
                 list.add(new Medicine(rs.getInt(1), rs.getString(2),
                         new TypeMedicine(rs.getString(3)), new MedicalBox(rs.getString(4)),
                         new Distributor(rs.getString(5)), rs.getString(6), rs.getInt(7), rs.getInt(8),
@@ -135,6 +117,22 @@ public class MedicineDB extends DBContext {
         return list;
     }
 
+    //get id max
+    public int getMedicineIdMax() {
+        String sql = "select max(MedicineId)\n"
+                + "from Medicine";
+        try {
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MedicineDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+
     //update medicine
     public void updateMedicine(Medicine m) {
         String sql = "UPDATE [Medicine]\n"
@@ -171,31 +169,76 @@ public class MedicineDB extends DBContext {
 
             stm.executeUpdate(); //INSERT UPDATE DELETE
         } catch (SQLException ex) {
-            Logger.getLogger(MedicineDB.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (stm != null) {
-                try {
-                    stm.close();
-                } catch (SQLException ex) {
-                    System.out.println("dfasdfdas");
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException ex) {
-                    System.out.println("aaaaa");
-                }
-            }
         }
+    }
 
+    //insert 1 medicine
+    public void insertMedicine(Medicine m) {
+        String sql = "INSERT INTO [dbo].[Medicine]\n"
+                + "           ([MedicineName]\n"
+                + "           ,[TypeId]\n"
+                + "           ,[BoxId]\n"
+                + "           ,[DistributorId]\n"
+                + "           ,[Unit]\n"
+                + "           ,[InputPrice]\n"
+                + "           ,[Price]\n"
+                + "           ,[ManufactureDate]\n"
+                + "           ,[OutOfDate]\n"
+                + "           ,[image]\n"
+                + "           ,[QuantityInStock]\n"
+                + "           ,[Note])\n"
+                + "     VALUES\n"
+                + "           (?,?,?,?,?,?,?,?,?,?,?,?)";
+        PreparedStatement stm = null;
+        try {
+            stm = connection.prepareStatement(sql);
+
+            stm.setString(1, m.getMedicineName());
+            stm.setInt(2, m.getType().getTypeId());
+            stm.setInt(3, m.getBox().getBoxId());
+            stm.setInt(4, m.getDistributor().getDistributorId());
+            stm.setString(5, m.getUnit());
+            stm.setInt(6, m.getInputPrice());
+            stm.setInt(7, m.getPrice());
+            stm.setString(8, m.getManufactureDate());
+            stm.setString(9, m.getOutOfDate());
+            stm.setString(10, m.getImage());
+            stm.setInt(11, m.getQuantityInStock());
+            stm.setString(12, m.getNote());
+
+            stm.executeUpdate(); //INSERT UPDATE DELETE
+        } catch (SQLException ex) {
+        }
+    }
+
+    //insert many medicine
+    public void insertManyMedicine(List<Medicine> list) {
+        for (Medicine medicine : list) {
+            insertMedicine(medicine);
+        }
+    }
+
+    public List<Integer> getListMedicineIdInsertedNearest(int count) {
+        List<Integer> list = new ArrayList<Integer>();
+        String sql = "select top (?) MedicineId from Medicine order by MedicineId desc";
+        try {
+            PreparedStatement stm = connection.prepareStatement(sql);
+
+            stm.setInt(1, count);
+
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                list.add(rs.getInt(1));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MedicineDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
     }
 
     public static void main(String[] args) {
         MedicineDB medicine = new MedicineDB();
-        List<Medicine> list = medicine.pagingMedicine(1);
-        for (Medicine o : list) {
-            System.out.println(o);
-        }
+        System.out.println(medicine.getListMedicineIdInsertedNearest(2));
     }
+
 }

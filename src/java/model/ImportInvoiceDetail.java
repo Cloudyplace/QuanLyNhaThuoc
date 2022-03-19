@@ -11,20 +11,18 @@ package model;
  */
 public class ImportInvoiceDetail {
     private int imInvoiceDetailId;
-    private int importInvoiceId;
+    private ImportInvoice importInvoice;
     private Medicine medicine;
     private int quantity;
-    private int money;
 
     public ImportInvoiceDetail() {
     }
 
-    public ImportInvoiceDetail(int imInvoiceDetailId, int importInvoiceId, Medicine medicine, int quantity, int money) {
+    public ImportInvoiceDetail(int imInvoiceDetailId, ImportInvoice importInvoice, Medicine medicine, int quantity) {
         this.imInvoiceDetailId = imInvoiceDetailId;
-        this.importInvoiceId = importInvoiceId;
+        this.importInvoice = importInvoice;
         this.medicine = medicine;
         this.quantity = quantity;
-        this.money = money;
     }
 
     public int getImInvoiceDetailId() {
@@ -35,13 +33,21 @@ public class ImportInvoiceDetail {
         this.imInvoiceDetailId = imInvoiceDetailId;
     }
 
-    public int getImportInvoiceId() {
-        return importInvoiceId;
+    public ImportInvoice getImportInvoice() {
+        return importInvoice;
     }
 
-    public void setImportInvoiceId(int importInvoiceId) {
-        this.importInvoiceId = importInvoiceId;
+    public void setImportInvoice(ImportInvoice importInvoice) {
+        this.importInvoice = importInvoice;
     }
+
+    public ImportInvoiceDetail(ImportInvoice importInvoice, Medicine medicine, int quantity) {
+        this.importInvoice = importInvoice;
+        this.medicine = medicine;
+        this.quantity = quantity;
+    }
+    
+    
 
     public Medicine getMedicine() {
         return medicine;
@@ -59,18 +65,13 @@ public class ImportInvoiceDetail {
         this.quantity = quantity;
     }
 
-    public int getMoney() {
-        return money;
-    }
-
-    public void setMoney(int money) {
-        this.money = money;
-    }
-
     @Override
     public String toString() {
-        return "ImportInvoiceDetail{" + "imInvoiceDetailId=" + imInvoiceDetailId + ", importInvoiceId=" + importInvoiceId + ", medicine=" + medicine + ", quantity=" + quantity + ", money=" + money + '}';
+        return "ImportInvoiceDetail{" + "imInvoiceDetailId=" + imInvoiceDetailId + ", importInvoice=" + importInvoice + ", medicine=" + medicine + ", quantity=" + quantity + '}';
     }
+
+   
+    
 
     
     

@@ -25,6 +25,21 @@ public class ImportInvoice {
         this.totalMoney = totalMoney;
         this.note = note;
     }
+
+    public ImportInvoice(Distributor distributor, String imDate, String totalMoney, String note) {
+        this.distributor = distributor;
+        this.imDate = imDate;
+        this.totalMoney = totalMoney;
+        this.note = note;
+    }
+    
+    
+
+    public ImportInvoice(int imInvoiceId) {
+        this.imInvoiceId = imInvoiceId;
+    }
+    
+    
     
     
 

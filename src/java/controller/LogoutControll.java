@@ -43,6 +43,7 @@ public class LogoutControll extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
+        session.invalidate();
         session.setMaxInactiveInterval(0);
         response.sendRedirect("login");
     }

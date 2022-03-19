@@ -23,7 +23,7 @@ import model.Medicine;
  *
  * @author cloudy_place
  */
-public class ImportInvoiceControll extends HttpServlet {
+public class ImportInvoiceControllManage extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

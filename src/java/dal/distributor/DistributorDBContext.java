@@ -5,6 +5,8 @@
  */
 package dal.distributor;
 
+import com.sun.tools.ws.wsdl.document.Import;
+import controller.ImportInvoiceManage.ImInvoiceDetailControll;
 import dal.DBContext;
 import dal.MedicineDB;
 import java.sql.PreparedStatement;
@@ -113,17 +115,20 @@ public class DistributorDBContext extends DBContext {
     }
 
     // get all invoice by disId
-    public List<ImportInvoice> getListImInvoiceByDisId(int disId) {
+    public List<ImportInvoice> pagingImInvoiceOfDistributor(int disId, int index) {
         List<ImportInvoice> list = new ArrayList<>();
         try {
-            String sql = "select i.ImInvoiceId, i.ImDate, i.TotalMoney,i.Note,d.DistributorName\n"
-                    + "from Distributor d inner join ImportInvoice i on d.DistributorId=i.DistributorId\n"
-                    + "                     where d.DistributorId = ?";
+            String sql = "select  ii.ImInvoiceId, d.DistributorName,  ii.ImDate, ii.TotalMoney, ii.Note\n"
+                    + "from Distributor d inner join ImportInvoice ii on d.DistributorId = ii.DistributorId\n"
+                    + "where d.DistributorId = ?\n"
+                    + "Order by ii.ImInvoiceId\n"
+                    + "offset ? rows fetch next 10 rows only";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, disId);
+            stm.setInt(2, (index - 1) * 10);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
-                list.add(new ImportInvoice(rs.getInt("imInvoiceId"), new Distributor(rs.getString("distributorName")), rs.getString("imDate"), rs.getString("totalMoney"), rs.getString("note")));
+                list.add(new ImportInvoice(rs.getInt(1), new Distributor(rs.getString(2)), rs.getString(3), rs.getString(4), rs.getString(5)));
             }
             return list;
 
@@ -160,7 +165,7 @@ public class DistributorDBContext extends DBContext {
     }
 
     //get total invoice by dis id
-    public int getTotalImInvoiceByDisId(int disId) {
+    public int getTotalImInvoiceOfDistributor(int disId) {
         try {
             String sql = "select count(*)"
                     + "from Distributor d inner join ImportInvoice i on d.DistributorId=i.DistributorId\n"
@@ -238,8 +243,8 @@ public class DistributorDBContext extends DBContext {
 
     public static void main(String[] args) {
         DistributorDBContext imInvoice = new DistributorDBContext();
-        List<Medicine> list = imInvoice.pagingMedicineOfDistributor(1, 1);
-        for (Medicine o : list) {
+        List<ImportInvoice> list = imInvoice.pagingImInvoiceOfDistributor(1, 1);
+        for (ImportInvoice o : list) {
             System.out.println(o);
         }
         //      System.out.println(list.size());

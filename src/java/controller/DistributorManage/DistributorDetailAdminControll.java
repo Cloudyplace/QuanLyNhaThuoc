@@ -66,7 +66,7 @@ public class DistributorDetailAdminControll extends HttpServlet {
             request.setAttribute("TotalTypeMidicine", new DistributorDBContext().getTotalMedicineOfDistributor((Integer.parseInt(request.getParameter("id")))));
 
             //total Import Invoice
-            request.setAttribute("TotalImportInvoice", new DistributorDBContext().getTotalImInvoiceByDisId(Integer.parseInt(request.getParameter("id"))));
+            request.setAttribute("TotalImportInvoice", new DistributorDBContext().getTotalImInvoiceOfDistributor(Integer.parseInt(request.getParameter("id"))));
 
             //total money of Im Invoice
             request.setAttribute("TotalMoneyIInvoice", new DistributorDBContext().getTotalMoneyImInvoiceByDisId(Integer.parseInt(request.getParameter("id"))));

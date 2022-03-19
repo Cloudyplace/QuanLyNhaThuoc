@@ -22,6 +22,10 @@ public class MedicalBox {
         this.boxName = boxName;
     }
 
+    public MedicalBox(int boxId) {
+        this.boxId = boxId;
+    }
+
     public MedicalBox(int boxId, String boxName) {
         this.boxId = boxId;
         this.boxName = boxName;

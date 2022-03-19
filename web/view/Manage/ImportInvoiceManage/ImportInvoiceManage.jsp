@@ -18,6 +18,8 @@
         <title>Quản lý hóa đơn nhập</title>
     </head>
     <body>
+                    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
         <jsp:include page="../../Home/Header.jsp"></jsp:include>
             <br/>
             <br/>

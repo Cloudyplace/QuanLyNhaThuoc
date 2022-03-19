@@ -2,20 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/D:/PRJ/ProjectPrj_QuanLyNhaThuoc/src/java/controller/DistributorManage/DistributorDetailAdminControll.java</file>
-            <file>file:/D:/PRJ/ProjectPrj_QuanLyNhaThuoc/src/java/dal/distributor/DistributorDBContext.java</file>
-            <file>file:/D:/PRJ/ProjectPrj_QuanLyNhaThuoc/web/view/Manage/DistributorManage/DistributorManage.jsp</file>
-            <file>file:/D:/PRJ/ProjectPrj_QuanLyNhaThuoc/web/view/Home/Home.jsp</file>
-            <file>file:/D:/PRJ/ProjectPrj_QuanLyNhaThuoc/src/java/controller/DistributorManage/ImInvoiceOfDistributor.java</file>
-            <file>file:/D:/PRJ/ProjectPrj_QuanLyNhaThuoc/src/java/controller/DistributorManage/MedicineOfDistributor.java</file>
-            <file>file:/D:/PRJ/ProjectPrj_QuanLyNhaThuoc/src/java/controller/DistributorManage/DistributorManageControll.java</file>
-            <file>file:/D:/PRJ/ProjectPrj_QuanLyNhaThuoc/web/view/Manage/DistributorManage/ImInvoiceOfDistributor.jsp</file>
-            <file>file:/D:/PRJ/ProjectPrj_QuanLyNhaThuoc/src/java/controller/HomeControll.java</file>
-            <file>file:/D:/PRJ/ProjectPrj_QuanLyNhaThuoc/web/view/Manage/DistributorManage/DistributorDetailAdmin.jsp</file>
-            <file>file:/D:/PRJ/ProjectPrj_QuanLyNhaThuoc/src/java/model/Medicine.java</file>
-            <file>file:/D:/PRJ/ProjectPrj_QuanLyNhaThuoc/web/view/Manage/DistributorManage/MedicineOfDistributor.jsp</file>
-            <file>file:/D:/PRJ/ProjectPrj_QuanLyNhaThuoc/web/view/Home/Product.jsp</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

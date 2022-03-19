@@ -54,16 +54,13 @@ public class ImInvoiceDetailControll extends HttpServlet {
             request.setAttribute("profileUser", new AccountDBContext().getUser(session.getAttribute("username").toString(), session.getAttribute("password").toString()));
 
             //distributor
-            request.setAttribute("DistributorDetail", new ImportInvoiceDBContext().getDistributorByImInvoiceId(Integer.parseInt(request.getParameter("id"))));
-
-            //Invoice
-            request.setAttribute("ImInvoice", new ImportInvoiceDBContext().getImInvoiceById(Integer.parseInt(request.getParameter("id"))));
+            request.setAttribute("ImvoiceAndDistributor", new ImportInvoiceDBContext().getImInvoiceAndDistributorByImInvoiceId(Integer.parseInt(request.getParameter("id"))));
 
             //invoice detail
-            request.setAttribute("ImInvoiceDetail", new ImportInvoiceDBContext().getImInvoiceDetailById(Integer.parseInt(request.getParameter("id"))));
+            request.setAttribute("ListImInvoiceDetail", new ImportInvoiceDBContext().getListImInvoiceDetailById(Integer.parseInt(request.getParameter("id"))));
 
-            //medice detail
-            request.setAttribute("MedicineDetail", new ProductDBGetById().getMedicineById(Integer.parseInt(request.getParameter("id"))));
+//            //medice detail
+//            request.setAttribute("MedicineDetail", new ProductDBGetById().getMedicineById(Integer.parseInt(request.getParameter("id"))));
 
             request.getRequestDispatcher("view/Manage/ImportInvoiceManage/ImInvoiceDetail.jsp").forward(request, response);
 

@@ -27,6 +27,12 @@ public class Medicine {
     public Medicine() {
     }
 
+    public Medicine(int medicineId) {
+        this.medicineId = medicineId;
+    }
+    
+    
+
     // page in home 
     public Medicine(int medicineId, String medicineName, MedicalBox box, int price, String image) {
         this.medicineId = medicineId;
@@ -53,6 +59,24 @@ public class Medicine {
         this.quantityInStock = quantityInStock;
         this.note = note;
     }
+
+    public Medicine(int medicineId, String medicineName, TypeMedicine type, MedicalBox box, Distributor distributor, String unit, int inputPrice, int price, String manufactureDate, String outOfDate, String image, int quantityInStock, String note) {
+        this.medicineId = medicineId;
+        this.medicineName = medicineName;
+        this.type = type;
+        this.box = box;
+        this.distributor = distributor;
+        this.unit = unit;
+        this.inputPrice = inputPrice;
+        this.price = price;
+        this.manufactureDate = manufactureDate;
+        this.outOfDate = outOfDate;
+        this.image = image;
+        this.quantityInStock = quantityInStock;
+        this.note = note;
+    }
+    
+    
     
     
     
@@ -66,15 +90,14 @@ public class Medicine {
         this.quantityInStock = quantityInStock;
     }
 
-    
-    public Medicine(String medicineName, String unit, int inputPrice) {
+    public Medicine(int medicineId, String medicineName, String unit, int inputPrice) {
+        this.medicineId = medicineId;
         this.medicineName = medicineName;
         this.unit = unit;
         this.inputPrice = inputPrice;
     }
 
-    public Medicine(int medicineId, String medicineName, TypeMedicine type, MedicalBox box, Distributor distributor, String unit, int inputPrice, int price, String manufactureDate, String outOfDate, String image, int quantityInStock, String note) {
-        this.medicineId = medicineId;
+    public Medicine(String medicineName, TypeMedicine type, MedicalBox box, Distributor distributor, String unit, int inputPrice, int price, String manufactureDate, String outOfDate, String image, int quantityInStock, String note) {
         this.medicineName = medicineName;
         this.type = type;
         this.box = box;

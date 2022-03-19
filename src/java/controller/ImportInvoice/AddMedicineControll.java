@@ -3,21 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.MedicineManage;
+package controller.ImportInvoice;
 
 import dal.AccountDBContext;
 import dal.MedicineDB;
-import dal.ProductDBGetById;
 import dal.distributor.DistributorDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Distributor;
+import model.ImportInvoiceDetail;
 import model.MedicalBox;
 import model.Medicine;
 import model.TypeMedicine;
@@ -26,14 +28,29 @@ import model.TypeMedicine;
  *
  * @author cloudy_place
  */
-public class MedicineEditControll extends HttpServlet {
+public class AddMedicineControll extends HttpServlet {
 
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-
-        //check session
         HttpSession session = request.getSession();
         if (session.getAttribute("username") == null) {// set login
             response.sendRedirect("login");
@@ -41,32 +58,35 @@ public class MedicineEditControll extends HttpServlet {
             //profileUser
             request.setAttribute("profileUser", new AccountDBContext().getUser(session.getAttribute("username").toString(), session.getAttribute("password").toString()));
 
-            request.setAttribute("MedicineDetail", new ProductDBGetById().getMedicineByIdAdmin(Integer.parseInt(request.getParameter("id"))));
-
+            request.setAttribute("AllMedicalBox", new MedicineDB().getAllMedicalBox());
 
             request.setAttribute("AllTypeMedicine", new MedicineDB().getAllTypeMedicine());
 
-
-            request.setAttribute("AllDistributor", new DistributorDBContext().getAllDistributor());
-
-            request.setAttribute("AllMedicalBox", new MedicineDB().getAllMedicalBox());
-
-            request.getRequestDispatcher("view/Manage/MedicineManage/MedicineEditAdmin.jsp").forward(request, response);
+            request.getRequestDispatcher("view/Invoice/ImportInvoice/AddMedicine.jsp").forward(request, response);
 
         }
 
     }
 
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    
+    List<ImportInvoiceDetail> list = new ArrayList<>();
+    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
 
-        String raw_id = request.getParameter("id");
         String raw_name = request.getParameter("name");
         String raw_typeId = request.getParameter("typeId");
-        String raw_distributorId = request.getParameter("disId");
         String raw_ManufactureDate = request.getParameter("ManufactureDate");
         String raw_OutOfDate = request.getParameter("OutOfDate");
         String raw_InputPrice = request.getParameter("InputPrice");
@@ -77,10 +97,8 @@ public class MedicineEditControll extends HttpServlet {
         String raw_image = request.getParameter("image");
         String raw_Note = request.getParameter("Note");
 
-        int id = Integer.parseInt(raw_id);
         String name = raw_name; //check length
         int typeId = Integer.parseInt(raw_typeId);
-        int distributorId = Integer.parseInt(raw_distributorId);
         String manufactureDate = raw_ManufactureDate;
         String outOfDate = raw_OutOfDate;
         int inputPrice = Integer.parseInt(raw_InputPrice);
@@ -91,32 +109,33 @@ public class MedicineEditControll extends HttpServlet {
         String image = raw_image;
         String note = raw_Note;
 
-        Distributor d = new Distributor();
-        d.setDistributorId(distributorId);
         TypeMedicine t = new TypeMedicine();
         t.setTypeId(typeId);
         MedicalBox b = new MedicalBox();
         b.setBoxId(boxId);
 
         Medicine m = new Medicine();
-        m.setMedicineId(id);
         m.setMedicineName(name);
         m.setType(t);
-        m.setDistributor(d);
-        m.setManufactureDate(raw_ManufactureDate);
-        m.setOutOfDate(raw_OutOfDate);
+        m.setManufactureDate(manufactureDate);
+        m.setOutOfDate(outOfDate);
         m.setInputPrice(inputPrice);
         m.setPrice(price);
         m.setUnit(unit);
         m.setBox(b);
-        m.setQuantityInStock(quantity);
         m.setImage(image);
         m.setNote(note);
+        
+        ImportInvoiceDetail i = new ImportInvoiceDetail();
+        i.setMedicine(m);
+        i.setQuantity(quantity);
+        
+        list.add(i);
 
-        MedicineDB db = new MedicineDB();
-        db.updateMedicine(m);
+        HttpSession session = request.getSession();
+        session.setAttribute("listImInvoiceDetail", list);
 
-        response.sendRedirect("medicineDetailAdmin?id="+id);
+        response.sendRedirect("ImportInvoice");
 
     }
 

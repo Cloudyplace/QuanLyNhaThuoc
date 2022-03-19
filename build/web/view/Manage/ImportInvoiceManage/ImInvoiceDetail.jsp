@@ -34,7 +34,7 @@
                         <!-- Breadcrumb -->
                         <nav aria-label="breadcrumb" class="main-breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="importInvoice">Quản lý hóa đơn nhập</a></li>
+                                <li class="breadcrumb-item"><a href="importInvoiceManage">Quản lý hóa đơn nhập</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">Chi tiết hóa đơn nhập</li>
                             </ol>
                         </nav>
@@ -44,7 +44,7 @@
                                     Hóa đơn
                                     <small class="page-info">
                                         <i class="fa fa-angle-double-right text-80"></i>
-                                    ${ImInvoice.imInvoiceId}
+                                    ${ImvoiceAndDistributor.imInvoiceId}
                                 </small>
                             </h1>
 
@@ -68,15 +68,15 @@
                             <div class="col-sm-6">
                                 <div>
                                     <span class="text-sm text-grey-m2 align-middle">Nhà phân phối:</span>
-                                    <span class="text-600 text-90 text-blue align-middle">${DistributorDetail.distributorName}</span>
+                                    <span class="text-600 text-90 text-blue align-middle">${ImvoiceAndDistributor.distributor.distributorName}</span>
                                 </div>
                                 <div class="text-grey-m2">
                                     <span class="text-sm text-grey-m2 align-middle">Địa chỉ:</span>
-                                    <span class="text-600 text-90 text-blue align-middle">${DistributorDetail.address}</span> <br/>
+                                    <span class="text-600 text-90 text-blue align-middle">${ImvoiceAndDistributor.distributor.address}</span> <br/>
                                     <span class="text-sm text-grey-m2 align-middle">Email:</span>
-                                    <span class="text-600 text-90 text-blue align-middle">${DistributorDetail.email}</span><br/>
+                                    <span class="text-600 text-90 text-blue align-middle">${ImvoiceAndDistributor.distributor.email}</span><br/>
                                     <span class="text-sm text-grey-m2 align-middle">Số điện thoại:</span>
-                                    <b class="text-600 text-90 text-blue align-middle">${DistributorDetail.phone}</b>
+                                    <b class="text-600 text-90 text-blue align-middle">${ImvoiceAndDistributor.distributor.phone}</b>
                                 </div>
                             </div>
                             <!-- /.col -->
@@ -88,9 +88,9 @@
                                         Hóa đơn
                                     </div>
 
-                                    <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">ID:</span> ${ImInvoice.imInvoiceId}</div>
+                                    <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">ID:</span> ${ImvoiceAndDistributor.imInvoiceId}</div>
 
-                                    <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">Ngày phát hành:</span>${ImInvoice.imDate}</div>
+                                    <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">Ngày phát hành:</span>${ImvoiceAndDistributor.imDate}</div>
 
                                 </div>
                             </div>
@@ -107,7 +107,7 @@
                                 <div class="col-2">Tiền</div>
                             </div>
 
-                            <c:forEach items="${ImInvoiceDetail}" var="o">
+                            <c:forEach items="${ListImInvoiceDetail}" var="o">
                                 <div class="text-95 text-secondary-d3">
                                     <div class="row mb-2 mb-sm-0 py-25">
                                         <div class="d-none d-sm-block col-1">${o.imInvoiceDetailId}</div>
@@ -115,7 +115,7 @@
                                         <div class="d-none d-sm-block col-2">${o.medicine.unit}</div>
                                         <div class="d-none d-sm-block col-2">${o.quantity}</div>
                                         <div class="d-none d-sm-block col-2 text-95">${o.medicine.inputPrice}</div>
-                                        <div class="col-2 text-secondary-d2">${o.money}</div>
+                                        <div class="col-2 text-secondary-d2">${o.quantity*o.medicine.inputPrice}</div>
                                     </div>
                                 </div>
                                 <hr/>
@@ -125,7 +125,7 @@
 
                             <div class="row mt-3">
                                 <div class="col-12 col-sm-7 text-grey-d2 text-95 mt-2 mt-lg-0">
-                                    Ghi chú khi thanh toán: 
+                                    Ghi chú khi thanh toán: ${ImInvoiceDetail.note}
                                 </div>
 
                                 <div class="col-12 col-sm-5 text-grey text-90 order-first order-sm-last">
@@ -134,7 +134,7 @@
                                             Tổng
                                         </div>
                                         <div class="col-5">
-                                            <span class="text-120 text-secondary-d1">${ImInvoice.totalMoney} VND</span>
+                                            <span class="text-120 text-secondary-d1">${ImvoiceAndDistributor.totalMoney} VND</span>
                                         </div>
                                     </div>
 
@@ -152,7 +152,7 @@
                                             Tổng số tiền
                                         </div>
                                         <div class="col-5">
-                                            <span class="text-150 text-success-d3 opacity-2">${ImInvoice.totalMoney} VND</span>
+                                            <span class="text-150 text-success-d3 opacity-2">${ImvoiceAndDistributor.totalMoney} VND</span>
                                         </div>
                                     </div>
                                 </div>
