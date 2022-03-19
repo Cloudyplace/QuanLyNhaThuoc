@@ -5,6 +5,7 @@
  */
 package controller.ImportInvoice;
 
+import static controller.ImportInvoice.AddMedicineControll.LISTMEDICINE;
 import dal.AccountDBContext;
 import dal.ImportInvoice.ImportInvoiceDBContext;
 import dal.MedicineDB;
@@ -140,23 +141,20 @@ public class ImportInvoiceControll extends HttpServlet {
         List<Integer> listMedicineId = medicineDB.getListMedicineIdInsertedNearest(size);
 
         int k = listMedicineId.size();
-        System.out.println(k);
         for (ImportInvoiceDetail importInvoiceDetail : listImInvoiceDetail) {
+            //set invoiceId in detail
             importInvoiceDetail.setImportInvoice(ii);
+            //set medicineId in detail
             Medicine m = importInvoiceDetail.getMedicine();
-            for (int j = k; j > 0; j--) {
-                m.setMedicineId(listMedicineId.get(j));
-                break;
-            }
-            k--;
+            m.setMedicineId(listMedicineId.get(k - 1));
 
-            System.out.println("inId= " + importInvoiceDetail.getImportInvoice().getImInvoiceId());
-            System.out.println("meId= " + importInvoiceDetail.getMedicine().getMedicineId());
+            k--;
         }
 
         importInvoiceDB.insertManyImInvoiceDetail(listImInvoiceDetail);
 
         session.removeAttribute("listImInvoiceDetail");
+        AddMedicineControll.LISTMEDICINE.removeAll(LISTMEDICINE);
         response.sendRedirect("ImportInvoice");
 
     }

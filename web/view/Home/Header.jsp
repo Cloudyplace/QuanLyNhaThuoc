@@ -15,18 +15,18 @@
         <title> E-COMMERCE WEBSITE BY EDYODA | CREATED BY PRIYANKA SHARMA </title>
         <!-- favicon -->
 
-        <link rel="icon"
+<!--        <link rel="icon"
               href="https://yt3.ggpht.com/a/AGF-l78km1YyNXmF0r3-0CycCA0HLA_i6zYn_8NZEg=s900-c-k-c0xffffffff-no-rj-mo"
-              type="image/gif" sizes="16x16">
+              type="image/gif" sizes="16x16">-->
         <!-- header links -->
-        <script src="https://kit.fontawesome.com/4a3b1f73a2.js"></script>
+        <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
         <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
         <!-- slider links -->
-        <script src="http://code.jquery.com/jquery-3.4.1.min.js"
-        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css">
+<!--        <script src="http://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>-->
+        <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css">-->
         <link rel="stylesheet" href="css/HomeStyle/headerStyle.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css">
+<!--        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css">-->
         <link href="https://fonts.googleapis.com/css?family=Arvo&display=swap" rel="stylesheet">
         <style>
             .dropbtn {
@@ -90,7 +90,7 @@
                         <button class="dropbtn">Hóa đơn</button>
                         <div class="dropdown-content">
                             <a href="ImportInvoice">Hóa đơn nhập</a>
-                            <a href="#">Hóa đơn xuất</a>
+                            <a href="OutputInvoice">Hóa đơn xuất</a>
                         </div>
                     </div>
                     <div class="dropdown">
@@ -111,8 +111,8 @@
                 </div>
                 <!-- USER SECTION (CART AND USER ICON) -->
                 <div id="user">
-                    <a href="cart.html"> <i class="fas fa-shopping-cart addedToCart">
-                            <div id="badge"> 0 </div>
+                    <a href="cart.html"> <i class='fas fa-file-invoice-dollar' style="font-size:28px; margin-left: -50px">
+                            <div style="margin-right: 38px"id="badge"> 0 </div>
                         </i></a>
                     <a href="#"> <i class="fas fa-user-circle userIcon"></i> 
                         <div class="dropdown">

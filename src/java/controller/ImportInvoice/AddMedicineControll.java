@@ -76,12 +76,12 @@ public class AddMedicineControll extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    
-    List<ImportInvoiceDetail> list = new ArrayList<>();
-    
+    public static final List<ImportInvoiceDetail> LISTMEDICINE = new ArrayList<>();
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
 
@@ -125,15 +125,15 @@ public class AddMedicineControll extends HttpServlet {
         m.setBox(b);
         m.setImage(image);
         m.setNote(note);
-        
+
         ImportInvoiceDetail i = new ImportInvoiceDetail();
         i.setMedicine(m);
         i.setQuantity(quantity);
-        
-        list.add(i);
+
+        LISTMEDICINE.add(i);
 
         HttpSession session = request.getSession();
-        session.setAttribute("listImInvoiceDetail", list);
+        session.setAttribute("listImInvoiceDetail", LISTMEDICINE);
 
         response.sendRedirect("ImportInvoice");
 

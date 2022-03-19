@@ -6,16 +6,12 @@
 package controller;
 
 import dal.AccountDB;
-import dal.AccountDBContext;
 import java.io.IOException;
-import java.io.PrintWriter;
-import javax.jms.Session;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.Account;
 
 /**
  *
