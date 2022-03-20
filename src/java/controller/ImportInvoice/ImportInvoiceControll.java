@@ -6,6 +6,7 @@
 package controller.ImportInvoice;
 
 import static controller.ImportInvoice.AddMedicineControll.LISTMEDICINE;
+import controller.OutputInvoice.OutputInvoiceControll;
 import dal.AccountDBContext;
 import dal.ImportInvoice.ImportInvoiceDBContext;
 import dal.MedicineDB;
@@ -62,13 +63,21 @@ public class ImportInvoiceControll extends HttpServlet {
             //profileUser
             request.setAttribute("profileUser", new AccountDBContext().getUser(session.getAttribute("username").toString(), session.getAttribute("password").toString()));
 
+            //listOutInvoiceDetail size
+            int size = 0;
+            try {
+                List<OutputInvoiceControll> listOutInvoiceDetail = (List<OutputInvoiceControll>) session.getAttribute("listOutInvoiceDetail");
+                size = listOutInvoiceDetail.size();
+
+            } catch (Exception e) {
+            }
+            request.setAttribute("outInvoiceDetailSize", size);
+            
             //distributor
             request.setAttribute("AllDistributor", new DistributorDBContext().getAllDistributor());
 
-            // get invoice id max
-            request.setAttribute("IdMax", new ImportInvoiceDBContext().getImInvoiceIdMax());
-//            // get medicine id max
-//            request.setAttribute("MedicineIdMax", new MedicineDB().getMedicineIdMax());
+//            // get invoice id max
+//            request.setAttribute("IdMax", new ImportInvoiceDBContext().getImInvoiceIdMax());
 
             List<ImportInvoiceDetail> listImInvoiceDetail = (List<ImportInvoiceDetail>) session.getAttribute("listImInvoiceDetail");
             request.setAttribute("listImInvoiceDetail", listImInvoiceDetail);

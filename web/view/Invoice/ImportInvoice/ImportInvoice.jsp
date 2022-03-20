@@ -73,7 +73,6 @@
                                             Hóa đơn
                                         </div>
 
-                                        <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">ID:${IdMax+1}<input type="hidden" name="ImInvoiceId" value="${IdMax+1}"></span></div>
 
                                         <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">Ngày phát hành:</span><input type="date" name="imDate"/></div>
 

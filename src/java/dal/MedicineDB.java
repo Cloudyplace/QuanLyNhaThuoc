@@ -171,6 +171,27 @@ public class MedicineDB extends DBContext {
         } catch (SQLException ex) {
         }
     }
+    public void updateQuantityMedicine(Medicine m) {
+        String sql = "UPDATE [Medicine]\n"
+                + "   SET [QuantityInStock] = ?\n"
+                + " WHERE MedicineId=?";
+        PreparedStatement stm = null;
+        try {
+            stm = connection.prepareStatement(sql);
+
+            stm.setInt(2, m.getMedicineId());
+            stm.setInt(1, m.getQuantityInStock());
+            stm.executeUpdate(); //INSERT UPDATE DELETE
+        } catch (SQLException ex) {
+        }
+    }
+    
+    //update many medicine
+    public void updateManyQuantityMedicine(List<Medicine> list) {
+        for (Medicine medicine : list) {
+            updateQuantityMedicine(medicine);
+        }
+    }
 
     //insert 1 medicine
     public void insertMedicine(Medicine m) {

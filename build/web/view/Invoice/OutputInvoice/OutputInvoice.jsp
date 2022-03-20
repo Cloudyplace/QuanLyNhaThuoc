@@ -18,6 +18,35 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
         <title>JSP Page</title>
+
+        <style>
+            .quantity-card{
+                display: flex;
+            }
+            .quantity-card .btn-quan {
+                padding: 3px 12px;
+                background-color: white;
+                border: 1px solid #97a0af8c;
+                font-weight: bold;
+                margin: 0;
+            }
+
+            .quantity-card .inp-quan {
+                padding: 3px;
+                width: 35px;
+                text-align: center;
+                font-weight: bold;
+                border: 1px solid #97a0af8c;
+            }
+
+            .quantity-card .btn-quan:hover {
+                background-color: yellowgreen;
+                cursor: pointer;
+            }
+
+        </style>
+
+
     </head>
     <body>
         <jsp:include page="../../Home/Header.jsp"></jsp:include>
@@ -29,7 +58,7 @@
             <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 
 
-            <form action="OutputtInvoice" method="POST">
+            <form action="OutputInvoice" method="POST">
 
                 <div class="container px-0">
                     <div class="row mt-4">
@@ -49,15 +78,9 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div>
-                                            <span class="text-sm text-grey-m2 align-middle">Tên nhân viên</span>
+                                            <span class="text-sm text-grey-m2 align-middle">Tên nhân viên: </span>
                                             <span class="text-600 text-90 text-blue align-middle">
-                                                <select name="AccId" >
-                                                    <option><a style="align-items: center">---</a></option>
-                                                <c:forEach items="${AllAcc}" var="d">
-                                                    <option 
-                                                        value="${d.accId}">${d.accName}</option> 
-                                                </c:forEach>
-                                            </select>
+                                            ${profileUser.fullName}
                                         </span>
                                     </div>
 
@@ -74,7 +97,7 @@
                                         <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">Tên khách hàng: <input type="text" name="customerName"></span></div>
                                         <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">Số điện thoại KH: <input type="text" name="customerPhone"></span></div>
 
-                                        <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">Ngày phát hành: </span><input type="date" name="imDate"/></div>
+                                        <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">Ngày phát hành: </span><input type="date" name="saleDate"/></div>
 
                                     </div>
                                 </div>
@@ -95,18 +118,25 @@
                                     int i = 1;
                                     request.setAttribute("i", i);
                                 %>
-                                
+
                                 <c:forEach items="${listOutInvoiceDetail}" var="m">
                                     <div class="text-95 text-secondary-d3">
                                         <div class="row mb-2 mb-sm-0 py-25">
                                             <div class="d-none d-sm-block col-1">${i}</div>
                                             <div class="col-7 col-sm-2" >${m.medicine.medicineName}</div>
                                             <div class="d-none d-sm-block col-2">${m.medicine.unit}</div>
-                                            <div class="d-none d-sm-block col-2"></div>
-                                            <div class="d-none d-sm-block col-2 text-95">${m.medicine.price}</div>
-                                            <div class="col-1 text-secondary-d2 price">${m.quantity*m.medicine.inputPrice}</div>
                                             <div class="d-none d-sm-block col-2">
-                                                <a class="table-link" href="#">
+                                                <div class="quantity-card" style="display: flex">
+                                                    <input onclick="window.location='updateQuantityOutInvoice?action=giam&medicineId=${m.medicine.medicineId}'"  class="btn-quan" type="button" value="-">
+                                                    <input name="quantity" class="inp-quan soLuong" type="text" value="${m.quantity}">
+                                                    <input onclick="window.location='updateQuantityOutInvoice?action=tang&medicineId=${m.medicine.medicineId}'"  class="btn-quan" type="button" value="+">
+                                                </div>
+
+                                            </div>
+                                            <div class="d-none d-sm-block col-2 text-95 donGia">${m.medicine.price}</div>
+                                            <div class="col-1 text-secondary-d2 tien"></div>
+                                            <div class="d-none d-sm-block col-2">
+                                                <a class="table-link" href="meddetail?id=${m.medicine.medicineId}">
                                                     <span class="fa-stack">
                                                         <i class="fa fa-square fa-stack-2x"></i>
                                                         <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
@@ -135,7 +165,7 @@
                                 <br/>
                                 <hr/>
                                 <br/>
-                                <a href="ClearMedicine">Xóa tất cả thuốc</a>
+                                <a href="ClearMedicineOutInvoice">Xóa tất cả thuốc</a>
 
                                 <div class="row border-b-2 brc-default-l2"></div>
 
@@ -191,7 +221,16 @@
             </div>
         </form>
         <script>
-            var price = document.getElementsByClassName('price');
+
+            var soLuong = document.getElementsByClassName('soLuong');
+            var donGia = document.getElementsByClassName('donGia');
+            var product = 0;
+            for (var i = 0; i < soLuong.length; i++) {
+                document.getElementsByClassName('tien')[i].innerHTML = donGia[i].innerHTML * soLuong[i].value
+            }
+
+
+            var price = document.getElementsByClassName('tien');
             var totalPrice = document.getElementsByClassName('totalPrice');
             var sum = 0;
             for (var i = 0; i < price.length; i++) {

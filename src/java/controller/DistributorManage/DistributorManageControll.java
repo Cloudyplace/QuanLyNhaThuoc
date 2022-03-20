@@ -5,6 +5,7 @@
  */
 package controller.DistributorManage;
 
+import controller.OutputInvoice.OutputInvoiceControll;
 import dal.AccountDBContext;
 import dal.distributor.DistributorDBContext;
 import java.io.IOException;
@@ -33,6 +34,16 @@ public class DistributorManageControll extends HttpServlet {
         } else {//profileUser
             request.setAttribute("profileUser", new AccountDBContext().getUser(session.getAttribute("username").toString(), session.getAttribute("password").toString()));
 
+            //listOutInvoiceDetail size
+            int size = 0;
+            try {
+                List<OutputInvoiceControll> listOutInvoiceDetail = (List<OutputInvoiceControll>) session.getAttribute("listOutInvoiceDetail");
+                size = listOutInvoiceDetail.size();
+
+            } catch (Exception e) {
+            }
+            request.setAttribute("outInvoiceDetailSize", size);
+            
             //dung de phan trang
             String indexPage = request.getParameter("indexPage");
             if (indexPage == null) {

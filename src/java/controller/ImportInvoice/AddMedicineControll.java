@@ -5,6 +5,7 @@
  */
 package controller.ImportInvoice;
 
+import controller.OutputInvoice.OutputInvoiceControll;
 import dal.AccountDBContext;
 import dal.MedicineDB;
 import dal.distributor.DistributorDBContext;
@@ -58,6 +59,16 @@ public class AddMedicineControll extends HttpServlet {
             //profileUser
             request.setAttribute("profileUser", new AccountDBContext().getUser(session.getAttribute("username").toString(), session.getAttribute("password").toString()));
 
+            //listOutInvoiceDetail size
+            int size = 0;
+            try {
+                List<OutputInvoiceControll> listOutInvoiceDetail = (List<OutputInvoiceControll>) session.getAttribute("listOutInvoiceDetail");
+                size = listOutInvoiceDetail.size();
+
+            } catch (Exception e) {
+            }
+            request.setAttribute("outInvoiceDetailSize", size);
+            
             request.setAttribute("AllMedicalBox", new MedicineDB().getAllMedicalBox());
 
             request.setAttribute("AllTypeMedicine", new MedicineDB().getAllTypeMedicine());

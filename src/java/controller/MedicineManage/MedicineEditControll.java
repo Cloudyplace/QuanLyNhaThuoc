@@ -5,6 +5,7 @@
  */
 package controller.MedicineManage;
 
+import controller.OutputInvoice.OutputInvoiceControll;
 import dal.AccountDBContext;
 import dal.MedicineDB;
 import dal.ProductDBGetById;
@@ -12,6 +13,7 @@ import dal.distributor.DistributorDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -41,6 +43,16 @@ public class MedicineEditControll extends HttpServlet {
             //profileUser
             request.setAttribute("profileUser", new AccountDBContext().getUser(session.getAttribute("username").toString(), session.getAttribute("password").toString()));
 
+            //listOutInvoiceDetail size
+            int size = 0;
+            try {
+                List<OutputInvoiceControll> listOutInvoiceDetail = (List<OutputInvoiceControll>) session.getAttribute("listOutInvoiceDetail");
+                size = listOutInvoiceDetail.size();
+
+            } catch (Exception e) {
+            }
+            request.setAttribute("outInvoiceDetailSize", size);
+            
             request.setAttribute("MedicineDetail", new ProductDBGetById().getMedicineByIdAdmin(Integer.parseInt(request.getParameter("id"))));
 
 

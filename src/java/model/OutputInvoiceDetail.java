@@ -10,6 +10,7 @@ package model;
  * @author cloudy_place
  */
 public class OutputInvoiceDetail {
+
     private int outDetailId;
     private OutputInvoice outputInvoice;
     private Medicine medicine;
@@ -22,6 +23,10 @@ public class OutputInvoiceDetail {
         this.outDetailId = outDetailId;
         this.outputInvoice = outputInvoice;
         this.medicine = medicine;
+        this.quantity = quantity;
+    }
+
+    public OutputInvoiceDetail(int quantity) {
         this.quantity = quantity;
     }
 
@@ -56,6 +61,10 @@ public class OutputInvoiceDetail {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return "OutputInvoiceDetail{" + "outDetailId=" + outDetailId + ", outputInvoice=" + outputInvoice + ", medicine=" + medicine + ", quantity=" + quantity + '}';
+    }
+
 }

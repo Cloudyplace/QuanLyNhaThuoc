@@ -96,6 +96,14 @@
         <servlet-name>AddMedicineOutInvocie</servlet-name>
         <servlet-class>controller.OutputInvoice.AddMedicineOutInvocie</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ClearMedicineOutInvoice</servlet-name>
+        <servlet-class>controller.OutputInvoice.ClearMedicineOutInvoice</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>updateQuantityOutInvoice</servlet-name>
+        <servlet-class>controller.OutputInvoice.updateQuantityOutInvoice</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -191,6 +199,14 @@
     <servlet-mapping>
         <servlet-name>AddMedicineOutInvocie</servlet-name>
         <url-pattern>/AddMedicineOutInvocie</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ClearMedicineOutInvoice</servlet-name>
+        <url-pattern>/ClearMedicineOutInvoice</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>updateQuantityOutInvoice</servlet-name>
+        <url-pattern>/updateQuantityOutInvoice</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

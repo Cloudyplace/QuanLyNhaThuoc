@@ -111,8 +111,8 @@
                 </div>
                 <!-- USER SECTION (CART AND USER ICON) -->
                 <div id="user">
-                    <a href="cart.html"> <i class='fas fa-file-invoice-dollar' style="font-size:28px; margin-left: -50px">
-                            <div style="margin-right: 38px"id="badge"> 0 </div>
+                    <a href="OutputInvoice"> <i class='fas fa-file-invoice-dollar' style="font-size:28px; margin-left: -50px">
+                            <div style="margin-right: 38px"id="badge"> ${outInvoiceDetailSize} </div>
                         </i></a>
                     <a href="#"> <i class="fas fa-user-circle userIcon"></i> 
                         <div class="dropdown">

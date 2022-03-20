@@ -156,7 +156,29 @@ hr {
 .addToInvoice input{
     background: greenyellow
 }
+.quantity-card{
+    display: flex;
+}
+.quantity-card .btn-quan {
+    padding: 3px 12px;
+    background-color: white;
+    border: 1px solid #97a0af8c;
+    font-weight: bold;
+    margin: 0;
+}
 
+.quantity-card .inp-quan {
+    padding: 3px;
+    width: 35px;
+    text-align: center;
+    font-weight: bold;
+    border: 1px solid #97a0af8c;
+}
+
+.quantity-card .btn-quan:hover {
+    background-color: yellowgreen;
+    cursor: pointer;
+}
 
 
 

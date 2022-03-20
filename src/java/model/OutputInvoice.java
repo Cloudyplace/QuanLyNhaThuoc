@@ -87,6 +87,11 @@ public class OutputInvoice {
         this.Note = Note;
     }
 
+    @Override
+    public String toString() {
+        return "OutputInvoice{" + "outInvoiceId=" + outInvoiceId + ", account=" + account + ", customerName=" + customerName + ", customerPhone=" + customerPhone + ", saleDate=" + saleDate + ", totalMoney=" + totalMoney + ", Note=" + Note + '}';
+    }
+
     
     
 }

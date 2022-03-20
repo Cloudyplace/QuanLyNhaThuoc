@@ -103,21 +103,21 @@ public class ImportInvoiceDBContext extends DBContext {
         return null;
     }
 
-    //get max import invoiceid
-    public int getImInvoiceIdMax() {
-        String sql = "select max(ImInvoiceId)\n"
-                + "from ImportInvoice";
-        try {
-            PreparedStatement stm = connection.prepareStatement(sql);
-            ResultSet rs = stm.executeQuery();
-            while (rs.next()) {
-                return rs.getInt(1);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ImportInvoiceDBContext.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return 0;
-    }
+//    //get max import invoiceid
+//    public int getImInvoiceIdMax() {
+//        String sql = "select max(ImInvoiceId)\n"
+//                + "from ImportInvoice";
+//        try {
+//            PreparedStatement stm = connection.prepareStatement(sql);
+//            ResultSet rs = stm.executeQuery();
+//            while (rs.next()) {
+//                return rs.getInt(1);
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(ImportInvoiceDBContext.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return 0;
+//    }
 
     // get ImInvoice have ImInvoice Id max
     public ImportInvoice getImInvoiceMaxId() {

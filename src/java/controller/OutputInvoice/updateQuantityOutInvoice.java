@@ -5,25 +5,24 @@
  */
 package controller.OutputInvoice;
 
-import dal.ProductDBGetById;
+import static controller.OutputInvoice.AddMedicineOutInvocie.LIST_MEDICINE_OUTINVOICE;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.ImportInvoiceDetail;
-import model.Medicine;
 import model.OutputInvoiceDetail;
 
 /**
  *
  * @author cloudy_place
  */
-public class AddMedicineOutInvocie extends HttpServlet {
+public class updateQuantityOutInvoice extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,7 +33,38 @@ public class AddMedicineOutInvocie extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        String action = request.getParameter("action");
+        int medicineId = Integer.parseInt(request.getParameter("medicineId"));
+        if (action.equals("tang")) {
+            for (int i = 0; i < LIST_MEDICINE_OUTINVOICE.size(); i++) {
+                OutputInvoiceDetail detail = LIST_MEDICINE_OUTINVOICE.get(i);
+                if (detail.getMedicine().getMedicineId() == medicineId) {
+                    detail.setQuantity(detail.getQuantity() + 1);
+                }
+            }
+        }
+        if (action.equals("giam")) {
+            for (int i = 0; i < LIST_MEDICINE_OUTINVOICE.size(); i++) {
+                OutputInvoiceDetail detail = LIST_MEDICINE_OUTINVOICE.get(i);
+                if (detail.getMedicine().getMedicineId() == medicineId) {
+                    if (detail.getQuantity() == 1) {
+                    } else {
+                        detail.setQuantity(detail.getQuantity() - 1);
+                    }
+                }
+            }
+        }
+        HttpSession session = request.getSession();
+        session.setAttribute("listOutInvoiceDetail", LIST_MEDICINE_OUTINVOICE);
+
+        response.sendRedirect("OutputInvoice");
+
+    }
+
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -46,8 +76,7 @@ public class AddMedicineOutInvocie extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       // response.sendRedirect("home");
-       // request.getRequestDispatcher("view/Home/Home.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -58,28 +87,10 @@ public class AddMedicineOutInvocie extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-            
-    public static final List<OutputInvoiceDetail> LIST_MEDICINE_OUTINVOICE = new ArrayList<>();
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");
-        
-        int medicineId = Integer.parseInt(request.getParameter("medicineId"));
-        Medicine medicine =new ProductDBGetById().getMedicineById(medicineId);
-        
-        OutputInvoiceDetail outInvoiceDetail  = new OutputInvoiceDetail();
-        outInvoiceDetail.setMedicine(medicine);
-        outInvoiceDetail.setQuantity(1);
-
-        LIST_MEDICINE_OUTINVOICE.add(outInvoiceDetail);
-        
-        HttpSession session = request.getSession();
-        session.setAttribute("listOutInvoiceDetail", LIST_MEDICINE_OUTINVOICE);
-
-        response.sendRedirect("OutputInvoice");
+        processRequest(request, response);
     }
 
     /**
