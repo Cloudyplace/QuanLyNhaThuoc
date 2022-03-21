@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="css/Manage/DistributorManage/DistributorManageStyle.css">
+        <!--<link rel="stylesheet" href="css/Manage/DistributorManage/DistributorManageStyle.css">-->
         <link rel="stylesheet" href="css/HomeStyle/PageStyle.css">
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" rel="stylesheet">

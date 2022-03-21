@@ -71,6 +71,7 @@
             }
             .logo{
                 width: 60px;
+                padding: -2px;
             }
             #container{
                 background-color: white;
@@ -166,6 +167,8 @@
                             <a href="medicinemanage">Quản lý thuốc</a>
                             <a href="distributormanage">Quản lý nhà phân phối</a>
                             <a href="importInvoiceManage">Quản lý hóa đơn nhập</a>
+                            <a href="outputInvoiceManage">Quản lý hóa đơn bán</a>
+                            <a href="medicalBoxManage">Quản lý vị trí thuốc</a>
                             <a href="#">Quản lý nhân viên</a>
                         </div>
                     </div>

@@ -13,23 +13,39 @@ public class OutputInvoice {
     private int outInvoiceId;
     private Account account;
     private String customerName;
-    private String customerPhone;
+    private int customerPhone;
     private String saleDate;
-    private String totalMoney;
-    private String Note;
+    private int totalMoney;
+    private String note;
 
     public OutputInvoice() {
     }
 
-    public OutputInvoice(int outInvoiceId, Account account, String customerName, String customerPhone, String saleDate, String totalMoney, String Note) {
+    public OutputInvoice(int outInvoiceId) {
+        this.outInvoiceId = outInvoiceId;
+    }
+    
+    
+
+    public OutputInvoice(int outInvoiceId, Account account, String customerName, int customerPhone, String saleDate, int totalMoney, String Note) {
         this.outInvoiceId = outInvoiceId;
         this.account = account;
         this.customerName = customerName;
         this.customerPhone = customerPhone;
         this.saleDate = saleDate;
         this.totalMoney = totalMoney;
-        this.Note = Note;
+        this.note = Note;
     }
+
+    public OutputInvoice(int outInvoiceId, String customerName, String saleDate, int totalMoney, String Note) {
+        this.outInvoiceId = outInvoiceId;
+        this.customerName = customerName;
+        this.saleDate = saleDate;
+        this.totalMoney = totalMoney;
+        this.note = Note;
+    }
+    
+    
 
     public int getOutInvoiceId() {
         return outInvoiceId;
@@ -55,11 +71,11 @@ public class OutputInvoice {
         this.customerName = customerName;
     }
 
-    public String getCustomerPhone() {
+    public int getCustomerPhone() {
         return customerPhone;
     }
 
-    public void setCustomerPhone(String customerPhone) {
+    public void setCustomerPhone(int customerPhone) {
         this.customerPhone = customerPhone;
     }
 
@@ -71,27 +87,29 @@ public class OutputInvoice {
         this.saleDate = saleDate;
     }
 
-    public String getTotalMoney() {
+    public int getTotalMoney() {
         return totalMoney;
     }
 
-    public void setTotalMoney(String totalMoney) {
+    public void setTotalMoney(int totalMoney) {
         this.totalMoney = totalMoney;
     }
 
     public String getNote() {
-        return Note;
+        return note;
     }
 
     public void setNote(String Note) {
-        this.Note = Note;
+        this.note = Note;
     }
 
     @Override
     public String toString() {
-        return "OutputInvoice{" + "outInvoiceId=" + outInvoiceId + ", account=" + account + ", customerName=" + customerName + ", customerPhone=" + customerPhone + ", saleDate=" + saleDate + ", totalMoney=" + totalMoney + ", Note=" + Note + '}';
+        return "OutputInvoice{" + "outInvoiceId=" + outInvoiceId + ", account=" + account + ", customerName=" + customerName + ", customerPhone=" + customerPhone + ", saleDate=" + saleDate + ", totalMoney=" + totalMoney + ", note=" + note + '}';
     }
+    
 
+  
     
     
 }

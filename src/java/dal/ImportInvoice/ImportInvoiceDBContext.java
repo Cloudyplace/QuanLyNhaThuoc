@@ -64,7 +64,7 @@ public class ImportInvoiceDBContext extends DBContext {
     // get importInvoiceDetail by id
     public List<ImportInvoiceDetail> getListImInvoiceDetailById(int importInvoiceId) {
         List<ImportInvoiceDetail> list = new ArrayList<>();
-        String sql = "select iid.ImDetailId,ii.ImInvoiceId, m.MedicineId, m.MedicineName, m.Unit, m.InputPrice, iid.Quantity \n"
+        String sql = "select iid.ImDetailId,ii.ImInvoiceId, m.MedicineId, m.MedicineName, m.Unit, m.InputPrice,m.Price, iid.Quantity \n"
                 + "from ImportInvoiceDetail iid inner join Medicine m on iid.MedicineId=m.MedicineId \n"
                 + "inner join ImportInvoice ii on ii.ImInvoiceId = iid.ImInvoiceId \n"
                 + "where ii.ImInvoiceId = ?";
@@ -74,7 +74,7 @@ public class ImportInvoiceDBContext extends DBContext {
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 list.add(new ImportInvoiceDetail(rs.getInt(1), new ImportInvoice(rs.getInt(2)), new Medicine(rs.getInt(3),
-                        rs.getString(4), rs.getString(5), rs.getInt(6)), rs.getInt(7)));
+                        rs.getString(4), rs.getString(5), rs.getInt(6), rs.getInt(7)), rs.getInt(8)));
             }
         } catch (SQLException ex) {
             Logger.getLogger(ImportInvoiceDBContext.class.getName()).log(Level.SEVERE, null, ex);
@@ -118,7 +118,6 @@ public class ImportInvoiceDBContext extends DBContext {
 //        }
 //        return 0;
 //    }
-
     // get ImInvoice have ImInvoice Id max
     public ImportInvoice getImInvoiceMaxId() {
         try {
@@ -189,6 +188,41 @@ public class ImportInvoiceDBContext extends DBContext {
             System.out.println(detail.getQuantity());
             insertImInvoiceDetail(detail);
         }
+    }
+
+    //update imInvoice
+    public void updateImportInvoice(ImportInvoice i) {
+        String sql = "UPDATE [ImportInvoice]\n"
+                + "   SET [DistributorId] = ?\n"
+                + "      ,[ImDate] = ?\n"
+                + "      ,[Note] = ?\n"
+                + " WHERE ImInvoiceId = ?";
+        PreparedStatement stm = null;
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setInt(4, i.getImInvoiceId());
+            stm.setInt(1, i.getDistributor().getDistributorId());
+            stm.setString(2, i.getImDate());
+            stm.setString(3, i.getNote());
+            
+            stm.executeUpdate(); //INSERT UPDATE DELETE
+        } catch (SQLException ex) {
+            Logger.getLogger(ImportInvoiceDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException ex) {
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException ex) {
+                }
+            }
+        }
+
     }
 
     public static void main(String[] args) {

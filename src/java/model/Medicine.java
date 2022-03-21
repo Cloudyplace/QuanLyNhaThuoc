@@ -90,12 +90,16 @@ public class Medicine {
         this.quantityInStock = quantityInStock;
     }
 
-    public Medicine(int medicineId, String medicineName, String unit, int inputPrice) {
+    public Medicine(int medicineId, String medicineName, String unit, int inputPrice, int price) {
         this.medicineId = medicineId;
         this.medicineName = medicineName;
         this.unit = unit;
         this.inputPrice = inputPrice;
+        this.price = price;
     }
+   
+    
+    
 
     public Medicine(String medicineName, TypeMedicine type, MedicalBox box, Distributor distributor, String unit, int inputPrice, int price, String manufactureDate, String outOfDate, String image, int quantityInStock, String note) {
         this.medicineName = medicineName;

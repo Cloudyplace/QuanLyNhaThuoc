@@ -96,9 +96,9 @@ public class OutputInvoiceControll extends HttpServlet {
 
         //set output invoice
         String customerName = request.getParameter("customerName");
-        String customerPhone = request.getParameter("customerPhone");
+        int customerPhone = Integer.parseInt(request.getParameter("customerPhone"));
         String saleDate = request.getParameter("saleDate");
-        String totalMoney = request.getParameter("totalMoney");
+        int totalMoney = Integer.parseInt(request.getParameter("totalMoney"));
         String note = request.getParameter("note");
 
         HttpSession session = request.getSession();

@@ -65,12 +65,7 @@ public class MedicineDetailAdminControll extends HttpServlet {
             request.setAttribute("outInvoiceDetailSize", size);
             
             request.setAttribute("MedicineDetail", new ProductDBGetById().getMedicineByIdAdmin(Integer.parseInt(request.getParameter("id"))));
-//            int typeId = ((Medicine) request.getAttribute("MedicineDetail")).getTypeId();
-//            request.setAttribute("typeName", new ProductDBGetById().getTypeNameByTypeId(typeId));
-//            int distributorId = ((Medicine) request.getAttribute("MedicineDetail")).getDistributorId();
-//            request.setAttribute("distributorName", new ProductDBGetById().getDistributorNameByDistributorId(distributorId));
-//            int boxId = ((Medicine) request.getAttribute("MedicineDetail")).getBoxId();
-//            request.setAttribute("boxName", new ProductDBGetById().getBoxNameByBoxId(boxId));
+
             request.getRequestDispatcher("view/Manage/MedicineManage/MedicineDetailAdmin.jsp").forward(request, response);
         }
 

@@ -125,7 +125,7 @@
 
                             <div class="row mt-3">
                                 <div class="col-12 col-sm-7 text-grey-d2 text-95 mt-2 mt-lg-0">
-                                    Ghi chú khi thanh toán: ${ImInvoiceDetail.note}
+                                    <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">Ghi chú khi thanh toán: </span>${ImvoiceAndDistributor.note}</div>
                                 </div>
 
                                 <div class="col-12 col-sm-5 text-grey text-90 order-first order-sm-last">
@@ -161,7 +161,7 @@
                             <hr />
 
                             <div>
-                                <a href="#" class="btn btn-info btn-bold px-4 float-right mt-3 mt-lg-0">Edit</a>
+                                <a href="imImvoiceEdit?id=${ImvoiceAndDistributor.imInvoiceId}" class="btn btn-info btn-bold px-4 float-right mt-3 mt-lg-0">Edit</a>
                                 <br/>
                                 <br/>
                                 <br/>

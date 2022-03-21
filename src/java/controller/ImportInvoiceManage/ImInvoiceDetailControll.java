@@ -8,10 +8,7 @@ package controller.ImportInvoiceManage;
 import controller.OutputInvoice.OutputInvoiceControll;
 import dal.AccountDBContext;
 import dal.ImportInvoice.ImportInvoiceDBContext;
-import dal.ProductDBGetById;
-import dal.distributor.DistributorDBContext;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -70,9 +67,6 @@ public class ImInvoiceDetailControll extends HttpServlet {
 
             //invoice detail
             request.setAttribute("ListImInvoiceDetail", new ImportInvoiceDBContext().getListImInvoiceDetailById(Integer.parseInt(request.getParameter("id"))));
-
-//            //medice detail
-//            request.setAttribute("MedicineDetail", new ProductDBGetById().getMedicineById(Integer.parseInt(request.getParameter("id"))));
 
             request.getRequestDispatcher("view/Manage/ImportInvoiceManage/ImInvoiceDetail.jsp").forward(request, response);
 
