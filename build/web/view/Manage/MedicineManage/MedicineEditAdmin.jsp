@@ -86,25 +86,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="row mb-3">
-                                        <div class="col-sm-3">
-                                            <h6 class="mb-0">Nhà phân phối</h6>
-                                        </div>
-                                        <div class="col-sm-9 text-secondary">
-                                            <select name="disId" >
-                                                <c:forEach items="${AllDistributor}" var="d">
-                                                    <option 
-                                                        <c:if test="${MedicineDetail.distributor.distributorId eq d.distributorId}">
-                                                            selected="selected"
-                                                        </c:if>
-                                                        value="${d.distributorId}">${d.distributorName}</option> 
-                                                </c:forEach>
-
-                                                <option><a href="dsfsd">Khác</a></option>
-
-                                            </select> <br/> 
-                                        </div>
-                                    </div>
+                                    
                                     <div class="row mb-3">
                                         <div class="col-sm-3">
                                             <h6 class="mb-0">Ngày sản xuất</h6>

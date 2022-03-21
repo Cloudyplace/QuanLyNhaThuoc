@@ -183,9 +183,6 @@ public class ImportInvoiceDBContext extends DBContext {
     //insert many medicine
     public void insertManyImInvoiceDetail(List<ImportInvoiceDetail> list) {
         for (ImportInvoiceDetail detail : list) {
-            System.out.println(detail.getImportInvoice().getImInvoiceId());
-            System.out.println(detail.getMedicine().getMedicineId());
-            System.out.println(detail.getQuantity());
             insertImInvoiceDetail(detail);
         }
     }

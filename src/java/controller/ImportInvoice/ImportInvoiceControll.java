@@ -12,7 +12,6 @@ import dal.ImportInvoice.ImportInvoiceDBContext;
 import dal.MedicineDB;
 import dal.distributor.DistributorDBContext;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -25,9 +24,7 @@ import javax.servlet.http.HttpSession;
 import model.Distributor;
 import model.ImportInvoice;
 import model.ImportInvoiceDetail;
-import model.MedicalBox;
 import model.Medicine;
-import model.TypeMedicine;
 
 /**
  *
@@ -129,7 +126,6 @@ public class ImportInvoiceControll extends HttpServlet {
             int quantityInStock = importInvoiceDetail.getQuantity();
             Medicine medicine = importInvoiceDetail.getMedicine();
             medicine.setQuantityInStock(quantityInStock);
-            medicine.setDistributor(d);
             listMedicine.add(medicine);
 
         }

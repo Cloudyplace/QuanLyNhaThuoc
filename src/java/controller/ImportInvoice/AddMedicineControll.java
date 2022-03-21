@@ -119,6 +119,8 @@ public class AddMedicineControll extends HttpServlet {
         int quantity = Integer.parseInt(raw_Quantity);
         String image = raw_image;
         String note = raw_Note;
+        
+        System.out.println("image: "+image);
 
         TypeMedicine t = new TypeMedicine();
         t.setTypeId(typeId);

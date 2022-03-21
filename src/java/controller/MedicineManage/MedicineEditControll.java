@@ -11,8 +11,6 @@ import dal.MedicineDB;
 import dal.ProductDBGetById;
 import dal.distributor.DistributorDBContext;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.Date;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -78,7 +76,6 @@ public class MedicineEditControll extends HttpServlet {
         String raw_id = request.getParameter("id");
         String raw_name = request.getParameter("name");
         String raw_typeId = request.getParameter("typeId");
-        String raw_distributorId = request.getParameter("disId");
         String raw_ManufactureDate = request.getParameter("ManufactureDate");
         String raw_OutOfDate = request.getParameter("OutOfDate");
         String raw_InputPrice = request.getParameter("InputPrice");
@@ -92,7 +89,6 @@ public class MedicineEditControll extends HttpServlet {
         int id = Integer.parseInt(raw_id);
         String name = raw_name; //check length
         int typeId = Integer.parseInt(raw_typeId);
-        int distributorId = Integer.parseInt(raw_distributorId);
         String manufactureDate = raw_ManufactureDate;
         String outOfDate = raw_OutOfDate;
         int inputPrice = Integer.parseInt(raw_InputPrice);
@@ -103,8 +99,7 @@ public class MedicineEditControll extends HttpServlet {
         String image = raw_image;
         String note = raw_Note;
 
-        Distributor d = new Distributor();
-        d.setDistributorId(distributorId);
+
         TypeMedicine t = new TypeMedicine();
         t.setTypeId(typeId);
         MedicalBox b = new MedicalBox();
@@ -114,9 +109,8 @@ public class MedicineEditControll extends HttpServlet {
         m.setMedicineId(id);
         m.setMedicineName(name);
         m.setType(t);
-        m.setDistributor(d);
-        m.setManufactureDate(raw_ManufactureDate);
-        m.setOutOfDate(raw_OutOfDate);
+        m.setManufactureDate(manufactureDate);
+        m.setOutOfDate(outOfDate);
         m.setInputPrice(inputPrice);
         m.setPrice(price);
         m.setUnit(unit);

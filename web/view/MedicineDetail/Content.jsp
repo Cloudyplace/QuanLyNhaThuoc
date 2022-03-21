@@ -28,7 +28,6 @@
                         <h3 style="font-size: 28px;">
                             Tên thuốc: ${MedicineDetail.medicineName}</h3>
                         <h4>Loại thuốc: ${MedicineDetail.type.typeName}</h4>
-                        <h4>Nhà phân phối: ${MedicineDetail.distributor.distributorName}</h4>
                         <h4>Số lượng còn lại: ${MedicineDetail.quantityInStock}</h4>
                         <h4>NSX: ${MedicineDetail.manufactureDate}  HSD: ${MedicineDetail.outOfDate}</h4>
                         <h4>Vị trí: ${MedicineDetail.box.boxName}</h4>

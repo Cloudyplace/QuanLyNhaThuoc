@@ -69,15 +69,7 @@
                                         </div>
                                     </div>
                                     <hr>
-                                    <div class="row">
-                                        <div class="col-sm-3">
-                                            <h6 class="mb-0">Nhà phân phối</h6>
-                                        </div>
-                                        <div class="col-sm-9 text-secondary">
-                                            ${MedicineDetail.distributor.distributorName}
-                                        </div>
-                                    </div>
-                                    <hr>
+                                    
                                     <div class="row">
                                         <div class="col-sm-3">
                                             <h6 class="mb-0">Ngày sản xuất</h6>

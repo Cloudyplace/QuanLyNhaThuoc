@@ -12,9 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.Account;
-import model.Distributor;
-import model.ImportInvoice;
 import model.MedicalBox;
 import model.Medicine;
 import model.TypeMedicine;
@@ -62,10 +59,9 @@ public class MedicineDB extends DBContext {
 
     public List<Medicine> pagingMedicineManage(int index) {
         List<Medicine> list = new ArrayList<>();
-        String sql = "select MedicineId, MedicineName, t.TypeName, b.BoxName, d.DistributorName, Unit,InputPrice, Price, ManufactureDate, OutOfDate, m.image, m.QuantityInStock, m.Note\n"
+        String sql = "select MedicineId, MedicineName, t.TypeName, b.BoxName, Unit,InputPrice, Price, ManufactureDate, OutOfDate, m.image, m.QuantityInStock, m.Note\n"
                 + "from Medicine m inner join TypeOfMedicine t on m.TypeId = t.TypeId\n"
                 + "inner join MedicalBox b on m.BoxId = b.BoxId\n"
-                + "inner join Distributor d on m.DistributorId = d.DistributorId\n"
                 + "Order by MedicineId\n"
                 + "offset ? rows fetch next 10 rows only";
         try {
@@ -75,9 +71,9 @@ public class MedicineDB extends DBContext {
             while (rs.next()) {
                 list.add(new Medicine(rs.getInt(1), rs.getString(2),
                         new TypeMedicine(rs.getString(3)), new MedicalBox(rs.getString(4)),
-                        new Distributor(rs.getString(5)), rs.getString(6), rs.getInt(7), rs.getInt(8),
-                        rs.getString(9), rs.getString(10), rs.getString(11),
-                        rs.getInt(12), rs.getString(13)));
+                         rs.getString(5), rs.getInt(6), rs.getInt(7),
+                        rs.getString(8), rs.getString(9), rs.getString(10),
+                        rs.getInt(11), rs.getString(12)));
             }
         } catch (SQLException ex) {
             Logger.getLogger(MedicineDB.class.getName()).log(Level.SEVERE, null, ex);
@@ -139,7 +135,6 @@ public class MedicineDB extends DBContext {
                 + "   SET [MedicineName] = ?\n"
                 + "      ,[TypeId] = ?\n"
                 + "      ,[BoxId] = ?\n"
-                + "      ,[DistributorId] = ?\n"
                 + "      ,[Unit] = ?\n"
                 + "      ,[InputPrice] = ?\n"
                 + "      ,[Price] = ?\n"
@@ -153,19 +148,18 @@ public class MedicineDB extends DBContext {
         try {
             stm = connection.prepareStatement(sql);
 
-            stm.setInt(13, m.getMedicineId());
+            stm.setInt(12, m.getMedicineId());
             stm.setString(1, m.getMedicineName());
             stm.setInt(2, m.getType().getTypeId());
             stm.setInt(3, m.getBox().getBoxId());
-            stm.setInt(4, m.getDistributor().getDistributorId());
-            stm.setString(5, m.getUnit());
-            stm.setInt(6, m.getInputPrice());
-            stm.setInt(7, m.getPrice());
-            stm.setString(8, m.getManufactureDate());
-            stm.setString(9, m.getOutOfDate());
-            stm.setString(10, m.getImage());
-            stm.setInt(11, m.getQuantityInStock());
-            stm.setString(12, m.getNote());
+            stm.setString(4, m.getUnit());
+            stm.setInt(5, m.getInputPrice());
+            stm.setInt(6, m.getPrice());
+            stm.setString(7, m.getManufactureDate());
+            stm.setString(8, m.getOutOfDate());
+            stm.setString(9, m.getImage());
+            stm.setInt(10, m.getQuantityInStock());
+            stm.setString(11, m.getNote());
 
             stm.executeUpdate(); //INSERT UPDATE DELETE
         } catch (SQLException ex) {
@@ -199,7 +193,6 @@ public class MedicineDB extends DBContext {
                 + "           ([MedicineName]\n"
                 + "           ,[TypeId]\n"
                 + "           ,[BoxId]\n"
-                + "           ,[DistributorId]\n"
                 + "           ,[Unit]\n"
                 + "           ,[InputPrice]\n"
                 + "           ,[Price]\n"
@@ -209,7 +202,7 @@ public class MedicineDB extends DBContext {
                 + "           ,[QuantityInStock]\n"
                 + "           ,[Note])\n"
                 + "     VALUES\n"
-                + "           (?,?,?,?,?,?,?,?,?,?,?,?)";
+                + "           (?,?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement stm = null;
         try {
             stm = connection.prepareStatement(sql);
@@ -217,15 +210,14 @@ public class MedicineDB extends DBContext {
             stm.setString(1, m.getMedicineName());
             stm.setInt(2, m.getType().getTypeId());
             stm.setInt(3, m.getBox().getBoxId());
-            stm.setInt(4, m.getDistributor().getDistributorId());
-            stm.setString(5, m.getUnit());
-            stm.setInt(6, m.getInputPrice());
-            stm.setInt(7, m.getPrice());
-            stm.setString(8, m.getManufactureDate());
-            stm.setString(9, m.getOutOfDate());
-            stm.setString(10, m.getImage());
-            stm.setInt(11, m.getQuantityInStock());
-            stm.setString(12, m.getNote());
+            stm.setString(4, m.getUnit());
+            stm.setInt(5, m.getInputPrice());
+            stm.setInt(6, m.getPrice());
+            stm.setString(7, m.getManufactureDate());
+            stm.setString(8, m.getOutOfDate());
+            stm.setString(9, m.getImage());
+            stm.setInt(10, m.getQuantityInStock());
+            stm.setString(11, m.getNote());
 
             stm.executeUpdate(); //INSERT UPDATE DELETE
         } catch (SQLException ex) {
@@ -259,7 +251,11 @@ public class MedicineDB extends DBContext {
 
     public static void main(String[] args) {
         MedicineDB medicine = new MedicineDB();
-        System.out.println(medicine.getListMedicineIdInsertedNearest(2));
+        //System.out.println(medicine.);
+        List<Medicine> list = new MedicineDB().pagingMedicine(2);
+        for (Medicine m : list) {
+            System.out.println(m);
+        }
     }
 
 }
