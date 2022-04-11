@@ -16,6 +16,16 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.bundle.min.js"></script>
         <title>Quản lý nhà phân phối</title>
+        <style>
+            a#addNewDistributor{
+                border-style: solid;
+                padding: 5px;
+                float: right;
+                    color: black;
+                    background: greenyellow;
+            }
+            
+        </style>
     </head>
     <body>
 
@@ -33,7 +43,7 @@
                     <div class="col-xl-12">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="header-title pb-3 mt-0">Quản lý nhà phân phối</h5>
+                                <h5 class="header-title pb-3 mt-0">Quản lý nhà phân phối</h5><a id="addNewDistributor"href="DistributorInsert">Thêm mới nhà phân phối</a>
                                 <div class="table-responsive">
                                     <table class="table table-hover mb-0">
                                         <thead>
@@ -66,7 +76,7 @@
                                                             <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
                                                         </span>
                                                     </a>
-                                                    <a href="#" class="table-link danger">
+                                                    <a href="DistributorDelete?id=${o.distributorId}" onclick="return confirm('Are you sure you want to delete this item?');" class="table-link">
                                                         <span class="fa-stack">
                                                             <i class="fa fa-square fa-stack-2x"></i>
                                                             <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>

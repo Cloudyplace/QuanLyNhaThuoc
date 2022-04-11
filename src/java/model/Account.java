@@ -32,6 +32,23 @@ public class Account {
         this.fullName = fullName;
     }
 
+    public Account(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    public Account(int accountID, String fullName, Role role) {
+        this.accountID = accountID;
+        this.fullName = fullName;
+        this.role = role;
+    }
+
+    public Account(int accountID, Role role) {
+        this.accountID = accountID;
+        this.role = role;
+    }
+
+    
     
     public Account(int accountID, String username, String password, String fullName, String address, String email, String phone, Role role) {
         this.accountID = accountID;

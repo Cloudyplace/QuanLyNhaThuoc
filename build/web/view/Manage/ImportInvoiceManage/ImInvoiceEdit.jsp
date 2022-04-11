@@ -159,7 +159,7 @@
                                 <hr />
 
                                 <div>
-                                    <input type="submit" value="Update" class="btn btn-info btn-bold px-4 float-right mt-3 mt-lg-0">
+                                    <input type="submit" value="Cập nhật" class="btn btn-info btn-bold px-4 float-right mt-3 mt-lg-0">
                                     <br/>
                                     <br/>
                                     <br/>

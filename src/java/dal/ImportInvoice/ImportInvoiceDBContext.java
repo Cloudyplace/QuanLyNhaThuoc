@@ -20,6 +20,7 @@ import model.Distributor;
 import model.ImportInvoice;
 import model.ImportInvoiceDetail;
 import model.Medicine;
+import model.OutputInvoiceDetail;
 
 /**
  *
@@ -47,7 +48,7 @@ public class ImportInvoiceDBContext extends DBContext {
         List<ImportInvoice> list = new ArrayList<>();
         String sql = "select i.ImInvoiceId, i.ImDate, i.TotalMoney,i.Note,d.DistributorName "
                 + "from ImportInvoice i inner join Distributor d on i.DistributorId=d.DistributorId\n"
-                + "Order by ImInvoiceId offset ? rows fetch next 10 rows only";
+                + "Order by ImInvoiceId desc offset ? rows fetch next 10 rows only";
         try {
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, (index - 1) * 10);
@@ -137,6 +138,42 @@ public class ImportInvoiceDBContext extends DBContext {
         return null;
     }
 
+    // get imDetail by imId
+    public List<ImportInvoiceDetail> getListImDetailByImId(ImportInvoice importInvoice) {
+        List<ImportInvoiceDetail> list = new ArrayList<>();
+        String sql = "SELECT ImDetailId\n"
+                + "  FROM [ImportInvoiceDetail] where ImInvoiceId = ?";
+        try {
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, importInvoice.getImInvoiceId());
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                list.add(new ImportInvoiceDetail(rs.getInt(1)));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ImportInvoiceDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+
+    //get list invoice by dis id
+    public List<ImportInvoice> getListImInvoiceByDisId(int disId) {
+        List<ImportInvoice> list = new ArrayList<>();
+        try {
+            String sql = "SELECT [ImInvoiceId]\n"
+                    + "  FROM [ImportInvoice] where DistributorId = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, disId);
+            ResultSet rs = stm.executeQuery();
+            while(rs.next()) {
+                list.add(new ImportInvoice(rs.getInt(1)));
+            }
+        } catch (SQLException ex) {
+
+        }
+        return list;
+    }
+
     public void insertImportInvoice(ImportInvoice i) {
         String sql = "INSERT INTO [ImportInvoice]\n"
                 + "           ([DistributorId]\n"
@@ -159,7 +196,36 @@ public class ImportInvoiceDBContext extends DBContext {
         }
     }
 
-    //insert 1 imInvoice detail
+    public void deleteImportInvoice(ImportInvoice i) {
+        String sql = "DELETE FROM [ImportInvoice]\n"
+                + "      WHERE ImInvoiceId = ?";
+        PreparedStatement stm = null;
+        try {
+            stm = connection.prepareStatement(sql);
+
+            stm.setInt(1, i.getImInvoiceId());
+
+            stm.executeUpdate(); //INSERT UPDATE DELETE
+        } catch (SQLException ex) {
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ImportInvoiceDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ImportInvoiceDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
+
+//insert 1 imInvoice detail
     public void insertImInvoiceDetail(ImportInvoiceDetail iid) {
         String sql = "INSERT INTO [ImportInvoiceDetail]\n"
                 + "           ([ImInvoiceId]\n"
@@ -177,6 +243,33 @@ public class ImportInvoiceDBContext extends DBContext {
 
             stm.executeUpdate(); //INSERT UPDATE DELETE
         } catch (SQLException ex) {
+
+        }
+    }
+
+    public void deleteImportInvoiceDetail(ImportInvoiceDetail iid) {
+        String sql = "DELETE FROM [ImportInvoiceDetail]\n"
+                + "      WHERE ImDetailId = ?";
+        PreparedStatement stm = null;
+        try {
+            stm = connection.prepareStatement(sql);
+
+            stm.setInt(1, iid.getImInvoiceDetailId());
+
+            stm.executeUpdate(); //INSERT UPDATE DELETE
+        } catch (SQLException ex) {
+        }
+    }
+
+    public void deleteManyImInvoiceDetail(List<ImportInvoiceDetail> listImInvoiceDetailId) {
+        for (ImportInvoiceDetail iid : listImInvoiceDetailId) {
+            deleteImportInvoiceDetail(iid);
+        }
+    }
+
+    public void deleteManyImInvoice(List<ImportInvoice> listImInvoice) {
+        for (ImportInvoice i : listImInvoice) {
+            deleteImportInvoice(i);
         }
     }
 
@@ -201,10 +294,12 @@ public class ImportInvoiceDBContext extends DBContext {
             stm.setInt(1, i.getDistributor().getDistributorId());
             stm.setString(2, i.getImDate());
             stm.setString(3, i.getNote());
-            
+
             stm.executeUpdate(); //INSERT UPDATE DELETE
+
         } catch (SQLException ex) {
-            Logger.getLogger(ImportInvoiceDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ImportInvoiceDBContext.class
+                    .getName()).log(Level.SEVERE, null, ex);
         } finally {
             if (stm != null) {
                 try {
@@ -222,11 +317,33 @@ public class ImportInvoiceDBContext extends DBContext {
 
     }
 
+    public List<ImportInvoiceDetail> getListImInvoiceByMedId(int medicineId) {
+        List<ImportInvoiceDetail> list = new ArrayList<>();
+        try {
+            String sql = "SELECT [ImDetailId]\n"
+                    + "  FROM [ImportInvoiceDetail] where MedicineId = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, medicineId);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                list.add(new ImportInvoiceDetail(rs.getInt(1)));
+            }
+        } catch (SQLException ex) {
+
+        }
+        return list;
+
+    }
+    
+    
+
     public static void main(String[] args) {
         ImportInvoiceDBContext imInvoice = new ImportInvoiceDBContext();
-        List<ImportInvoiceDetail> list = new ArrayList<>();
-        list.add(new ImportInvoiceDetail(new ImportInvoice(18), new Medicine(8), 5));
-        list.add(new ImportInvoiceDetail(new ImportInvoice(17), new Medicine(3000), 5));
-        imInvoice.insertManyImInvoiceDetail(list);
+        List<ImportInvoiceDetail> list = imInvoice.getListImInvoiceByMedId(13);
+        for (ImportInvoiceDetail i : list) {
+            System.out.println(i);
+        }
     }
+
+    
 }

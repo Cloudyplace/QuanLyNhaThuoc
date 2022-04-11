@@ -161,7 +161,7 @@
                             <hr />
 
                             <div>
-                                <a href="imImvoiceEdit?id=${ImvoiceAndDistributor.imInvoiceId}" class="btn btn-info btn-bold px-4 float-right mt-3 mt-lg-0">Edit</a>
+                                <a href="imImvoiceEdit?id=${ImvoiceAndDistributor.imInvoiceId}" class="btn btn-info btn-bold px-4 float-right mt-3 mt-lg-0">Chỉnh sửa</a>
                                 <br/>
                                 <br/>
                                 <br/>

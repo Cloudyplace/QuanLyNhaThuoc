@@ -6,6 +6,7 @@
 package controller.ImportInvoice;
 
 import static controller.ImportInvoice.AddMedicineControll.LISTMEDICINE;
+import dal.AccountDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.Account;
 
 /**
  *
@@ -32,12 +34,24 @@ public class ClearMedicineControll extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        //clear
+        //check session
         HttpSession session = request.getSession();
-        session.removeAttribute("listImInvoiceDetail");
-        AddMedicineControll.LISTMEDICINE.removeAll(LISTMEDICINE);
+        if (session.getAttribute("username") == null) {// set login
+            response.sendRedirect("login");
+        } else {
+            Account account = new AccountDBContext().getUser(session.getAttribute("username").toString(), session.getAttribute("password").toString());
+            if (account.getRole().getRoleId() == 2) {
+                response.sendRedirect("AccessDenied");
+            } else {
+                //profileUser
+                request.setAttribute("profileUser", account);
+                //clear
+                session.removeAttribute("listImInvoiceDetail");
+                AddMedicineControll.LISTMEDICINE.removeAll(LISTMEDICINE);
 
-        response.sendRedirect("ImportInvoice");
+                response.sendRedirect("ImportInvoice");
+            }
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

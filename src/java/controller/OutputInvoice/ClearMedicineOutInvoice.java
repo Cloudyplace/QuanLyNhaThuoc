@@ -6,6 +6,7 @@
 package controller.OutputInvoice;
 
 import static controller.OutputInvoice.AddMedicineOutInvocie.LIST_MEDICINE_OUTINVOICE;
+import dal.AccountDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.Account;
 
 /**
  *
@@ -32,13 +34,23 @@ public class ClearMedicineOutInvoice extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        //clear
+        //check session
         HttpSession session = request.getSession();
-        session.removeAttribute("listOutInvoiceDetail");
-        AddMedicineOutInvocie.LIST_MEDICINE_OUTINVOICE.removeAll(LIST_MEDICINE_OUTINVOICE);
+        if (session.getAttribute("username") == null) {// set login
+            response.sendRedirect("login");
+        } else {
+            Account account = new AccountDBContext().getUser(session.getAttribute("username").toString(), session.getAttribute("password").toString());
 
-        response.sendRedirect("OutputInvoice");
+            //profileUser
+            request.setAttribute("profileUser", account);
+            //clear
+
+            session.removeAttribute("listOutInvoiceDetail");
+            AddMedicineOutInvocie.LIST_MEDICINE_OUTINVOICE.removeAll(LIST_MEDICINE_OUTINVOICE);
+
+            response.sendRedirect("OutputInvoice");
+        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

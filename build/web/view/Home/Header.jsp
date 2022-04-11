@@ -94,7 +94,9 @@
             {
                 font-weight: bold;
                 display: flex;
-                justify-content: space-between
+                justify-content: space-between;
+                margin-top: 19px;
+                margin-left: -47px;
             }
             #collection a
             {
@@ -112,6 +114,7 @@
                 min-width: 25px;
                 text-align: center;
                 position: absolute;
+                margin-top: 10px
             }
             #input 
             {
@@ -121,6 +124,7 @@
                 background-color: rgb(241, 241, 241);
                 border: none;
                 border-radius: 5px;
+                margin-top: 10px;
             }
             #input::placeholder
             {
@@ -140,17 +144,22 @@
         <section>
             <!-- MAIN CONTAINER -->
             <div id="container">
-                <div>
-                    <img class="logo" src="image/logo.PNG" alt=""/>
-                </div>
+                <a href="home">
+                    <div>
+                        <img class="logo" src="image/logo.PNG" alt=""/>
+                    </div>
+                </a>
+
                 <!-- SHOP NAME -->
                 <div style="color: black;
                      font-size: 20px; 
                      font-family: 'Lato', sans-serif;
                      font-weight: 600;
-                     font: black;">
-                    
-                    <a style=" text-decoration: none;"href="home"> <b>NHÀ THUỐC 304</b></a>
+                     color: green;
+                     margin-top: 16px;
+                     margin-left: -58px;">
+
+                    <a style=" text-decoration: none;" href="home"> <b>NHÀ THUỐC 304</b></a>
                 </div>
                 <!-- COLLCETIONS ON WEBSITE -->
                 <div id="collection">
@@ -168,16 +177,19 @@
                             <a href="distributormanage">Quản lý nhà phân phối</a>
                             <a href="importInvoiceManage">Quản lý hóa đơn nhập</a>
                             <a href="outputInvoiceManage">Quản lý hóa đơn bán</a>
-                            <a href="medicalBoxManage">Quản lý vị trí thuốc</a>
-                            <a href="#">Quản lý nhân viên</a>
+                            <a href="AccountManage">Quản lý nhân viên</a>
                         </div>
                     </div>
                     <div>Doanh Thu</div>
                 </div>
                 <!-- SEARCH SECTION -->
                 <div id="search">
-                    <i class="fas fa-search search"></i>
-                    <input type="text" id="input" name="searchBox" placeholder="Search Medicine">
+                    <form action="searchMedicine" method="POST">
+                        <i class="fas fa-search search"></i>
+
+                        <input oninput="searchByName(this)" type="text" id="input" name="txtsearch" value="${txtS}" placeholder="Tìm kiếm thuốc">
+                        <input style="display: none" type="submit"> 
+                    </form>
                 </div>
                 <!-- USER SECTION (CART AND USER ICON) -->
                 <div id="user">
@@ -197,6 +209,23 @@
             </div>
 
         </section>
+<!--        <script>
+            function searchByName(param){
+                var txtSearch = param.value;
+                $.ajax({
+                    url: "/ProjectPrj_QuanLyNhaThuoc/searchAjax",
+                    type: "GET",
+                    data: {
+                        txtsearch = txtSearch
+                    },
+                    success: function (data) {
+                        var row = document.getElementById()
+                    }
+                    
+                })
+            } 
+
+        </script>-->
     </header>
 
 </body>

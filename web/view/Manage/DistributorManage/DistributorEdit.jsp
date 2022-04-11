@@ -82,7 +82,7 @@
                                             <h6 class="mb-0">Số điện thoại</h6>
                                         </div>
                                         <div class="col-sm-9 text-secondary">
-                                            <input type="text" class="form-control"  name="phone" value="${DistributorDetail.phone}"  VND>
+                                            <input type="number" class="form-control"  name="phone" value="${DistributorDetail.phone}"  VND>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
@@ -97,7 +97,7 @@
                                     <div class="row">
                                         <div class="col-sm-3"></div>
                                         <div class="col-sm-9 text-secondary">
-                                            <input type="submit" class="btn btn-primary px-4" value="Save Changes">
+                                            <input type="submit" class="btn btn-primary px-4" value="Cập nhật">
                                         </div>
                                     </div>
                                 </form>

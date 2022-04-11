@@ -145,7 +145,7 @@
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <a class="btn btn-info " target="__blank"
-                                               href="medicineedit?id=${MedicineDetail.medicineId}">Edit</a>
+                                               href="medicineedit?id=${MedicineDetail.medicineId}">Chỉnh sửa</a>
                                         </div>
                                     </div>
                                 </div>

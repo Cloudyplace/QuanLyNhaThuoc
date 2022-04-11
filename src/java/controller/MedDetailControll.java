@@ -8,16 +8,13 @@ package controller;
 import controller.OutputInvoice.OutputInvoiceControll;
 import dal.AccountDBContext;
 import dal.MedicineDB;
-import dal.ProductDBGetById;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.Medicine;
 
 /**
  *
@@ -54,13 +51,8 @@ public class MedDetailControll extends HttpServlet {
             }
             request.setAttribute("outInvoiceDetailSize", size);
             
-            request.setAttribute("MedicineDetail", new ProductDBGetById().getMedicineById(Integer.parseInt(request.getParameter("id"))));
-//            int typeId = ((Medicine) request.getAttribute("MedicineDetail")).getTypeId();
-//            request.setAttribute("typeName", new ProductDBGetById().getTypeNameByTypeId(typeId));
-//            int distributorId = ((Medicine) request.getAttribute("MedicineDetail")).getDistributorId();
-//            request.setAttribute("distributorName", new ProductDBGetById().getDistributorNameByDistributorId(distributorId));
-//            int boxId = ((Medicine) request.getAttribute("MedicineDetail")).getBoxId();
-//            request.setAttribute("boxName", new ProductDBGetById().getBoxNameByBoxId(boxId));
+            request.setAttribute("MedicineDetail", new MedicineDB().getMedicineById(Integer.parseInt(request.getParameter("id"))));
+            
             request.getRequestDispatcher("view/MedicineDetail/MedicineDetail.jsp").forward(request, response);
         }
     }

@@ -51,17 +51,15 @@
                                         <div>
                                             <span class="text-sm text-grey-m2 align-middle">Nhà phân phối:</span>
                                             <span class="text-600 text-90 text-blue align-middle">
-                                                <select name="disId" >
-                                                    <option><a style="align-items: center">---</a></option>
+                                                <select name="disId">
                                                 <c:forEach items="${AllDistributor}" var="d">
                                                     <option 
                                                         value="${d.distributorId}">${d.distributorName}</option> 
                                                 </c:forEach>
-                                                <option><a href="dsfsd">Khác</a></option>
-
                                             </select>
                                         </span>
                                     </div>
+                                        <a href="DistributorInsert">Thêm mới nhà phân phối</a>
 
                                 </div>
                                 <!-- /.col -->
@@ -74,12 +72,13 @@
                                         </div>
 
 
-                                        <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">Ngày phát hành:</span><input type="date" name="imDate"/></div>
+                                        <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">Ngày phát hành:</span><input type="date" name="imDate" required=""/></div>
 
                                     </div>
                                 </div>
                                 <!-- /.col -->
                             </div>
+
 
                             <div class="mt-4">
                                 <div class="row text-600 text-white bgc-default-tp1 py-25">
@@ -95,7 +94,7 @@
                                     int i = 1;
                                     request.setAttribute("i", i);
                                 %>
-                                
+
                                 <c:forEach items="${listImInvoiceDetail}" var="m">
                                     <div class="text-95 text-secondary-d3">
                                         <div class="row mb-2 mb-sm-0 py-25">
@@ -106,19 +105,14 @@
                                             <div class="d-none d-sm-block col-2 text-95">${m.medicine.inputPrice}</div>
                                             <div class="col-1 text-secondary-d2 price">${m.quantity*m.medicine.inputPrice}</div>
                                             <div class="d-none d-sm-block col-2">
-                                                <a class="table-link" href="#">
-                                                    <span class="fa-stack">
-                                                        <i class="fa fa-square fa-stack-2x"></i>
-                                                        <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
-                                                    </span>
-                                                </a>
-                                                <a href="#" class="table-link">
+
+                                                <a href="ChangeImInvoiceDetail?action=edit&index=${i}" class="table-link">
                                                     <span class="fa-stack">
                                                         <i class="fa fa-square fa-stack-2x"></i>
                                                         <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
                                                     </span>
                                                 </a>
-                                                <a href="#" class="table-link danger">
+                                                <a href="ChangeImInvoiceDetail?action=delete&index=${i}" class="table-link danger">
                                                     <span class="fa-stack">
                                                         <i class="fa fa-square fa-stack-2x"></i>
                                                         <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
@@ -184,7 +178,7 @@
                                 <hr />
 
                                 <div>
-                                    <input type="submit" class="btn btn-info btn-bold px-4 float-right mt-3 mt-lg-0" value="Create">
+                                    <input type="submit" class="btn btn-info btn-bold px-4 float-right mt-3 mt-lg-0" value="Tạo">
                                     <br/>
                                     <br/>
                                     <br/>
@@ -197,6 +191,7 @@
             </div>
         </form>
         <script>
+
             var price = document.getElementsByClassName('price');
             var totalPrice = document.getElementsByClassName('totalPrice');
             var sum = 0;

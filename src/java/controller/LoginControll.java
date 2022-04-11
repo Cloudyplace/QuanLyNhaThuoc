@@ -53,7 +53,7 @@ public class LoginControll extends HttpServlet {
         if (db.checkExits(user, pass)) {
             session.setAttribute("username", user);
             session.setAttribute("password", pass);
-            session.setMaxInactiveInterval(60*30);
+            session.setMaxInactiveInterval(60*20);
             response.sendRedirect("home");
         } else {
             request.setAttribute("ErrorLogin", "Lỗi: Tài khoản hoặc mật khẩu không chính xác =)");

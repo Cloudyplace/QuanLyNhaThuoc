@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.Account;
 import model.Distributor;
 import model.ImportInvoice;
 import model.ImportInvoiceDetail;
@@ -53,36 +54,41 @@ public class ImportInvoiceControll extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        //check session
         HttpSession session = request.getSession();
         if (session.getAttribute("username") == null) {// set login
             response.sendRedirect("login");
         } else {
-            //profileUser
-            request.setAttribute("profileUser", new AccountDBContext().getUser(session.getAttribute("username").toString(), session.getAttribute("password").toString()));
+            Account account = new AccountDBContext().getUser(session.getAttribute("username").toString(), session.getAttribute("password").toString());
+            if (account.getRole().getRoleId() == 2) {
+                response.sendRedirect("AccessDenied");
+            } else {
+                //profileUser
+                request.setAttribute("profileUser", account);
 
-            //listOutInvoiceDetail size
-            int size = 0;
-            try {
-                List<OutputInvoiceControll> listOutInvoiceDetail = (List<OutputInvoiceControll>) session.getAttribute("listOutInvoiceDetail");
-                size = listOutInvoiceDetail.size();
+                //listOutInvoiceDetail size
+                int size = 0;
+                try {
+                    List<OutputInvoiceControll> listOutInvoiceDetail = (List<OutputInvoiceControll>) session.getAttribute("listOutInvoiceDetail");
+                    size = listOutInvoiceDetail.size();
 
-            } catch (Exception e) {
-            }
-            request.setAttribute("outInvoiceDetailSize", size);
-            
-            //distributor
-            request.setAttribute("AllDistributor", new DistributorDBContext().getAllDistributor());
+                } catch (Exception e) {
+                }
+                request.setAttribute("outInvoiceDetailSize", size);
+
+                //distributor
+                request.setAttribute("AllDistributor", new DistributorDBContext().getAllDistributor());
 
 //            // get invoice id max
 //            request.setAttribute("IdMax", new ImportInvoiceDBContext().getImInvoiceIdMax());
+                List<ImportInvoiceDetail> listImInvoiceDetail = (List<ImportInvoiceDetail>) session.getAttribute("listImInvoiceDetail");
+                request.setAttribute("listImInvoiceDetail", listImInvoiceDetail);
 
-            List<ImportInvoiceDetail> listImInvoiceDetail = (List<ImportInvoiceDetail>) session.getAttribute("listImInvoiceDetail");
-            request.setAttribute("listImInvoiceDetail", listImInvoiceDetail);
+                request.getRequestDispatcher("view/Invoice/ImportInvoice/ImportInvoice.jsp").forward(request, response);
 
-            request.getRequestDispatcher("view/Invoice/ImportInvoice/ImportInvoice.jsp").forward(request, response);
+            }
 
         }
-
     }
 
     /**
@@ -108,60 +114,63 @@ public class ImportInvoiceControll extends HttpServlet {
         //set import invoice
         String imDate = request.getParameter("imDate");
         String totalMoney = request.getParameter("totalMoney");
-        String note = request.getParameter("note");
+        if (totalMoney.equals("0")) {
+            response.sendRedirect("home");
+        } else {
+            String note = request.getParameter("note");
 
-        ImportInvoice i = new ImportInvoice();
-        i.setDistributor(d);
-        i.setImDate(imDate);
-        i.setTotalMoney(totalMoney);
-        i.setNote(note);
+            ImportInvoice i = new ImportInvoice();
+            i.setDistributor(d);
+            i.setImDate(imDate);
+            i.setTotalMoney(totalMoney);
+            i.setNote(note);
 
-        //set Medicine
-        HttpSession session = request.getSession();
-        List<ImportInvoiceDetail> listImInvoiceDetail = (List<ImportInvoiceDetail>) session.getAttribute("listImInvoiceDetail");
-        List<Medicine> listMedicine = new ArrayList<>();
+            //set Medicine
+            HttpSession session = request.getSession();
+            List<ImportInvoiceDetail> listImInvoiceDetail = (List<ImportInvoiceDetail>) session.getAttribute("listImInvoiceDetail");
+            List<Medicine> listMedicine = new ArrayList<>();
 
-        for (ImportInvoiceDetail importInvoiceDetail : listImInvoiceDetail) {
-            //set thêm những cái thiếu trong Medicine
-            int quantityInStock = importInvoiceDetail.getQuantity();
-            Medicine medicine = importInvoiceDetail.getMedicine();
-            medicine.setQuantityInStock(quantityInStock);
-            listMedicine.add(medicine);
+            for (ImportInvoiceDetail importInvoiceDetail : listImInvoiceDetail) {
+                //set thêm những cái thiếu trong Medicine
+                int quantityInStock = importInvoiceDetail.getQuantity();
+                Medicine medicine = importInvoiceDetail.getMedicine();
+                medicine.setQuantityInStock(quantityInStock);
+                listMedicine.add(medicine);
 
+            }
+
+            MedicineDB medicineDB = new MedicineDB();
+            medicineDB.insertManyMedicine(listMedicine);
+
+            ImportInvoiceDBContext importInvoiceDB = new ImportInvoiceDBContext();
+            importInvoiceDB.insertImportInvoice(i);
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(ImportInvoiceControll.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            ImportInvoice ii = new ImportInvoiceDBContext().getImInvoiceMaxId();
+            int size = listImInvoiceDetail.size();
+            List<Integer> listMedicineId = medicineDB.getListMedicineIdInsertedNearest(size);
+
+            int k = listMedicineId.size();
+            for (ImportInvoiceDetail importInvoiceDetail : listImInvoiceDetail) {
+                //set invoiceId in detail
+                importInvoiceDetail.setImportInvoice(ii);
+                //set medicineId in detail
+                Medicine m = importInvoiceDetail.getMedicine();
+                m.setMedicineId(listMedicineId.get(k - 1));
+
+                k--;
+            }
+
+            importInvoiceDB.insertManyImInvoiceDetail(listImInvoiceDetail);
+
+            session.removeAttribute("listImInvoiceDetail");
+            AddMedicineControll.LISTMEDICINE.removeAll(LISTMEDICINE);
+            response.sendRedirect("ImportInvoice");
         }
-
-        MedicineDB medicineDB = new MedicineDB();
-        medicineDB.insertManyMedicine(listMedicine);
-
-        ImportInvoiceDBContext importInvoiceDB = new ImportInvoiceDBContext();
-        importInvoiceDB.insertImportInvoice(i);
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(ImportInvoiceControll.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        ImportInvoice ii = new ImportInvoiceDBContext().getImInvoiceMaxId();
-        int size = listImInvoiceDetail.size();
-        List<Integer> listMedicineId = medicineDB.getListMedicineIdInsertedNearest(size);
-
-        int k = listMedicineId.size();
-        for (ImportInvoiceDetail importInvoiceDetail : listImInvoiceDetail) {
-            //set invoiceId in detail
-            importInvoiceDetail.setImportInvoice(ii);
-            //set medicineId in detail
-            Medicine m = importInvoiceDetail.getMedicine();
-            m.setMedicineId(listMedicineId.get(k - 1));
-
-            k--;
-        }
-
-        importInvoiceDB.insertManyImInvoiceDetail(listImInvoiceDetail);
-
-        session.removeAttribute("listImInvoiceDetail");
-        AddMedicineControll.LISTMEDICINE.removeAll(LISTMEDICINE);
-        response.sendRedirect("ImportInvoice");
-
     }
 
     /**

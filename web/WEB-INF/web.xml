@@ -69,10 +69,6 @@
         <servlet-class>controller.DistributorManage.MedicineOfDistributor</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>DistributorEditControll</servlet-name>
-        <servlet-class>controller.DistributorManage.DistributorEditControll</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>ImportInvoiceControll</servlet-name>
         <servlet-class>controller.ImportInvoice.ImportInvoiceControll</servlet-class>
     </servlet>
@@ -115,6 +111,54 @@
     <servlet>
         <servlet-name>OutputInvoiceEdit</servlet-name>
         <servlet-class>controller.OutputInvoiceManage.OutputInvoiceEdit</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DistributorEditControll</servlet-name>
+        <servlet-class>controller.DistributorManage.DistributorEditControll</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteMedicineOutInvoice</servlet-name>
+        <servlet-class>controller.OutputInvoice.DeleteMedicineOutInvoice</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ChangeImInvoiceDetail</servlet-name>
+        <servlet-class>controller.ImportInvoice.ChangeImInvoiceDetail</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DistributorInsertControll</servlet-name>
+        <servlet-class>controller.DistributorManage.DistributorInsertControll</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DistributorDeleteControll</servlet-name>
+        <servlet-class>controller.DistributorManage.DistributorDeleteControll</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MedicineDeleteControll</servlet-name>
+        <servlet-class>controller.MedicineManage.MedicineDeleteControll</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>searchAjax</servlet-name>
+        <servlet-class>controller.searchAjax</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>searchMedicineControll</servlet-name>
+        <servlet-class>controller.searchMedicineControll</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AccessDenied</servlet-name>
+        <servlet-class>controller.AccessDenied</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SuccessCheckOut</servlet-name>
+        <servlet-class>controller.OutputInvoice.SuccessCheckOut</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EmployeeManage</servlet-name>
+        <servlet-class>controller.EmployeeManage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AccountManage</servlet-name>
+        <servlet-class>controller.AccountManage.AccountManage</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>HomeControll</servlet-name>
@@ -181,10 +225,6 @@
         <url-pattern>/MedicineOfDistributor</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>DistributorEditControll</servlet-name>
-        <url-pattern>/DistributorEdit</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>ImportInvoiceControll</servlet-name>
         <url-pattern>/ImportInvoice</url-pattern>
     </servlet-mapping>
@@ -231,6 +271,54 @@
     <servlet-mapping>
         <servlet-name>OutputInvoiceEdit</servlet-name>
         <url-pattern>/outputInvoiceEdit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DistributorEditControll</servlet-name>
+        <url-pattern>/DistributorEdit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteMedicineOutInvoice</servlet-name>
+        <url-pattern>/DeleteMedicineOutInvoice</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChangeImInvoiceDetail</servlet-name>
+        <url-pattern>/ChangeImInvoiceDetail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DistributorInsertControll</servlet-name>
+        <url-pattern>/DistributorInsert</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DistributorDeleteControll</servlet-name>
+        <url-pattern>/DistributorDelete</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MedicineDeleteControll</servlet-name>
+        <url-pattern>/MedicineDelete</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>searchAjax</servlet-name>
+        <url-pattern>/searchAjax</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>searchMedicineControll</servlet-name>
+        <url-pattern>/searchMedicine</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AccessDenied</servlet-name>
+        <url-pattern>/AccessDenied</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SuccessCheckOut</servlet-name>
+        <url-pattern>/SuccessCheckOut</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EmployeeManage</servlet-name>
+        <url-pattern>/EmployeeManage</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AccountManage</servlet-name>
+        <url-pattern>/AccountManage</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

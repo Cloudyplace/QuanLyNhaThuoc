@@ -85,11 +85,11 @@
             <!--phan trang-->
             <div class="tagPage">
                 <div class="tag">
-                    <a class="" href="distributormanage?indexPage=${tagPage==i?"active":""}"><</a> 
+                    
                     <c:forEach begin="1" end="${endPage}" var="i">
-                        <a class="${tagPage==i?"active":""}" href="distributormanage?indexPage=${i}"> ${i}</a> <!--chon the nao thi the aay mang active-->
+                        <a class="${tagPage==i?"active":""}" href="outputInvoiceManage?indexPage=${i}"> ${i}</a> <!--chon the nao thi the aay mang active-->
                     </c:forEach>
-                    <a class="" href="distributormanage?indexPage=${i}">></a> 
+                    
                 </div>
             </div>
         </div>

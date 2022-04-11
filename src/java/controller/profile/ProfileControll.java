@@ -6,15 +6,15 @@
 package controller.profile;
 
 import dal.AccountDBContext;
-import dal.ProductDBGetById;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Account;
+import model.OutputInvoiceDetail;
 
 /**
  *
@@ -40,11 +40,16 @@ public class ProfileControll extends HttpServlet {
         } else {//profileUser
             request.setAttribute("profileUser", new AccountDBContext().getUser(session.getAttribute("username").toString(), session.getAttribute("password").toString()));
 
-            request.setAttribute("profileUser", new AccountDBContext().getUser(session.getAttribute("username").toString(), session.getAttribute("password").toString()));
+            //listOutInvoiceDetail size
+            int size = 0;
+            try {
+                List<OutputInvoiceDetail> listOutInvoiceDetail = (List<OutputInvoiceDetail>) session.getAttribute("listOutInvoiceDetail");
+                size = listOutInvoiceDetail.size();
 
-            //get roleName by roleId
-            Account account = new AccountDBContext().getUser(session.getAttribute("username").toString(), session.getAttribute("password").toString());
-            
+            } catch (Exception e) {
+            }
+            request.setAttribute("outInvoiceDetailSize", size);
+
             request.getRequestDispatcher("view/Profile/profile.jsp").forward(request, response);
         }
 

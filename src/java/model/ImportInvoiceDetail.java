@@ -10,12 +10,17 @@ package model;
  * @author cloudy_place
  */
 public class ImportInvoiceDetail {
+
     private int imInvoiceDetailId;
     private ImportInvoice importInvoice;
     private Medicine medicine;
     private int quantity;
 
     public ImportInvoiceDetail() {
+    }
+
+    public ImportInvoiceDetail(int imInvoiceDetailId) {
+        this.imInvoiceDetailId = imInvoiceDetailId;
     }
 
     public ImportInvoiceDetail(int imInvoiceDetailId, ImportInvoice importInvoice, Medicine medicine, int quantity) {
@@ -46,8 +51,6 @@ public class ImportInvoiceDetail {
         this.medicine = medicine;
         this.quantity = quantity;
     }
-    
-    
 
     public Medicine getMedicine() {
         return medicine;
@@ -70,13 +73,4 @@ public class ImportInvoiceDetail {
         return "ImportInvoiceDetail{" + "imInvoiceDetailId=" + imInvoiceDetailId + ", importInvoice=" + importInvoice + ", medicine=" + medicine + ", quantity=" + quantity + '}';
     }
 
-   
-    
-
-    
-    
-
-    
-    
-    
 }

@@ -7,12 +7,14 @@ package controller.profile;
 
 import dal.AccountDBContext;
 import java.io.IOException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Account;
+import model.OutputInvoiceDetail;
 import model.Role;
 
 /**
@@ -42,8 +44,15 @@ public class ProfileEditControll extends HttpServlet {
             //profileUser
             request.setAttribute("profileUser", new AccountDBContext().getUser(session.getAttribute("username").toString(), session.getAttribute("password").toString()));
 
-            //get roleName by roleId
-            Account account = new AccountDBContext().getUser(session.getAttribute("username").toString(), session.getAttribute("password").toString());
+            //listOutInvoiceDetail size
+            int size = 0;
+            try {
+                List<OutputInvoiceDetail> listOutInvoiceDetail = (List<OutputInvoiceDetail>) session.getAttribute("listOutInvoiceDetail");
+                size = listOutInvoiceDetail.size();
+
+            } catch (Exception e) {
+            }
+            request.setAttribute("outInvoiceDetailSize", size);
 
             request.getRequestDispatcher("view/Profile/profileEdit.jsp").forward(request, response);
         }
@@ -79,7 +88,6 @@ public class ProfileEditControll extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
         HttpSession session = request.getSession();
-        
 
         String raw_username = session.getAttribute("username").toString();
         String raw_password = session.getAttribute("password").toString();

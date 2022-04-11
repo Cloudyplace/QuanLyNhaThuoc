@@ -61,13 +61,14 @@ public final class login_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("            function hideURLbar(){ window.scrollTo(0,1); } </script>\n");
       out.write("        <!-- Meta tag Keywords -->\n");
       out.write("        <!-- css files -->\n");
-      out.write("        <link rel=\"stylesheet\" href=\"css/style.css\" type=\"text/css\" media=\"all\" /> <!-- Style-CSS --> \n");
-      out.write("        <link rel=\"stylesheet\" href=\"css/font-awesome.css\"> <!-- Font-Awesome-Icons-CSS -->\n");
+      out.write("        <link rel=\"stylesheet\" href=\"css/HomeStyle/LoginStyle.css\" type=\"text/css\" media=\"all\" /> <!-- Style-CSS --> \n");
+      out.write("        <link rel=\"stylesheet\" href=\"css/HomeStyle/fontLogin.css\"> <!-- Font-Awesome-Icons-CSS -->\n");
       out.write("        <!-- //css files -->\n");
       out.write("        <!-- online-fonts -->\n");
       out.write("        <link href=\"//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&amp;subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext,vietnamese\" rel=\"stylesheet\">\n");
       out.write("        <link href=\"//fonts.googleapis.com/css?family=Dosis:200,300,400,500,600,700,800&amp;subset=latin-ext\" rel=\"stylesheet\">\n");
       out.write("        <!-- //online-fonts -->\n");
+      out.write("\n");
       out.write("    </head>\n");
       out.write("    <body>\n");
       out.write("        <!-- main -->\n");

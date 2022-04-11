@@ -6,6 +6,8 @@
 package controller.OutputInvoice;
 
 import static controller.OutputInvoice.AddMedicineOutInvocie.LIST_MEDICINE_OUTINVOICE;
+import dal.AccountDBContext;
+import dal.MedicineDB;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -16,6 +18,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.Account;
+import model.Medicine;
 import model.OutputInvoiceDetail;
 
 /**
@@ -35,32 +39,48 @@ public class updateQuantityOutInvoice extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        //check session
+        HttpSession session = request.getSession();
+        if (session.getAttribute("username") == null) {// set login
+            response.sendRedirect("login");
+        } else {
+            Account account = new AccountDBContext().getUser(session.getAttribute("username").toString(), session.getAttribute("password").toString());
 
-        String action = request.getParameter("action");
-        int medicineId = Integer.parseInt(request.getParameter("medicineId"));
-        if (action.equals("tang")) {
-            for (int i = 0; i < LIST_MEDICINE_OUTINVOICE.size(); i++) {
-                OutputInvoiceDetail detail = LIST_MEDICINE_OUTINVOICE.get(i);
-                if (detail.getMedicine().getMedicineId() == medicineId) {
-                    detail.setQuantity(detail.getQuantity() + 1);
-                }
-            }
-        }
-        if (action.equals("giam")) {
-            for (int i = 0; i < LIST_MEDICINE_OUTINVOICE.size(); i++) {
-                OutputInvoiceDetail detail = LIST_MEDICINE_OUTINVOICE.get(i);
-                if (detail.getMedicine().getMedicineId() == medicineId) {
-                    if (detail.getQuantity() == 1) {
-                    } else {
-                        detail.setQuantity(detail.getQuantity() - 1);
+            //profileUser
+            request.setAttribute("profileUser", account);
+
+            String action = request.getParameter("action");
+            int medicineId = Integer.parseInt(request.getParameter("medicineId"));
+            Medicine m = new MedicineDB().getMedicineById(medicineId);
+
+            if (action.equals("tang")) {
+                for (int i = 0; i < LIST_MEDICINE_OUTINVOICE.size(); i++) {
+                    OutputInvoiceDetail detail = LIST_MEDICINE_OUTINVOICE.get(i);
+                    if (detail.getMedicine().getMedicineId() == medicineId) {
+                        //check quantityInStock 
+                        if (detail.getQuantity() < m.getQuantityInStock()) {
+                            detail.setQuantity(detail.getQuantity() + 1);
+                        } else {
+                            request.setAttribute("ErrorQuantityMax", "Số lượng thuốc " + m.getMedicineName() + " chỉ còn: " + m.getQuantityInStock());
+                        }
                     }
                 }
             }
-        }
-        HttpSession session = request.getSession();
-        session.setAttribute("listOutInvoiceDetail", LIST_MEDICINE_OUTINVOICE);
+            if (action.equals("giam")) {
+                for (int i = 0; i < LIST_MEDICINE_OUTINVOICE.size(); i++) {
+                    OutputInvoiceDetail detail = LIST_MEDICINE_OUTINVOICE.get(i);
+                    if (detail.getMedicine().getMedicineId() == medicineId) {
+                        if (detail.getQuantity() == 1) {
+                        } else {
+                            detail.setQuantity(detail.getQuantity() - 1);
+                        }
+                    }
+                }
+            }
+            session.setAttribute("listOutInvoiceDetail", LIST_MEDICINE_OUTINVOICE);
 
-        response.sendRedirect("OutputInvoice");
+            request.getRequestDispatcher("OutputInvoice").forward(request, response);
+        }
 
     }
 

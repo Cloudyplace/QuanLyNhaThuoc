@@ -7,16 +7,15 @@ package controller.MedicineManage;
 
 import controller.OutputInvoice.OutputInvoiceControll;
 import dal.AccountDBContext;
-import dal.ProductDBGetById;
+import dal.MedicineDB;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.Medicine;
+import model.Account;
 
 /**
  *
@@ -51,24 +50,28 @@ public class MedicineDetailAdminControll extends HttpServlet {
         if (session.getAttribute("username") == null) {// set login
             response.sendRedirect("login");
         } else {
-            //profileUser
-            request.setAttribute("profileUser", new AccountDBContext().getUser(session.getAttribute("username").toString(), session.getAttribute("password").toString()));
+            Account account = new AccountDBContext().getUser(session.getAttribute("username").toString(), session.getAttribute("password").toString());
+            if (account.getRole().getRoleId() == 2) {
+                response.sendRedirect("AccessDenied");
+            } else {
+                //profileUser
+                request.setAttribute("profileUser", account);
 
-            //listOutInvoiceDetail size
-            int size = 0;
-            try {
-                List<OutputInvoiceControll> listOutInvoiceDetail = (List<OutputInvoiceControll>) session.getAttribute("listOutInvoiceDetail");
-                size = listOutInvoiceDetail.size();
+                //listOutInvoiceDetail size
+                int size = 0;
+                try {
+                    List<OutputInvoiceControll> listOutInvoiceDetail = (List<OutputInvoiceControll>) session.getAttribute("listOutInvoiceDetail");
+                    size = listOutInvoiceDetail.size();
 
-            } catch (Exception e) {
+                } catch (Exception e) {
+                }
+                request.setAttribute("outInvoiceDetailSize", size);
+
+                request.setAttribute("MedicineDetail", new MedicineDB().getMedicineByIdAdmin(Integer.parseInt(request.getParameter("id"))));
+
+                request.getRequestDispatcher("view/Manage/MedicineManage/MedicineDetailAdmin.jsp").forward(request, response);
             }
-            request.setAttribute("outInvoiceDetailSize", size);
-            
-            request.setAttribute("MedicineDetail", new ProductDBGetById().getMedicineByIdAdmin(Integer.parseInt(request.getParameter("id"))));
-
-            request.getRequestDispatcher("view/Manage/MedicineManage/MedicineDetailAdmin.jsp").forward(request, response);
         }
-
     }
 
     /**

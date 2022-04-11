@@ -8,6 +8,7 @@ package dal.distributor;
 import com.sun.tools.ws.wsdl.document.Import;
 import controller.ImportInvoiceManage.ImInvoiceDetailControll;
 import dal.DBContext;
+import dal.ImportInvoice.ImportInvoiceDBContext;
 import dal.MedicineDB;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,6 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Distributor;
 import model.ImportInvoice;
+import model.ImportInvoiceDetail;
 import model.Medicine;
 
 /**
@@ -241,12 +243,85 @@ public class DistributorDBContext extends DBContext {
 
     }
 
-    public static void main(String[] args) {
-        DistributorDBContext imInvoice = new DistributorDBContext();
-        List<ImportInvoice> list = imInvoice.pagingImInvoiceOfDistributor(1, 1);
-        for (ImportInvoice o : list) {
-            System.out.println(o);
+    //insert Distributor
+    public void insertDistributor(Distributor d) {
+        String sql = "INSERT INTO [Distributor]\n"
+                + "           ([DistributorName]\n"
+                + "           ,[Address]\n"
+                + "           ,[Email]\n"
+                + "           ,[PhoneNumber]\n"
+                + "           ,[Note])\n"
+                + "     VALUES\n"
+                + "           (?,?,?,?,?)";
+        PreparedStatement stm = null;
+        try {
+            stm = connection.prepareStatement(sql);
+
+            stm.setString(1, d.getDistributorName());
+            stm.setString(2, d.getAddress());
+            stm.setString(3, d.getEmail());
+            stm.setString(4, d.getPhone());
+            stm.setString(5, d.getNote());
+
+            stm.executeUpdate(); //INSERT UPDATE DELETE
+        } catch (SQLException ex) {
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(DistributorDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(DistributorDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
-        //      System.out.println(list.size());
     }
+
+    //delete Distributor
+    public void deleteDistributor(Integer d) {
+
+        String sql = "DELETE FROM [Distributor]\n"
+                + "      WHERE DistributorId = ?";
+        PreparedStatement stm = null;
+        try {
+            stm = connection.prepareStatement(sql);
+
+            stm.setInt(1, d);
+
+            stm.executeUpdate(); //INSERT UPDATE DELETE
+        } catch (SQLException ex) {
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(DistributorDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(DistributorDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        //        DistributorDBContext imInvoice = new DistributorDBContext();
+        //        List<ImportInvoice> list = imInvoice.pagingImInvoiceOfDistributor(1, 1);
+        //        for (ImportInvoice o : list) {
+        //            System.out.println(o);
+        //        }
+        List<Integer> list = new ArrayList<>();
+        System.out.println(list.size());
+    }
+
 }

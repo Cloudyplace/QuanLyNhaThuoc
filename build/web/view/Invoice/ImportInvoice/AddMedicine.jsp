@@ -58,7 +58,6 @@
                                     </div>
                                     <div class="col-sm-9 text-secondary">
                                         <select name="typeId" >
-                                            <option>---</option>
                                             <c:forEach items="${AllTypeMedicine}" var="t">
                                                 <option 
                                                     value="${t.typeId}">${t.typeName}</option> 
@@ -69,6 +68,7 @@
                                         </select>
                                     </div>
                                 </div>
+                                
                                 <div class="row mb-3">
                                     <div class="col-sm-3">
                                         <h6 class="mb-0">Ngày sản xuất</h6>
@@ -123,7 +123,7 @@
                                                     value="${b.boxId}">${b.boxName}</option> 
                                             </c:forEach>
 
-                                            <option><a href="dsfsd">Khác</a></option>
+                                            
 
                                         </select>
                                     </div>
@@ -155,7 +155,7 @@
                                 <div class="row">
                                     <div class="col-sm-3"></div>
                                     <div class="col-sm-9 text-secondary">
-                                        <input type="submit" class="btn btn-primary px-4" value="Add">
+                                        <input type="submit" class="btn btn-primary px-4" value="Thêm">
                                     </div>
                                 </div>
                             </form>

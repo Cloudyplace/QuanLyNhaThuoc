@@ -13,6 +13,11 @@
         <title>JSP Page</title>
         <link rel="stylesheet" href="css/HomeStyle/productStyle.css" type="text/css">
         <link href="css/HomeStyle/PageStyle.css" rel="stylesheet" type="text/css"/>
+        <style>
+            .hihi:hover{
+                cursor: pointer;
+            }
+        </style>
     </head>
     <body>
 
@@ -30,10 +35,10 @@
                                 <h2 style="font-size: 18px">Giá ${o.unit}: ${o.price}VND</h2>
                             </div>
                         </a>
-                            <form action="AddMedicineOutInvocie" method="Post">
+                            <form action="AddMedicineOutInvocie" method="GET">
                                 <input type="hidden" name="medicineId" value="${o.medicineId}">
                             <div  class="addToInvoice" style="text-align: center; margin-bottom: 5px">
-                                <a href="OutputInvoice"><input style="border-radius: 10px; background-color: greenyellow; padding: 8px 10px
+                                <a href="OutputInvoice"><input class="hihi" style="border-radius: 10px; background-color: greenyellow; padding: 8px 10px
                                                                ;font-size:16px" 
                                                                type="submit" value="Thêm vào hóa đơn"></a>
                             </div>
@@ -47,11 +52,9 @@
         </div>
         <div class="tagPage">
             <div class="tag">
-                <a class="" href="home?indexPage=${tagPage==i?"active":""}"><</a> 
                 <c:forEach begin="1" end="${endPage}" var="i">
                     <a class="${tagPage==i?"active":""}" href="home?indexPage=${i}"> ${i}</a> <!--chon the nao thi the aay mang active-->
                 </c:forEach>
-                <a class="" href="home?indexPage=${i}">></a> 
             </div>
         </div>
 

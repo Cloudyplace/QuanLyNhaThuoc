@@ -117,7 +117,7 @@
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <a class="btn btn-info " target="__blank"
-                                               href="profileedit">Edit</a>
+                                               href="profileedit">Chỉnh sửa</a>
                                         </div>
                                     </div>
                                 </div>

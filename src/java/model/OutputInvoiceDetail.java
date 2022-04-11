@@ -18,6 +18,8 @@ public class OutputInvoiceDetail {
 
     public OutputInvoiceDetail() {
     }
+    
+    
 
     public OutputInvoiceDetail(int outDetailId, OutputInvoice outputInvoice, Medicine medicine, int quantity) {
         this.outDetailId = outDetailId;

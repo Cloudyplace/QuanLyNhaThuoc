@@ -48,21 +48,21 @@ public class OutputInvoiceDBContext extends DBContext {
 
             stm.executeUpdate(); //INSERT UPDATE DELETE
         } catch (SQLException ex) {
-//        } finally {
-//            if (stm != null) {
-//                try {
-//                    stm.close();
-//                } catch (SQLException ex) {
-//                    Logger.getLogger(OutputInvoiceDBContext.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//            }
-//            if (connection != null) {
-//                try {
-//                    connection.close();
-//                } catch (SQLException ex) {
-//                    Logger.getLogger(OutputInvoiceDBContext.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//            }
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(OutputInvoiceDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(OutputInvoiceDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
     }
 
@@ -103,6 +103,22 @@ public class OutputInvoiceDBContext extends DBContext {
 
             stm.executeUpdate(); //INSERT UPDATE DELETE
         } catch (SQLException ex) {
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(OutputInvoiceDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(OutputInvoiceDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
         }
     }
 
@@ -118,7 +134,7 @@ public class OutputInvoiceDBContext extends DBContext {
         List<OutputInvoice> list = new ArrayList<>();
         String sql = "select OutInvoiceId, CustomerName, SaleDate, TotalMoney, Note\n"
                 + "from OutputInvoice\n"
-                + "Order by OutInvoiceId offset ? rows fetch next 10 rows only";
+                + "Order by OutInvoiceId desc offset ? rows fetch next 10 rows only";
         try {
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, (index - 1) * 10);
@@ -203,31 +219,84 @@ public class OutputInvoiceDBContext extends DBContext {
             stm.setInt(2, o.getCustomerPhone());
             stm.setString(3, o.getSaleDate());
             stm.setString(4, o.getNote());
-            
-            System.out.println(o.getOutInvoiceId()+","+o.getCustomerName()+" "+o.getCustomerPhone()+" "+o.getSaleDate()+" "+o.getNote());
+
+            System.out.println(o.getOutInvoiceId() + "," + o.getCustomerName() + " " + o.getCustomerPhone() + " " + o.getSaleDate() + " " + o.getNote());
 
             stm.executeUpdate(); //INSERT UPDATE DELETE
         } catch (SQLException ex) {
             Logger.getLogger(OutputInvoiceDBContext.class.getName()).log(Level.SEVERE, null, ex);
-//        } finally {
-//            if (stm != null) {
-//                try {
-//                    stm.close();
-//                } catch (SQLException ex) {
-//                }
-//            }
-//            if (connection != null) {
-//                try {
-//                    connection.close();
-//                } catch (SQLException ex) {
-//                }
-//            }
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException ex) {
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException ex) {
+                }
+            }
         }
 
     }
 
+    public List<OutputInvoiceDetail> getListOutInvoiceByMedId(int medicineId) {
+        List<OutputInvoiceDetail> list = new ArrayList<>();
+        try {
+            String sql = "SELECT *\n"
+                    + "  FROM [OutputInvoiceDetail] where MedicineId = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, medicineId);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                list.add(new OutputInvoiceDetail(rs.getInt(1), new OutputInvoice(rs.getInt(2)), new Medicine(rs.getInt(3)), rs.getInt(4)));
+            }
+        } catch (SQLException ex) {
+        }
+
+        return list;
+    }
+
+    private void deleteOutputInvoiceDetail(OutputInvoiceDetail o) {
+        String sql = "DELETE FROM [OutputInvoiceDetail]\n"
+                + "      WHERE MedicineId = ?";
+        PreparedStatement stm = null;
+        try {
+            stm = connection.prepareStatement(sql);
+
+            stm.setInt(1, o.getMedicine().getMedicineId());
+
+            stm.executeUpdate(); //INSERT UPDATE DELETE
+        } catch (SQLException e) {
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(OutputInvoiceDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(OutputInvoiceDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+        }
+    }
+
+    public void deleteManyOutInvoiceDetail(List<OutputInvoiceDetail> listOutInvoiceDetail) {
+        for (OutputInvoiceDetail o : listOutInvoiceDetail) {
+            deleteOutputInvoiceDetail(o);
+        }
+    }
+
     public static void main(String[] args) {
-        List<OutputInvoiceDetail> list = new OutputInvoiceDBContext().getListOutInvoiceDetailById(1);
+        List<OutputInvoiceDetail> list = new OutputInvoiceDBContext().getListOutInvoiceByMedId(3);
         for (OutputInvoiceDetail outputInvoiceDetail : list) {
             System.out.println(outputInvoiceDetail);
         }

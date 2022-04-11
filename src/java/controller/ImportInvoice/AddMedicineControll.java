@@ -8,10 +8,7 @@ package controller.ImportInvoice;
 import controller.OutputInvoice.OutputInvoiceControll;
 import dal.AccountDBContext;
 import dal.MedicineDB;
-import dal.distributor.DistributorDBContext;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -19,7 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.Distributor;
+import model.Account;
 import model.ImportInvoiceDetail;
 import model.MedicalBox;
 import model.Medicine;
@@ -52,31 +49,36 @@ public class AddMedicineControll extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        //check session
         HttpSession session = request.getSession();
         if (session.getAttribute("username") == null) {// set login
             response.sendRedirect("login");
         } else {
-            //profileUser
-            request.setAttribute("profileUser", new AccountDBContext().getUser(session.getAttribute("username").toString(), session.getAttribute("password").toString()));
+            Account account = new AccountDBContext().getUser(session.getAttribute("username").toString(), session.getAttribute("password").toString());
+            if (account.getRole().getRoleId() == 2) {
+                response.sendRedirect("AccessDenied");
+            } else {
+                //profileUser
+                request.setAttribute("profileUser", account);
 
-            //listOutInvoiceDetail size
-            int size = 0;
-            try {
-                List<OutputInvoiceControll> listOutInvoiceDetail = (List<OutputInvoiceControll>) session.getAttribute("listOutInvoiceDetail");
-                size = listOutInvoiceDetail.size();
+                //listOutInvoiceDetail size
+                int size = 0;
+                try {
+                    List<OutputInvoiceControll> listOutInvoiceDetail = (List<OutputInvoiceControll>) session.getAttribute("listOutInvoiceDetail");
+                    size = listOutInvoiceDetail.size();
 
-            } catch (Exception e) {
+                } catch (Exception e) {
+                }
+                request.setAttribute("outInvoiceDetailSize", size);
+
+                request.setAttribute("AllMedicalBox", new MedicineDB().getAllMedicalBox());
+
+                request.setAttribute("AllTypeMedicine", new MedicineDB().getAllTypeMedicine());
+
+                request.getRequestDispatcher("view/Invoice/ImportInvoice/AddMedicine.jsp").forward(request, response);
+
             }
-            request.setAttribute("outInvoiceDetailSize", size);
-            
-            request.setAttribute("AllMedicalBox", new MedicineDB().getAllMedicalBox());
-
-            request.setAttribute("AllTypeMedicine", new MedicineDB().getAllTypeMedicine());
-
-            request.getRequestDispatcher("view/Invoice/ImportInvoice/AddMedicine.jsp").forward(request, response);
-
         }
-
     }
 
     /**
@@ -88,10 +90,10 @@ public class AddMedicineControll extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     public static final List<ImportInvoiceDetail> LISTMEDICINE = new ArrayList<>();
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
 
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
@@ -119,8 +121,6 @@ public class AddMedicineControll extends HttpServlet {
         int quantity = Integer.parseInt(raw_Quantity);
         String image = raw_image;
         String note = raw_Note;
-        
-        System.out.println("image: "+image);
 
         TypeMedicine t = new TypeMedicine();
         t.setTypeId(typeId);

@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.Account;
 import model.Distributor;
 import model.ImportInvoice;
 
@@ -48,34 +49,40 @@ public class ImInvoiceEditControll extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        //check session
         HttpSession session = request.getSession();
         if (session.getAttribute("username") == null) {// set login
             response.sendRedirect("login");
         } else {
-            //profileUser&
-            request.setAttribute("profileUser", new AccountDBContext().getUser(session.getAttribute("username").toString(), session.getAttribute("password").toString()));
+            Account account = new AccountDBContext().getUser(session.getAttribute("username").toString(), session.getAttribute("password").toString());
+            if (account.getRole().getRoleId() == 2) {
+                response.sendRedirect("AccessDenied");
+            } else {
+                //profileUser
+                request.setAttribute("profileUser", account);
 
-            //listOutInvoiceDetail size
-            int size = 0;
-            try {
-                List<OutputInvoiceControll> listOutInvoiceDetail = (List<OutputInvoiceControll>) session.getAttribute("listOutInvoiceDetail");
-                size = listOutInvoiceDetail.size();
+                //listOutInvoiceDetail size
+                int size = 0;
+                try {
+                    List<OutputInvoiceControll> listOutInvoiceDetail = (List<OutputInvoiceControll>) session.getAttribute("listOutInvoiceDetail");
+                    size = listOutInvoiceDetail.size();
 
-            } catch (Exception e) {
+                } catch (Exception e) {
+                }
+                request.setAttribute("outInvoiceDetailSize", size);
+
+                //distributor
+                request.setAttribute("ImvoiceAndDistributor", new ImportInvoiceDBContext().getImInvoiceAndDistributorByImInvoiceId(Integer.parseInt(request.getParameter("id"))));
+
+                //invoice detail
+                request.setAttribute("ListImInvoiceDetail", new ImportInvoiceDBContext().getListImInvoiceDetailById(Integer.parseInt(request.getParameter("id"))));
+
+                //set all distributor
+                request.setAttribute("AllDistributor", new DistributorDBContext().getAllDistributor());
+
+                request.getRequestDispatcher("view/Manage/ImportInvoiceManage/ImInvoiceEdit.jsp").forward(request, response);
+
             }
-            request.setAttribute("outInvoiceDetailSize", size);
-
-            //distributor
-            request.setAttribute("ImvoiceAndDistributor", new ImportInvoiceDBContext().getImInvoiceAndDistributorByImInvoiceId(Integer.parseInt(request.getParameter("id"))));
-
-            //invoice detail
-            request.setAttribute("ListImInvoiceDetail", new ImportInvoiceDBContext().getListImInvoiceDetailById(Integer.parseInt(request.getParameter("id"))));
-
-            //set all distributor
-            request.setAttribute("AllDistributor", new DistributorDBContext().getAllDistributor());
-
-            request.getRequestDispatcher("view/Manage/ImportInvoiceManage/ImInvoiceEdit.jsp").forward(request, response);
-
         }
     }
 
@@ -90,7 +97,7 @@ public class ImInvoiceEditControll extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
 
@@ -98,23 +105,23 @@ public class ImInvoiceEditControll extends HttpServlet {
         int disId = Integer.parseInt(request.getParameter("disId"));
         String raw_date = request.getParameter("imDate");
         String raw_note = request.getParameter("note");
-        
+
         //set distributor in imInvoice
         Distributor d = new Distributor();
         d.setDistributorId(disId);
-        
+
         //set imInvoice
         ImportInvoice i = new ImportInvoice();
         i.setImInvoiceId(id);
         i.setDistributor(d);
         i.setImDate(raw_date);
         i.setNote(raw_note);
-        
+
         ImportInvoiceDBContext imInvoiceDB = new ImportInvoiceDBContext();
         imInvoiceDB.updateImportInvoice(i);
-        
+
         response.sendRedirect("imInvoiceDetail?id=" + id);
-        
+
     }
 
     /**

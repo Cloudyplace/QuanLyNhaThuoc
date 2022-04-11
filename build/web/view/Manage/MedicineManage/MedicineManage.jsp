@@ -66,7 +66,7 @@
                                                             <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
                                                         </span>
                                                     </a>
-                                                    <a href="#" class="table-link danger">
+                                                    <a href="MedicineDelete?id=${o.medicineId}" onclick="return confirm('Bạn có chắc chắn muốn xóa thuốc này không?');" class="table-link danger" >
                                                         <span class="fa-stack">
                                                             <i class="fa fa-square fa-stack-2x"></i>
                                                             <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
@@ -86,11 +86,9 @@
             </div>
             <div class="tagPage">
                 <div class="tag">
-                    <a class="" href="medicinemanage?indexPage=${tagPage==i?"active":""}"><</a> 
                     <c:forEach begin="1" end="${endPage}" var="i">
                         <a class="${tagPage==i?"active":""}" href="medicinemanage?indexPage=${i}"> ${i}</a> <!--chon the nao thi the aay mang active-->
                     </c:forEach>
-                    <a class="" href="medicinemanage?indexPage=${i}">></a> 
                 </div>
             </div>
         </div>

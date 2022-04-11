@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.Account;
 import model.Medicine;
 
 /**
@@ -51,46 +52,50 @@ public class MedicineOfDistributor extends HttpServlet {
         HttpSession session = request.getSession();
         if (session.getAttribute("username") == null) {// set login
             response.sendRedirect("login");
-        } else {//profileUser
-            request.setAttribute("profileUser", new AccountDBContext().getUser(session.getAttribute("username").toString(), session.getAttribute("password").toString()));
+        } else {
+            Account account = new AccountDBContext().getUser(session.getAttribute("username").toString(), session.getAttribute("password").toString());
+            if (account.getRole().getRoleId() == 2) {
+                response.sendRedirect("AccessDenied");
+            } else {
+                //profileUser
+                request.setAttribute("profileUser", account);
+                //listOutInvoiceDetail size
+                int size = 0;
+                try {
+                    List<OutputInvoiceControll> listOutInvoiceDetail = (List<OutputInvoiceControll>) session.getAttribute("listOutInvoiceDetail");
+                    size = listOutInvoiceDetail.size();
 
-            //listOutInvoiceDetail size
-            int size = 0;
-            try {
-                List<OutputInvoiceControll> listOutInvoiceDetail = (List<OutputInvoiceControll>) session.getAttribute("listOutInvoiceDetail");
-                size = listOutInvoiceDetail.size();
+                } catch (Exception e) {
+                }
+                request.setAttribute("outInvoiceDetailSize", size);
 
-            } catch (Exception e) {
+                //dung de phan trang
+                String indexPage = request.getParameter("indexPage");
+                if (indexPage == null) {
+                    indexPage = "1";
+                }
+                int indexP = Integer.parseInt(indexPage);
+                //get total medicine of Distributor
+                DistributorDBContext distributor = new DistributorDBContext();
+                int count = distributor.getTotalMedicineOfDistributor(Integer.parseInt(request.getParameter("id")));
+                int endPage = count / 10;
+                if (count % 10 != 0) {
+                    endPage++;
+                }
+                request.setAttribute("endPage", endPage);
+                List<Medicine> listMedicinePageOfDis = distributor.pagingMedicineOfDistributor(Integer.parseInt(request.getParameter("id")), indexP);
+                request.setAttribute("listMedicinePageOfDis", listMedicinePageOfDis);
+
+                //style tag page
+                request.setAttribute("tagPage", indexP);
+
+                //Distributor detail dùng để quay về 
+                request.setAttribute("DistributorDetail", new DistributorDBContext().getDistributorById(Integer.parseInt(request.getParameter("id"))));
+
+                request.getRequestDispatcher("view/Manage/DistributorManage/MedicineOfDistributor.jsp").forward(request, response);
+
             }
-            request.setAttribute("outInvoiceDetailSize", size);
-
-            //dung de phan trang
-            String indexPage = request.getParameter("indexPage");
-            if (indexPage == null) {
-                indexPage = "1";
-            }
-            int indexP = Integer.parseInt(indexPage);
-            //get total medicine of Distributor
-            DistributorDBContext distributor = new DistributorDBContext();
-            int count = distributor.getTotalMedicineOfDistributor(Integer.parseInt(request.getParameter("id")));
-            int endPage = count / 10;
-            if (count % 10 != 0) {
-                endPage++;
-            }
-            request.setAttribute("endPage", endPage);
-            List<Medicine> listMedicinePageOfDis = distributor.pagingMedicineOfDistributor(Integer.parseInt(request.getParameter("id")), indexP);
-            request.setAttribute("listMedicinePageOfDis", listMedicinePageOfDis);
-
-            //style tag page
-            request.setAttribute("tagPage", indexP);
-
-            //Distributor detail dùng để quay về 
-            request.setAttribute("DistributorDetail", new DistributorDBContext().getDistributorById(Integer.parseInt(request.getParameter("id"))));
-
-            request.getRequestDispatcher("view/Manage/DistributorManage/MedicineOfDistributor.jsp").forward(request, response);
-
         }
-
     }
 
     /**

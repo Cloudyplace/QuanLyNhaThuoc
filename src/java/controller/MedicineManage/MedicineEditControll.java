@@ -8,7 +8,6 @@ package controller.MedicineManage;
 import controller.OutputInvoice.OutputInvoiceControll;
 import dal.AccountDBContext;
 import dal.MedicineDB;
-import dal.ProductDBGetById;
 import dal.distributor.DistributorDBContext;
 import java.io.IOException;
 import java.util.List;
@@ -17,7 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.Distributor;
+import model.Account;
 import model.MedicalBox;
 import model.Medicine;
 import model.TypeMedicine;
@@ -32,37 +31,39 @@ public class MedicineEditControll extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-
         //check session
         HttpSession session = request.getSession();
         if (session.getAttribute("username") == null) {// set login
             response.sendRedirect("login");
         } else {
-            //profileUser
-            request.setAttribute("profileUser", new AccountDBContext().getUser(session.getAttribute("username").toString(), session.getAttribute("password").toString()));
+            Account account = new AccountDBContext().getUser(session.getAttribute("username").toString(), session.getAttribute("password").toString());
+            if (account.getRole().getRoleId() == 2) {
+                response.sendRedirect("AccessDenied");
+            } else {
+                //profileUser
+                request.setAttribute("profileUser", account);
 
-            //listOutInvoiceDetail size
-            int size = 0;
-            try {
-                List<OutputInvoiceControll> listOutInvoiceDetail = (List<OutputInvoiceControll>) session.getAttribute("listOutInvoiceDetail");
-                size = listOutInvoiceDetail.size();
+                //listOutInvoiceDetail size
+                int size = 0;
+                try {
+                    List<OutputInvoiceControll> listOutInvoiceDetail = (List<OutputInvoiceControll>) session.getAttribute("listOutInvoiceDetail");
+                    size = listOutInvoiceDetail.size();
 
-            } catch (Exception e) {
+                } catch (Exception e) {
+                }
+                request.setAttribute("outInvoiceDetailSize", size);
+
+                request.setAttribute("MedicineDetail", new MedicineDB().getMedicineByIdAdmin(Integer.parseInt(request.getParameter("id"))));
+
+                request.setAttribute("AllTypeMedicine", new MedicineDB().getAllTypeMedicine());
+
+                request.setAttribute("AllDistributor", new DistributorDBContext().getAllDistributor());
+
+                request.setAttribute("AllMedicalBox", new MedicineDB().getAllMedicalBox());
+
+                request.getRequestDispatcher("view/Manage/MedicineManage/MedicineEditAdmin.jsp").forward(request, response);
+
             }
-            request.setAttribute("outInvoiceDetailSize", size);
-            
-            request.setAttribute("MedicineDetail", new ProductDBGetById().getMedicineByIdAdmin(Integer.parseInt(request.getParameter("id"))));
-
-
-            request.setAttribute("AllTypeMedicine", new MedicineDB().getAllTypeMedicine());
-
-
-            request.setAttribute("AllDistributor", new DistributorDBContext().getAllDistributor());
-
-            request.setAttribute("AllMedicalBox", new MedicineDB().getAllMedicalBox());
-
-            request.getRequestDispatcher("view/Manage/MedicineManage/MedicineEditAdmin.jsp").forward(request, response);
-
         }
 
     }
@@ -99,7 +100,6 @@ public class MedicineEditControll extends HttpServlet {
         String image = raw_image;
         String note = raw_Note;
 
-
         TypeMedicine t = new TypeMedicine();
         t.setTypeId(typeId);
         MedicalBox b = new MedicalBox();
@@ -122,7 +122,7 @@ public class MedicineEditControll extends HttpServlet {
         MedicineDB db = new MedicineDB();
         db.updateMedicine(m);
 
-        response.sendRedirect("medicineDetailAdmin?id="+id);
+        response.sendRedirect("medicineDetailAdmin?id=" + id);
 
     }
 

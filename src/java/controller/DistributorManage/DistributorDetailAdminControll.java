@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.Account;
 
 /**
  *
@@ -44,48 +45,45 @@ public class DistributorDetailAdminControll extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//                request.setAttribute("MedicineDetail", new ProductDBGetById().getMedicineById(Integer.parseInt(request.getParameter("id"))));
-//        int typeId = ((Medicine) request.getAttribute("MedicineDetail")).getTypeId();
-//        request.setAttribute("typeName", new ProductDBGetById().getTypeNameByTypeId(typeId));
-//        int distributorId = ((Medicine) request.getAttribute("MedicineDetail")).getDistributorId();
-//        request.setAttribute("distributorName", new ProductDBGetById().getDistributorNameByDistributorId(distributorId));
-//        int boxId = ((Medicine) request.getAttribute("MedicineDetail")).getBoxId();
-//        request.setAttribute("boxName", new ProductDBGetById().getBoxNameByBoxId(boxId));
-//        request.getRequestDispatcher("view/Manage/MedicineManage/MedicineDetailAdmin.jsp").forward(request, response);
 
+        //check session
         //check session
         HttpSession session = request.getSession();
         if (session.getAttribute("username") == null) {// set login
             response.sendRedirect("login");
         } else {
-            //profileUser
-            request.setAttribute("profileUser", new AccountDBContext().getUser(session.getAttribute("username").toString(), session.getAttribute("password").toString()));
+            Account account = new AccountDBContext().getUser(session.getAttribute("username").toString(), session.getAttribute("password").toString());
+            if (account.getRole().getRoleId() == 2) {
+                response.sendRedirect("AccessDenied");
+            } else {
+                //profileUser
+                request.setAttribute("profileUser", account);
 
-            //listOutInvoiceDetail size
-            int size = 0;
-            try {
-                List<OutputInvoiceControll> listOutInvoiceDetail = (List<OutputInvoiceControll>) session.getAttribute("listOutInvoiceDetail");
-                size = listOutInvoiceDetail.size();
+                //listOutInvoiceDetail size
+                int size = 0;
+                try {
+                    List<OutputInvoiceControll> listOutInvoiceDetail = (List<OutputInvoiceControll>) session.getAttribute("listOutInvoiceDetail");
+                    size = listOutInvoiceDetail.size();
 
-            } catch (Exception e) {
+                } catch (Exception e) {
+                }
+                request.setAttribute("outInvoiceDetailSize", size);
+
+                //distributor detail
+                request.setAttribute("DistributorDetail", new DistributorDBContext().getDistributorById(Integer.parseInt(request.getParameter("id"))));
+
+                //total medicine
+                request.setAttribute("TotalTypeMidicine", new DistributorDBContext().getTotalMedicineOfDistributor((Integer.parseInt(request.getParameter("id")))));
+
+                //total Import Invoice
+                request.setAttribute("TotalImportInvoice", new DistributorDBContext().getTotalImInvoiceOfDistributor(Integer.parseInt(request.getParameter("id"))));
+
+                //total money of Im Invoice
+                request.setAttribute("TotalMoneyIInvoice", new DistributorDBContext().getTotalMoneyImInvoiceByDisId(Integer.parseInt(request.getParameter("id"))));
+
+                request.getRequestDispatcher("view/Manage/DistributorManage/DistributorDetailAdmin.jsp").forward(request, response);
             }
-            request.setAttribute("outInvoiceDetailSize", size);
-            
-            //distributor detail
-            request.setAttribute("DistributorDetail", new DistributorDBContext().getDistributorById(Integer.parseInt(request.getParameter("id"))));
-
-            //total medicine
-            request.setAttribute("TotalTypeMidicine", new DistributorDBContext().getTotalMedicineOfDistributor((Integer.parseInt(request.getParameter("id")))));
-
-            //total Import Invoice
-            request.setAttribute("TotalImportInvoice", new DistributorDBContext().getTotalImInvoiceOfDistributor(Integer.parseInt(request.getParameter("id"))));
-
-            //total money of Im Invoice
-            request.setAttribute("TotalMoneyIInvoice", new DistributorDBContext().getTotalMoneyImInvoiceByDisId(Integer.parseInt(request.getParameter("id"))));
-
-            request.getRequestDispatcher("view/Manage/DistributorManage/DistributorDetailAdmin.jsp").forward(request, response);
         }
-
     }
 
     /**

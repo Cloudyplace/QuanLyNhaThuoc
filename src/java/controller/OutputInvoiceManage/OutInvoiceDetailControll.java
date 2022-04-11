@@ -5,20 +5,17 @@
  */
 package controller.OutputInvoiceManage;
 
-import controller.OutputInvoiceManage.*;
 import controller.OutputInvoice.OutputInvoiceControll;
 import dal.AccountDBContext;
 import dal.OutputInvoice.OutputInvoiceDBContext;
-import dal.ProductDBGetById;
-import dal.distributor.DistributorDBContext;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.Account;
 
 /**
  *
@@ -49,34 +46,39 @@ public class OutInvoiceDetailControll extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        //check session
         HttpSession session = request.getSession();
         if (session.getAttribute("username") == null) {// set login
             response.sendRedirect("login");
         } else {
-            //profileUser
-            request.setAttribute("profileUser", new AccountDBContext().getUser(session.getAttribute("username").toString(), session.getAttribute("password").toString()));
+            Account account = new AccountDBContext().getUser(session.getAttribute("username").toString(), session.getAttribute("password").toString());
+            if (account.getRole().getRoleId() == 2) {
+                response.sendRedirect("AccessDenied");
+            } else {
+                //profileUser
+                request.setAttribute("profileUser", account);
 
-            //listOutInvoiceDetail size
-            int size = 0;
-            try {
-                List<OutputInvoiceControll> listOutInvoiceDetail = (List<OutputInvoiceControll>) session.getAttribute("listOutInvoiceDetail");
-                size = listOutInvoiceDetail.size();
+                //listOutInvoiceDetail size
+                int size = 0;
+                try {
+                    List<OutputInvoiceControll> listOutInvoiceDetail = (List<OutputInvoiceControll>) session.getAttribute("listOutInvoiceDetail");
+                    size = listOutInvoiceDetail.size();
 
-            } catch (Exception e) {
-            }
-            request.setAttribute("outInvoiceDetailSize", size);
-            
-            //distributor
-            request.setAttribute("OutInvoiceAndAccount", new OutputInvoiceDBContext().getOutInvoiceAndAccountByOutInvoiceId(Integer.parseInt(request.getParameter("id"))));
+                } catch (Exception e) {
+                }
+                request.setAttribute("outInvoiceDetailSize", size);
 
-            //invoice detail
-            request.setAttribute("ListOutInvoiceDetail", new OutputInvoiceDBContext().getListOutInvoiceDetailById(Integer.parseInt(request.getParameter("id"))));
+                
+                request.setAttribute("OutInvoiceAndAccount", new OutputInvoiceDBContext().getOutInvoiceAndAccountByOutInvoiceId(Integer.parseInt(request.getParameter("id"))));
+
+                //invoice detail
+                request.setAttribute("ListOutInvoiceDetail", new OutputInvoiceDBContext().getListOutInvoiceDetailById(Integer.parseInt(request.getParameter("id"))));
 
 //            //medice detail
 //            request.setAttribute("MedicineDetail", new ProductDBGetById().getMedicineById(Integer.parseInt(request.getParameter("id"))));
+                request.getRequestDispatcher("view/Manage/OutputInvoiceManage/OutInvoiceDetail.jsp").forward(request, response);
 
-            request.getRequestDispatcher("view/Manage/OutputInvoiceManage/OutInvoiceDetail.jsp").forward(request, response);
-
+            }
         }
     }
 

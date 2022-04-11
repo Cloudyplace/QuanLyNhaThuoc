@@ -43,6 +43,10 @@
                 background-color: yellowgreen;
                 cursor: pointer;
             }
+            i#ErrorQuantityMax{
+                color: red;
+                font-weight: bold;
+            }
 
         </style>
 
@@ -66,7 +70,7 @@
                             <div class="page-content container">
                                 <div class="page-header text-blue-d2">
                                     <h1 class="page-title text-secondary-d1">
-                                        Tạo Hóa Bán Hàng
+                                        Tạo Hóa Đơn Bán Hàng
                                         <small class="page-info">
                                             <i class="fa fa-angle-double-right text-80"></i>
                                         </small>
@@ -94,10 +98,10 @@
                                             Hóa đơn
                                         </div>
 
-                                        <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">Tên khách hàng: <input type="text" name="customerName"></span></div>
-                                        <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">Số điện thoại KH: <input type="text" name="customerPhone"></span></div>
+                                        <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">Tên khách hàng: <input type="text" name="customerName" value="Trống"></span></div>
+                                        <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">Số điện thoại KH: <input type="number" name="customerPhone" value="000"></span></div>
 
-                                        <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">Ngày phát hành: </span><input type="date" name="saleDate"/></div>
+                                        <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">Ngày phát hành: </span><input required=""type="date" name="saleDate"/></div>
 
                                     </div>
                                 </div>
@@ -127,9 +131,9 @@
                                             <div class="d-none d-sm-block col-2">${m.medicine.unit}</div>
                                             <div class="d-none d-sm-block col-2">
                                                 <div class="quantity-card" style="display: flex">
-                                                    <input onclick="window.location='updateQuantityOutInvoice?action=giam&medicineId=${m.medicine.medicineId}'"  class="btn-quan" type="button" value="-">
+                                                    <input onclick="window.location = 'updateQuantityOutInvoice?action=giam&medicineId=${m.medicine.medicineId}'"  class="btn-quan" type="button" value="-">
                                                     <input name="quantity" class="inp-quan soLuong" type="text" value="${m.quantity}">
-                                                    <input onclick="window.location='updateQuantityOutInvoice?action=tang&medicineId=${m.medicine.medicineId}'"  class="btn-quan" type="button" value="+">
+                                                    <input onclick="window.location = 'updateQuantityOutInvoice?action=tang&medicineId=${m.medicine.medicineId}'"  class="btn-quan" type="button" value="+">
                                                 </div>
 
                                             </div>
@@ -142,22 +146,27 @@
                                                         <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
                                                     </span>
                                                 </a>
-                                                <a href="#" class="table-link danger">
+                                                <a href="DeleteMedicineOutInvoice?index=${i}" class="table-link danger">
                                                     <span class="fa-stack">
                                                         <i class="fa fa-square fa-stack-2x"></i>
                                                         <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
                                                     </span>
                                                 </a>
+
                                             </div>
 
                                         </div>
                                     </div>
+
                                     <hr/>
                                     <%
                                         i = i + 1;
                                         request.setAttribute("i", i);
                                     %>
                                 </c:forEach>
+                                <span><i id="ErrorQuantityMax">${ErrorQuantityMax}</i></span>
+                                <span><i id="ErrorOutInvocieNull">${ErrorOutInvocieNull}</i></span>
+
                                 <br/>
 
                                 <a href="home">Thêm thuốc</a>
@@ -208,7 +217,7 @@
                                 <hr />
 
                                 <div>
-                                    <input type="submit" class="btn btn-info btn-bold px-4 float-right mt-3 mt-lg-0" value="Create">
+                                    <input type="submit" class="btn btn-info btn-bold px-4 float-right mt-3 mt-lg-0" value="Tạo">
                                     <br/>
                                     <br/>
                                     <br/>
