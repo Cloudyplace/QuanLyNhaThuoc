@@ -9,12 +9,12 @@ package model;
  *
  * @author cloudy_place
  */
-public class Medicine {
+public class Medicine {  
     private int medicineId;
     private String medicineName;
-    private int typeId;
-    private int boxId;
-    private int distributorId;
+    private TypeMedicine type;
+    private MedicalBox box;
+//    private Distributor distributor;
     private String unit;
     private int inputPrice;
     private int price;
@@ -27,12 +27,85 @@ public class Medicine {
     public Medicine() {
     }
 
-    public Medicine(int medicineId, String medicineName, int typeId, int boxId, int distributor, String unit, int inputPrice, int price, String manufactureDate, String outOfDate, String image, int quantityInStock, String note) {
+    public Medicine(int medicineId) {
+        this.medicineId = medicineId;
+    }
+    
+    
+
+    // page in home 
+    public Medicine(int medicineId, String medicineName, MedicalBox box, int price, String image) {
         this.medicineId = medicineId;
         this.medicineName = medicineName;
-        this.typeId = typeId;
-        this.boxId = boxId;
-        this.distributorId = distributor;
+        this.box = box;
+        this.price = price;
+        this.image = image;
+        
+    }
+    
+    // detail medicine home
+
+    public Medicine(int medicineId, String medicineName, TypeMedicine type, MedicalBox box, String unit, int price, String manufactureDate, String outOfDate, String image, int quantityInStock, String note) {
+        this.medicineId = medicineId;
+        this.medicineName = medicineName;
+        this.type = type;
+        this.box = box;
+//        this.distributor = distributor;
+        this.unit = unit;
+        this.price = price;
+        this.manufactureDate = manufactureDate;
+        this.outOfDate = outOfDate;
+        this.image = image;
+        this.quantityInStock = quantityInStock;
+        this.note = note;
+    }
+
+    public Medicine(int medicineId, String medicineName, TypeMedicine type, MedicalBox box, String unit, int inputPrice, int price, String manufactureDate, String outOfDate, String image, int quantityInStock, String note) {
+        this.medicineId = medicineId;
+        this.medicineName = medicineName;
+        this.type = type;
+        this.box = box;
+//        this.distributor = distributor;
+        this.unit = unit;
+        this.inputPrice = inputPrice;
+        this.price = price;
+        this.manufactureDate = manufactureDate;
+        this.outOfDate = outOfDate;
+        this.image = image;
+        this.quantityInStock = quantityInStock;
+        this.note = note;
+    }
+    
+    
+    
+    
+    
+
+    public Medicine(int medicineId, String medicineName, int inputPrice, int price, String outOfDate, int quantityInStock) {
+        this.medicineId = medicineId;
+        this.medicineName = medicineName;
+        this.inputPrice = inputPrice;
+        this.price = price;
+        this.outOfDate = outOfDate;
+        this.quantityInStock = quantityInStock;
+    }
+
+    public Medicine(int medicineId, String medicineName, String unit, int inputPrice, int price) {
+        this.medicineId = medicineId;
+        this.medicineName = medicineName;
+        this.unit = unit;
+        this.inputPrice = inputPrice;
+        this.price = price;
+    }
+   
+    
+    
+
+    public Medicine(String medicineName, TypeMedicine type, MedicalBox box, String unit, int inputPrice, int price, String manufactureDate, String outOfDate, String image, int quantityInStock, String note) {
+        this.medicineName = medicineName;
+        this.type = type;
+        this.box = box;
+//        this.distributor = distributor;
         this.unit = unit;
         this.inputPrice = inputPrice;
         this.price = price;
@@ -59,29 +132,29 @@ public class Medicine {
         this.medicineName = medicineName;
     }
 
-    public int getTypeId() {
-        return typeId;
+    public TypeMedicine getType() {
+        return type;
     }
 
-    public void setTypeId(int typeId) {
-        this.typeId = typeId;
+    public void setType(TypeMedicine type) {
+        this.type = type;
     }
 
-    public int getBoxId() {
-        return boxId;
+    public MedicalBox getBox() {
+        return box;
     }
 
-    public void setBoxId(int boxId) {
-        this.boxId = boxId;
+    public void setBox(MedicalBox box) {
+        this.box = box;
     }
 
-    public int getDistributorId() {
-        return distributorId;
-    }
-
-    public void setDistributorId(int distributorId) {
-        this.distributorId = distributorId;
-    }
+//    public Distributor getDistributor() {
+//        return distributor;
+//    }
+//
+//    public void setDistributor(Distributor distributor) {
+//        this.distributor = distributor;
+//    }
 
     public String getUnit() {
         return unit;
@@ -149,8 +222,12 @@ public class Medicine {
 
     @Override
     public String toString() {
-        return "Medicine{" + "medicineId=" + medicineId + ", medicineName=" + medicineName + ", typeId=" + typeId + ", boxId=" + boxId + ", distributor=" + distributorId + ", unit=" + unit + ", inputPrice=" + inputPrice + ", price=" + price + ", manufactureDate=" + manufactureDate + ", outOfDate=" + outOfDate + ", image=" + image + ", quantityInStock=" + quantityInStock + ", note=" + note + '}';
+        return "Medicine{" + "medicineId=" + medicineId + ", medicineName=" + medicineName + ", type=" + type + ", box=" + box + ", unit=" + unit + ", inputPrice=" + inputPrice + ", price=" + price + ", manufactureDate=" + manufactureDate + ", outOfDate=" + outOfDate + ", image=" + image + ", quantityInStock=" + quantityInStock + ", note=" + note + '}';
     }
+    
+    
+
+    
 
     
     

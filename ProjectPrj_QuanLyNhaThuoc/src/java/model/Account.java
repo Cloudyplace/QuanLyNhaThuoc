@@ -5,6 +5,8 @@
  */
 package model;
 
+
+
 /**
  *
  * @author cloudy_place
@@ -17,12 +19,38 @@ public class Account {
     private String address;
     private String email;
     private String phone;
-    private String role;
+    private Role role;
 
     public Account() {
     }
 
-    public Account(int accountID, String username, String password, String fullName, String address, String email, String phone, String role) {
+    public Account(int accountID) {
+        this.accountID = accountID;
+    }
+
+    public Account(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public Account(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    public Account(int accountID, String fullName, Role role) {
+        this.accountID = accountID;
+        this.fullName = fullName;
+        this.role = role;
+    }
+
+    public Account(int accountID, Role role) {
+        this.accountID = accountID;
+        this.role = role;
+    }
+
+    
+    
+    public Account(int accountID, String username, String password, String fullName, String address, String email, String phone, Role role) {
         this.accountID = accountID;
         this.username = username;
         this.password = password;
@@ -32,6 +60,16 @@ public class Account {
         this.phone = phone;
         this.role = role;
     }
+
+    public Account(int accountId ,String fullName, String address, String email, String phone, Role role) {
+        this.accountID = accountId;
+        this.fullName = fullName;
+        this.address = address;
+        this.email = email;
+        this.phone = phone;
+        this.role = role;
+    }
+    
 
     public int getAccountID() {
         return accountID;
@@ -85,22 +123,24 @@ public class Account {
         return phone;
     }
 
-    public void setPhoneNumber(String phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
     @Override
     public String toString() {
-        return "Account{" + "accountID=" + accountID + ", username=" + username + ", password=" + password + ", fullName=" + fullName + ", address=" + address + ", email=" + email + ", phoneNumber=" + phone + ", role=" + role + '}';
+        return "Account{" + "accountID=" + accountID + ", username=" + username + ", password=" + password + ", fullName=" + fullName + ", address=" + address + ", email=" + email + ", phone=" + phone + ", role=" + role + '}';
     }
+
+    
 
     
     

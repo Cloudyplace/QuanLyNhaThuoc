@@ -5,6 +5,10 @@
  */
 package controller;
 
+import controller.ImportInvoice.AddMedicineControll;
+import static controller.ImportInvoice.AddMedicineControll.LISTMEDICINE;
+import controller.OutputInvoice.AddMedicineOutInvocie;
+import static controller.OutputInvoice.AddMedicineOutInvocie.LIST_MEDICINE_OUTINVOICE;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -43,6 +47,12 @@ public class LogoutControll extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
+        
+        // delete 2 list  list medicine imInvoice and outInvocie
+        AddMedicineControll.LISTMEDICINE.removeAll(LISTMEDICINE);
+        AddMedicineOutInvocie.LIST_MEDICINE_OUTINVOICE.removeAll(LIST_MEDICINE_OUTINVOICE);
+
+        session.invalidate();
         session.setMaxInactiveInterval(0);
         response.sendRedirect("login");
     }

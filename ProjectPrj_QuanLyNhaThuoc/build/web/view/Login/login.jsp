@@ -22,13 +22,14 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             function hideURLbar(){ window.scrollTo(0,1); } </script>
         <!-- Meta tag Keywords -->
         <!-- css files -->
-        <link rel="stylesheet" href="css/style.css" type="text/css" media="all" /> <!-- Style-CSS --> 
-        <link rel="stylesheet" href="css/font-awesome.css"> <!-- Font-Awesome-Icons-CSS -->
+        <link rel="stylesheet" href="css/HomeStyle/LoginStyle.css" type="text/css" media="all" /> <!-- Style-CSS --> 
+        <link rel="stylesheet" href="css/HomeStyle/fontLogin.css"> <!-- Font-Awesome-Icons-CSS -->
         <!-- //css files -->
         <!-- online-fonts -->
         <link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&amp;subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext,vietnamese" rel="stylesheet">
         <link href="//fonts.googleapis.com/css?family=Dosis:200,300,400,500,600,700,800&amp;subset=latin-ext" rel="stylesheet">
         <!-- //online-fonts -->
+
     </head>
     <body>
         <!-- main -->
@@ -53,7 +54,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                             <input  placeholder="Mật khẩu" name="password" class="pass" type="password" required="">
                             <span class="icon2"><i class="fa fa-unlock" aria-hidden="true"></i></span>
                         </div>
-                        <h3 class="errorLogin"">${ErrorLogin}</h3>
+                        <h3 class="errorLogin">${ErrorLogin}</h3>
                         <div class="sub-w3l">
                             <div class="right-w3l">
                                 <input type="submit" value="Đăng nhập">

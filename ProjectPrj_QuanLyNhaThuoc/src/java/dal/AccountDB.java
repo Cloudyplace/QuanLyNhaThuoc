@@ -16,9 +16,9 @@ import model.Account;
  *
  * @author cloudy_place
  */
-public class AccountDB extends DBContext{
-    
-     public boolean checkExits(String username, String password) {
+public class AccountDB extends DBContext {
+
+    public boolean checkExits(String username, String password) {
         try {
             String sql = "select username, password from Account WHERE username = ? AND password = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
@@ -33,8 +33,10 @@ public class AccountDB extends DBContext{
         }
         return false;
     }
-     
-     public static void main(String[] args) {
-         System.out.println(new AccountDB().checkExits("admin", "123123"));
+
+    
+
+    public static void main(String[] args) {
+        System.out.println(new AccountDB().checkExits("admin", "123123"));
     }
 }

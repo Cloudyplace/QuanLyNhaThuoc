@@ -5,14 +5,19 @@
  */
 package controller;
 
-import dal.ProductDB;
+import controller.OutputInvoice.OutputInvoiceControll;
+import dal.AccountDBContext;
+import dal.MedicineDB;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import javax.security.auth.message.callback.PrivateKeyCallback;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.Medicine;
 
 /**
  *
@@ -31,11 +36,46 @@ public class HomeControll extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        request.setCharacterEncoding("UTF-8");
+
         HttpSession session = request.getSession();
-        if (session.getAttribute("username") == null) {
+        if (session.getAttribute("username") == null) {// set login
             response.sendRedirect("login");
         } else {
-            request.setAttribute("listMedicine", new ProductDB().getAllMedicine());
+            //dung de phan trang
+            String indexPage = request.getParameter("indexPage");
+            if (indexPage == null) {
+                indexPage = "1";
+            }
+            int indexP = Integer.parseInt(indexPage);
+            //get total medicine
+            MedicineDB medicine = new MedicineDB();
+            int count = medicine.getTotalMedicine();
+            int endPage = count / 10;
+            if (count % 10 != 0) {
+                endPage++;
+            }
+            request.setAttribute("endPage", endPage);
+            List<Medicine> listMedPage = medicine.pagingMedicine(indexP);
+            request.setAttribute("listMedPage", listMedPage);
+
+            //style tag page
+            request.setAttribute("tagPage", indexP);
+
+            //profileUser
+            request.setAttribute("profileUser", new AccountDBContext().getUser(session.getAttribute("username").toString(), session.getAttribute("password").toString()));
+
+            //listOutInvoiceDetail size
+            int size = 0;
+            try {
+                List<OutputInvoiceControll> listOutInvoiceDetail = (List<OutputInvoiceControll>) session.getAttribute("listOutInvoiceDetail");
+                size = listOutInvoiceDetail.size();
+
+            } catch (Exception e) {
+            }
+            request.setAttribute("outInvoiceDetailSize", size);
+
             request.getRequestDispatcher("view/Home/Home.jsp").forward(request, response);
         }
     }

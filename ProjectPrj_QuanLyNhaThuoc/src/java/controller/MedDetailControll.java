@@ -5,15 +5,16 @@
  */
 package controller;
 
-import dal.ProductDB;
-import dal.ProductDBGetById;
+import controller.OutputInvoice.OutputInvoiceControll;
+import dal.AccountDBContext;
+import dal.MedicineDB;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Medicine;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -32,13 +33,28 @@ public class MedDetailControll extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setAttribute("MedicineDetail", new ProductDBGetById().getMedicineById(Integer.parseInt(request.getParameter("id"))));
-        int typeId = ((Medicine) request.getAttribute("MedicineDetail")).getTypeId();
-        request.setAttribute("typeName", new ProductDBGetById().getTypeNameByTypeId(typeId));
-        int distributorId = ((Medicine) request.getAttribute("MedicineDetail")).getDistributorId();
-        request.setAttribute("distributorName", new ProductDBGetById().getDistributorNameByDistributorId(distributorId));
-        request.getRequestDispatcher("view/MedicineDetail/medicineDetail.jsp").forward(request, response);
+        //check session
+        HttpSession session = request.getSession();
+        if (session.getAttribute("username") == null) {// set login
+            response.sendRedirect("login");
+        } else {
+            //profileUser
+            request.setAttribute("profileUser", new AccountDBContext().getUser(session.getAttribute("username").toString(), session.getAttribute("password").toString()));
 
+            //listOutInvoiceDetail size
+            int size = 0;
+            try {
+                List<OutputInvoiceControll> listOutInvoiceDetail = (List<OutputInvoiceControll>) session.getAttribute("listOutInvoiceDetail");
+                size = listOutInvoiceDetail.size();
+
+            } catch (Exception e) {
+            }
+            request.setAttribute("outInvoiceDetailSize", size);
+            
+            request.setAttribute("MedicineDetail", new MedicineDB().getMedicineById(Integer.parseInt(request.getParameter("id"))));
+            
+            request.getRequestDispatcher("view/MedicineDetail/MedicineDetail.jsp").forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
